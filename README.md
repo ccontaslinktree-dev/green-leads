@@ -60,4 +60,8 @@ A apresentação agora mostra uma etapa por vez, com URLs próprias: `/` (headli
 
 ## Apresentação com experiência de quiz
 
-A entrada principal usa uma moldura de 100dvh, barra de progresso e ação fixa de continuar. Apenas a etapa atual é montada. O botão troca o conteúdo sem recarregar a página: `?fase=1` (VSL), `?fase=2` (benefícios), `?fase=3` (mineração), `?fase=4` (oferta). A URL preserva a etapa ao atualizar, permite voltar pelo navegador e mantém os parâmetros de campanha. O conteúdo de uma etapa pode rolar dentro da moldura; as outras etapas não aparecem abaixo dela. As rotas `/etapa/*` permanecem compatíveis com links anteriores.
+A entrada principal usa uma moldura de 100dvh, barra de progresso e ação fixa de continuar. Apenas a etapa atual é montada. O botão troca o conteúdo sem recarregar a página: `?fase=1` (VSL), `?fase=2` (benefícios), `?fase=3` (mineração), `?fase=4` (oferta). A URL preserva a etapa ao atualizar, permite voltar pelo navegador e mantém os parâmetros de campanha. As etapas cabem na altura disponível, sem rolagem do documento ou da área principal. As rotas `/etapa/*` permanecem compatíveis com links anteriores.
+
+## Telas sem rolagem
+
+Cada uma das quatro etapas é composta para caber na altura disponível, sem rolagem no documento ou no conteúdo principal. Vídeos usam capa proporcional com abertura em overlay. Em celulares baixos, a apresentação é simplificada mantendo corpo legível, descrição da entrega, preço e custos externos. A ação Continuar permanece fixa. Validar com `node qa/no-scroll.cjs` em 320x568, 360x640, 390x844 e desktop.
