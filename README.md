@@ -40,7 +40,7 @@ Pixel público: `1418598996441763`. PageView uma vez por carregamento, ViewConte
 
 O navegador e a API usam o mesmo `event_id` para deduplicação. O endpoint `/api/meta-events` valida origem, tamanho, tipos e eventos permitidos; aplica limite por IP e não aceita email/telefone nem encaminha a query string. Nenhum token é retornado ao visitante.
 
-O Cloud foi habilitado. O token é provisionado separadamente no Supabase Vault como `office_ia_meta_access_token`. A migração concede acesso somente ao serviço do servidor, nunca aos papéis `anon`/`authenticated`.
+O Cloud foi habilitado. O segredo META_CAPI_ACCESS_TOKEN também foi configurado no gerenciador de segredos do servidor Lovable. O preview registrou respostas HTTP 200 para o relay após a configuração. O token é provisionado separadamente no Supabase Vault como `office_ia_meta_access_token`. A migração concede acesso somente ao serviço do servidor, nunca aos papéis `anon`/`authenticated`.
 
 Para o relay usar o Vault, o runtime precisa de `SUPABASE_URL` e `SUPABASE_SERVICE_ROLE_KEY` ou `SUPABASE_SECRET_KEY`. Alternativamente, configure `META_CAPI_ACCESS_TOKEN` diretamente nos segredos do servidor do Lovable. Nunca use o prefixo `VITE_` para uma credencial. Sem esse vínculo no runtime, o endpoint responde `server_configuration_pending` e o Pixel continua funcionando. Ativar Cloud ou gravar o segredo no Vault não prova que a API já está conectada; verificar a resposta do endpoint no ambiente hospedado.
 
@@ -49,3 +49,7 @@ Para o relay usar o Vault, o runtime precisa de `SUPABASE_URL` e `SUPABASE_SERVI
 `node --experimental-strip-types --test tests/meta-events.test.ts`
 
 O teste usa fetch simulado, sem gerar conversões reais. As verificações de navegador cobrem 320, 390, 768 e 1440 px, nenhum download de MP4 no carregamento inicial, tabs/teclado, FAQ, rolagem e o player dedicado. O áudio não é verificável no host de testes sem saída de som; os arquivos originais mantêm AAC.
+
+## Fluxo compacto
+
+A página segue: VSL de apresentação → desejo e benefícios → VSL de mineração → entregáveis e oferta. Há somente um link principal de rolagem fora da oferta. O player é preservado. O checkout ainda depende da URL real da Wiapy em src/data/office-offer.ts; nenhum endereço de outro produto é reutilizado.

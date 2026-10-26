@@ -1286,3 +1286,124 @@ h2 > span {
     transform: none;
   }
 }
+
+/* Compact flow: presentation VSL, desire, mining VSL, offer. */
+.compact-hero {
+  padding-block: 44px;
+}
+.compact-hero h1 {
+  font-size: clamp(36px, 5.5vw, 62px);
+}
+.compact-lead {
+  max-width: 580px !important;
+  margin: 22px auto 0;
+}
+.compact-lead strong {
+  color: var(--ink);
+}
+.compact-hero .video-demo {
+  margin-top: 26px;
+  max-width: 290px;
+}
+.desire-section {
+  padding: 64px 0;
+  background: #eaf0e5;
+  text-align: center;
+}
+.desire-section h2 + p {
+  margin: 22px auto 0;
+  max-width: 600px;
+}
+.desire-art {
+  margin: 20px auto;
+  max-width: 620px;
+}
+.desire-art img {
+  width: 100%;
+  height: auto;
+  mix-blend-mode: multiply;
+}
+.desire-art figcaption {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  margin-top: -4px;
+  text-align: left;
+  color: var(--ink);
+}
+.desire-art figcaption > span {
+  font-size: 15px;
+  line-height: 1.5;
+}
+.desire-benefits {
+  max-width: 580px;
+  margin: 28px auto;
+  text-align: left;
+  display: grid;
+  gap: 18px;
+}
+.desire-benefits p {
+  display: flex;
+  gap: 13px;
+  align-items: flex-start;
+  font-size: 17px;
+  margin: 0;
+}
+.desire-benefits svg {
+  color: var(--teal);
+  margin-top: 5px;
+  flex: none;
+}
+.desire-benefits strong {
+  color: var(--ink);
+}
+.desire-section .cta {
+  margin-inline: auto;
+}
+.compact-mining {
+  padding-block: 64px;
+  text-align: center;
+}
+.compact-mining .video-demo {
+  max-width: 290px;
+}
+.compact-offer {
+  padding-block: 0 60px;
+}
+.compact-questions {
+  max-width: 620px;
+  margin: 30px auto 0;
+}
+.office-page--compact .site-footer {
+  padding-block: 26px;
+}
+@media (max-width: 600px) {
+  .compact-hero {
+    padding-block: 30px 38px;
+  }
+  .compact-hero h1 {
+    font-size: clamp(32px, 8.8vw, 43px);
+  }
+  .compact-hero .eyebrow {
+    font-size: 9px;
+  }
+  .compact-lead {
+    font-size: 17px;
+    margin-top: 20px;
+  }
+  .compact-hero .video-demo {
+    margin-top: 24px;
+    max-width: 275px;
+  }
+  .desire-section,
+  .compact-mining {
+    padding-block: 46px;
+  }
+  .desire-benefits p {
+    font-size: 17px;
+  }
+  .compact-offer {
+    padding-block: 0 42px;
+  }
+}
