@@ -25,7 +25,6 @@ function NotFoundComponent() {
         <div className="mt-6">
           <Link
             to="/"
-            search={{ fase: 1 }}
             className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
             Voltar ao início
@@ -83,7 +82,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Um prompt para estruturar seu escritório de agentes de IA no Claude. Mineração de ofertas, copy, páginas e criativos com uma direção clara.",
+          "Um prompt para estruturar seu escritório de agentes de IA no ChatGPT ou Claude. Mineração de ofertas, copy, páginas e criativos com uma direção clara.",
       },
       { name: "author", content: "Escritório IA" },
       { property: "og:title", content: "Escritório IA | Da ideia à sua operação" },

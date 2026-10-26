@@ -4,11 +4,11 @@ Página de apresentação em português do Brasil para um prompt de organizaçã
 
 ## Oferta
 
-- Produto: prompt Escritório IA, para usar no Claude.
+- Produto: e-book em PDF com o prompt Escritório IA, para usar no ChatGPT ou Claude.
 - Preço: R$ 9,99, pagamento único pelo prompt.
 - Lote definido pelo responsável: 50 acessos. A página não simula vendas nem disponibilidade restante.
 - Contas, assinaturas e integrações externas são separadas. Não há promessa de renda ou vendas.
-- Esta etapa implementa a estrutura da página. Checkout e publicação serão configurados posteriormente.
+- Checkout real ainda precisa ser configurado. A página não reutiliza links de outros produtos.
 
 ## Configuração
 
@@ -50,18 +50,10 @@ Para o relay usar o Vault, o runtime precisa de `SUPABASE_URL` e `SUPABASE_SERVI
 
 O teste usa fetch simulado, sem gerar conversões reais. As verificações de navegador cobrem 320, 390, 768 e 1440 px, nenhum download de MP4 no carregamento inicial, tabs/teclado, FAQ, rolagem e o player dedicado. O áudio não é verificável no host de testes sem saída de som; os arquivos originais mantêm AAC.
 
-## Fluxo compacto
+## Layout restaurado
 
-A sequência de apresentação é VSL → benefícios → VSL de mineração → oferta. Cada etapa agora ocupa uma URL própria, conforme detalhado abaixo. O player é preservado. O checkout ainda depende da URL real da Wiapy em src/data/office-offer.ts; nenhum endereço de outro produto é reutilizado.
+A rota `/` volta ao primeiro layout de `42acc10`, com hero e VSL, gargalos, demonstração de mineração, funções dos agentes, instruções, explicação do uso de IA, oferta e FAQ. O player imersivo atual e o rastreamento seguro são preservados. A entrega é descrita como e-book com prompt para ChatGPT ou Claude. Links legados `/etapa/*` retornam à página principal. Parâmetros antigos `fase` não trocam mais o layout.
 
-## Funil em quatro páginas
+A explicação de autoria diz que design, código e estrutura tiveram apoio de IA e revisão humana; não afirma que o prompt comercial gerou autonomamente esta página.
 
-A apresentação agora mostra uma etapa por vez, com URLs próprias: `/` (headline e VSL), `/etapa/beneficios` (explicação e entregáveis), `/etapa/mineracao` (demonstração da mineração), `/etapa/oferta` (pacote, preço e FAQ). Os botões avançam com transição de saída e entrada, preservam parâmetros de campanha e respeitam redução de movimento. Recarregar mantém a etapa pela URL; voltar do navegador funciona normalmente. Ao terminar cada VSL, o botão continua para a etapa seguinte. O Pixel registra Funnel_Step e Funnel_Advance; ViewContent permanece na oferta, e InitiateCheckout apenas no pagamento real.
-
-## Apresentação com experiência de quiz
-
-A entrada principal usa uma moldura de 100dvh, barra de progresso e ação fixa de continuar. Apenas a etapa atual é montada. O botão troca o conteúdo sem recarregar a página: `?fase=1` (VSL), `?fase=2` (benefícios), `?fase=3` (mineração), `?fase=4` (oferta). A URL preserva a etapa ao atualizar, permite voltar pelo navegador e mantém os parâmetros de campanha. As etapas cabem na altura disponível, sem rolagem do documento ou da área principal. As rotas `/etapa/*` permanecem compatíveis com links anteriores.
-
-## Telas sem rolagem
-
-Cada uma das quatro etapas é composta para caber na altura disponível, sem rolagem no documento ou no conteúdo principal. Vídeos usam capa proporcional com abertura em overlay. Em celulares baixos, a apresentação é simplificada mantendo corpo legível, descrição da entrega, preço e custos externos. A ação Continuar permanece fixa. Validar com `node qa/no-scroll.cjs` em 320x568, 360x640, 390x844 e desktop.
+Verificação do layout restaurado: `node qa/restored-page.cjs`. A configuração de teste intercepta analytics e silencia o áudio apenas no navegador de teste, pois o host não tem saída sonora. Os vídeos de produção preservam o áudio original e iniciam com som após o gesto do usuário.
