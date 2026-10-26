@@ -3,63 +3,58 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   ArrowDown,
   ArrowUpRight,
-  ArrowRight,
   Check,
   Copy,
   Layers3,
-  Sparkles,
+  Plus,
+  Command,
   Search,
   PenTool,
-  Clapperboard,
   LayoutTemplate,
-  Command,
-  CircleCheck,
-  Plus,
-  Laptop,
+  Clapperboard,
   PackageCheck,
+  Sparkles,
 } from "lucide-react";
 import { AgentDesk } from "@/components/office/AgentDesk";
 import { VideoDemo } from "@/components/office/VideoDemo";
+import { CountUp } from "@/components/office/CountUp";
 import { officeOffer, formatPrice, getCheckoutUrl } from "@/data/office-offer";
+import { initializeTracking, trackEvent } from "@/lib/office-tracking";
 
 export const Route = createFileRoute("/")({ component: Index });
 
 const questions = [
   [
     "O que eu recebo por R$ 9,99?",
-    "Você recebe o prompt do Escritório IA para usar no Claude e estruturar as funções de pesquisa de ofertas, copy, páginas, criativos e entregáveis. O produto é o prompt, não uma licença de uma plataforma pronta.",
+    "O prompt completo do Escritório IA, para colar no Claude e organizar cinco funções: mineração de ofertas, copy, páginas, criativos e entregáveis. Você recebe o prompt, não uma licença de software ou uma equipe humana.",
   ],
   [
-    "Preciso ser infoprodutor ou saber programar?",
-    "Você pode estar começando ou já ter uma operação. Para iniciar a conversa com os agentes, não precisa escrever código: precisa seguir o prompt, explicar seu objetivo e revisar as respostas. Algumas etapas de execução podem exigir configuração de ferramentas.",
+    "Preciso saber programar?",
+    "Para começar a conversa com os agentes, não. Você cola o prompt, explica seu objetivo e revisa as respostas. Publicar páginas, gerar vídeos e conectar ferramentas pode exigir configurações adicionais.",
   ],
   [
-    "A conta do Claude e outras ferramentas estão incluídas?",
-    "Não. Você utiliza sua própria conta do Claude. Planos, limites de uso, assinaturas e eventuais ferramentas externas são separados e dependem dos recursos que você escolher usar.",
+    "O Claude e as ferramentas estão incluídos?",
+    "Não. Você utiliza sua própria conta do Claude. Assinaturas, limites, integrações e eventuais custos de ferramentas externas são separados.",
   ],
   [
-    "O agente entrega vídeos prontos automaticamente?",
-    "Ele pode ajudar nos ganchos, roteiros, direção visual e fluxo de produção. A geração e a exportação de vídeos dependem das ferramentas e integrações que você disponibilizar. Confira a demonstração para entender o fluxo mostrado.",
+    "Ele cria os vídeos sozinho?",
+    "O prompt ajuda a organizar ganchos, roteiros, direção visual e o fluxo de produção. Geração, edição e exportação dependem das ferramentas e integrações disponíveis na sua conta. Assista às demonstrações para entender o processo.",
   ],
   [
-    "Isso garante renda extra ou vendas?",
-    "Não existe garantia de faturamento. O prompt ajuda a organizar a pesquisa e a produção. As vendas dependem da oferta, da qualidade da execução, da divulgação, dos testes e das decisões que você tomar.",
+    "Por que apenas 50 acessos?",
+    "Este lote foi definido para 50 acessos ao prompt. O número é o limite do lote, não um contador de vagas restantes ou de vendas em tempo real.",
+  ],
+  [
+    "Isso garante que vou vender?",
+    "Não. O prompt organiza a pesquisa e a produção. Seu resultado depende da oferta, da execução, da divulgação, dos testes e das decisões que você tomar.",
   ],
 ];
 
-function OfferLink({
-  children,
-  className = "",
-  arrow = "right",
-}: {
-  children: ReactNode;
-  className?: string;
-  arrow?: "right" | "down";
-}) {
+function OfferLink({ children, local }: { children: ReactNode; local: string }) {
   return (
-    <a href="#oferta" className={`cta ${className}`}>
+    <a className="cta" href="#oferta" onClick={() => trackEvent("ClickParaOferta", { local })}>
       {children}
-      {arrow === "down" ? <ArrowDown size={20} /> : <ArrowUpRight size={21} />}
+      <ArrowDown size={21} aria-hidden="true" />
     </a>
   );
 }
@@ -69,384 +64,364 @@ function Index() {
   const [checkout, setCheckout] = useState<string | null>(null);
   useEffect(() => {
     setCheckout(getCheckoutUrl());
-    if (
-      !main.current ||
-      !window.IntersectionObserver ||
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    )
-      return;
+    initializeTracking();
+    const offer = document.getElementById("oferta");
     const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          trackEvent("ViewContent", {
+            content_name: officeOffer.name,
+            value: officeOffer.price,
+            currency: "BRL",
+          });
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.12 },
+    );
+    if (offer) observer.observe(offer);
+    const reveal = new IntersectionObserver(
       (entries) =>
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target);
+            reveal.unobserve(entry.target);
           }
         }),
-      { threshold: 0.08 },
+      { threshold: 0.1 },
     );
-    main.current.querySelectorAll<HTMLElement>(".reveal").forEach((el) => {
-      el.classList.add("will-reveal");
-      observer.observe(el);
-    });
-    return () => observer.disconnect();
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      main.current?.querySelectorAll<HTMLElement>(".reveal").forEach((el) => {
+        el.classList.add("will-reveal");
+        reveal.observe(el);
+      });
+    }
+    return () => {
+      observer.disconnect();
+      reveal.disconnect();
+    };
   }, []);
+  async function purchase(event: React.MouseEvent<HTMLAnchorElement>) {
+    if (!checkout) return;
+    trackEvent("InitiateCheckout", {
+      content_name: officeOffer.name,
+      value: officeOffer.price,
+      currency: "BRL",
+    });
+    if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    await new Promise((resolve) => setTimeout(resolve, 150));
+    window.location.assign(checkout);
+  }
   return (
     <div className="office-page">
       <header className="site-header wrap">
-        <a href="#inicio" aria-label="Escritório IA, início" className="brand">
+        <a href="#inicio" className="brand" aria-label="Escritório IA, início">
           <span className="brand-symbol">
             <Layers3 size={23} />
           </span>
-          <span>
-            escritório<span className="brand-ia">IA</span>
-          </span>
+          escritório<span className="brand-ia">IA</span>
         </a>
-        <span className="header-note">
-          <span /> UM PROMPT. UMA NOVA FORMA DE EXECUTAR.
-        </span>
-        <span className="header-price">
-          Seu ponto de partida <strong>{formatPrice(officeOffer.price)}</strong>
+        <span className="header-edition">
+          EDIÇÃO LIMITADA <strong>50 acessos</strong>
         </span>
       </header>
       <main ref={main}>
-        <section id="inicio" className="hero wrap">
-          <div className="hero__copy">
-            <div className="kicker">
-              <span className="tiny-orbit" /> SUA OPERAÇÃO DE INFOPRODUTOS COMEÇA AQUI
-            </div>
-            <h1>
-              Pare de fazer tudo sozinho.
-              <br />
-              <span>Monte seu escritório de agentes de IA.</span>
-            </h1>
-            <p className="hero__lead">
-              Quer uma renda extra com infoprodutos, mas trava na hora de escolher a oferta,
-              escrever a copy ou criar a página?
-            </p>
-            <p className="hero__body">
-              Cole um prompt no <strong>Claude</strong> e estruture agentes para organizar a
-              mineração, a copy, as páginas e os criativos. Você ganha uma direção para sair da
-              ideia e começar a executar.
-            </p>
-            <div className="hero__capabilities">
-              <span>
-                <Search size={17} /> Ofertas
-              </span>
-              <span>
-                <PenTool size={17} /> Copy
-              </span>
-              <span>
-                <LayoutTemplate size={17} /> Páginas
-              </span>
-              <span>
-                <Clapperboard size={17} /> Criativos
-              </span>
-            </div>
-            <div className="hero__action">
-              <OfferLink arrow="down">Quero conhecer o acesso</OfferLink>
-              <span>
-                O prompt completo por <strong>{formatPrice(officeOffer.price)}</strong>.<br />
-                Contas de IA e ferramentas são separadas.
-              </span>
-            </div>
-          </div>
-          <div className="hero__visual">
-            <div className="hero-orbit orbit-one" />
-            <div className="hero-orbit orbit-two" />
-            <span className="float-label float-label--top">
-              <Sparkles size={18} /> Da ideia à execução
+        <section id="inicio" className="hero wrap story">
+          <span className="eyebrow">
+            <span className="status-dot" /> UM PROMPT PARA USAR NO CLAUDE
+          </span>
+          <h1>
+            Pare de travar na ideia.
+            <br />
+            <span className="word-entry">
+              Coloque a IA
+              <br className="mobile-break" /> para trabalhar
+              <br className="desktop-break" /> com você.
             </span>
-            <VideoDemo {...officeOffer.videos.presentation} />
-            <span className="float-label float-label--bottom">
-              <CircleCheck size={18} /> Veja o fluxo real no vídeo
-            </span>
-          </div>
-        </section>
-        <section
-          className="pain-strip wrap reveal"
-          aria-label="Os gargalos que você pode organizar"
-        >
-          <div>
-            <span className="section-index">01 / O QUE ESTÁ TE TRAVANDO</span>
-            <h2>
-              A ideia existe.
-              <br />A execução fica para depois.
-            </h2>
-          </div>
-          <div className="pain-item">
-            <span>01</span>
-            <p>
-              Você abre várias abas.
-              <br />
-              <strong>E continua sem escolher uma oferta.</strong>
-            </p>
-          </div>
-          <div className="pain-item">
-            <span>02</span>
-            <p>
-              A pesquisa vira um rascunho.
-              <br />
-              <strong>A página e o criativo não saem.</strong>
-            </p>
-          </div>
-          <div className="pain-item">
-            <span>03</span>
-            <p>
-              Tudo depende de você.
-              <br />
-              <strong>Cada etapa começa do zero.</strong>
-            </p>
-          </div>
-        </section>
-        <section id="mineracao" className="mining-section">
-          <div className="wrap mining-grid">
-            <div className="mining-copy reveal">
-              <div className="kicker kicker--dark">
-                <span className="tiny-orbit" /> COMECE PELA OFERTA
-              </div>
-              <h2>
-                Tá difícil minerar uma oferta com sinais reais de demanda?
-                <br />
-                <em>Veja este vídeo.</em>
-              </h2>
-              <p>
-                Antes da página bonita, vem a decisão que sustenta a operação:{" "}
-                <strong>o que vender, para quem e com qual abordagem.</strong>
-              </p>
-              <p>
-                Veja como o agente organiza referências e oportunidades de mercado para você
-                analisar. Uma pesquisa com direção, em vez de mais uma lista de ideias esquecidas.
-              </p>
-              <ol className="mining-steps">
-                <li>
-                  <span>1</span>
-                  <div>
-                    <strong>Encontre referências</strong>
-                    <p>Comece por sinais de mercado e ofertas em circulação.</p>
-                  </div>
-                </li>
-                <li>
-                  <span>2</span>
-                  <div>
-                    <strong>Organize as oportunidades</strong>
-                    <p>Compare as propostas e entenda os possíveis ângulos.</p>
-                  </div>
-                </li>
-                <li>
-                  <span>3</span>
-                  <div>
-                    <strong>Escolha o que vale testar</strong>
-                    <p>Avance com uma hipótese e próximos passos claros.</p>
-                  </div>
-                </li>
-              </ol>
-              <p className="evidence-note">
-                Anúncios ativos são sinais de mercado, não comprovantes de faturamento. A decisão e
-                a validação continuam com você.
-              </p>
-            </div>
-            <div className="mining-video reveal">
-              <VideoDemo {...officeOffer.videos.mining} variant="mining" />
-            </div>
-          </div>
-        </section>
-        <section id="agentes" className="agents-section wrap">
-          <div className="section-top reveal">
-            <div>
-              <span className="section-index">02 / CADA AGENTE TEM UMA FUNÇÃO</span>
-              <h2>
-                Uma equipe organizada.
-                <br />
-                <span>Você no comando.</span>
-              </h2>
-            </div>
-            <p>
-              Do primeiro sinal de mercado à estrutura da sua oferta. Conheça as funções e visualize
-              o que pode construir com cada agente.
-            </p>
-          </div>
-          <div className="office-art reveal">
+          </h1>
+          <p className="hero-lead">
+            Uma oferta na cabeça. Mil tarefas pela frente.
+            <br />
+            <strong>Você não precisa começar todas do zero.</strong>
+          </p>
+          <p>
+            Organize seu escritório de agentes de IA para pesquisar ofertas, escrever a copy,
+            estruturar páginas e planejar criativos.
+          </p>
+          <figure className="hero-art">
             <img
               src="/images/escritorio-ia.webp"
-              alt="Ilustração 3D de um escritório com áreas de pesquisa, copy, páginas, vídeo e entregáveis"
               width="1200"
               height="800"
-              loading="lazy"
-              decoding="async"
+              fetchPriority="high"
+              alt="Ilustração 3D de cinco áreas de um escritório de IA conectadas: pesquisa, textos, páginas, vídeos e entregáveis"
             />
-            <div className="office-art__tag">
-              <Command size={16} />
-              <span>Sua direção conecta as etapas.</span>
+            <figcaption>
+              <span className="status-dot" /> Você dá a direção. Cada função tem seu lugar.
+            </figcaption>
+          </figure>
+          <div className="numbers" aria-label="O que compõe a oferta">
+            <div>
+              <CountUp value={1} />
+              <span>prompt completo</span>
             </div>
+            <div>
+              <CountUp value={5} />
+              <span>funções de agentes</span>
+            </div>
+            <div>
+              <CountUp value={50} />
+              <span>acessos neste lote</span>
+            </div>
+          </div>
+        </section>
+        <section className="pain-band">
+          <div className="wrap story reveal">
+            <span className="eyebrow">O PROBLEMA NÃO É FALTA DE IDEIA</span>
+            <h2>
+              Você pesquisa.
+              <br />
+              Salva. Abre outra aba.
+              <br />
+              <em>E nada vai para a rua.</em>
+            </h2>
+            <p>
+              Quem quer começar uma renda extra com infoprodutos conhece esse ciclo. A oferta não
+              está definida. A copy fica pela metade. O criativo fica para amanhã.
+            </p>
+            <p className="strong-line">Está faltando uma sequência para executar.</p>
+            <div className="workflow" aria-label="Da ideia à execução">
+              {[
+                [Search, "Pesquisar"],
+                [PenTool, "Escrever"],
+                [LayoutTemplate, "Estruturar"],
+                [Clapperboard, "Criar"],
+                [PackageCheck, "Organizar"],
+              ].map(([Icon, label], i) => {
+                const I = Icon as typeof Search;
+                return (
+                  <div key={String(label)} style={{ "--step": i } as React.CSSProperties}>
+                    <span>0{i + 1}</span>
+                    <I size={24} />
+                    <strong>{String(label)}</strong>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+        <section className="wrap story agents-section">
+          <div className="reveal">
+            <span className="eyebrow">MENOS CONVERSAS SOLTAS. MAIS DIREÇÃO.</span>
+            <h2>
+              Um escritório com
+              <br />
+              <span>
+                cinco funções.
+                <br />
+                Você no comando.
+              </span>
+            </h2>
+            <p>
+              Em vez de abrir uma conversa sem saber o que pedir, comece com funções definidas.
+              Toque em cada agente e veja onde ele entra na sua operação.
+            </p>
           </div>
           <div className="reveal">
             <AgentDesk />
           </div>
-          <div className="agents-bottom reveal">
-            <p>
-              Chega de abrir uma conversa nova sem saber o que pedir.
-              <br />
-              <strong>Comece com funções e objetivos definidos.</strong>
-            </p>
-            <OfferLink>Ver o que vem no acesso</OfferLink>
-          </div>
+          <p className="section-caption">
+            Representação das funções. O prompt é usado dentro da sua conta do Claude.
+          </p>
         </section>
-        <section className="how-section">
-          <div className="wrap">
-            <div className="section-top reveal">
-              <div>
-                <span className="section-index">03 / DA IDEIA AO PRIMEIRO PASSO</span>
-                <h2>
-                  Copie. Cole.
-                  <br />
-                  <span>Dê a direção.</span>
-                </h2>
-              </div>
-              <p>
-                O ponto de partida é um prompt. O que você faz com ele começa nas orientações que dá
-                aos agentes.
-              </p>
-            </div>
-            <div className="how-grid reveal">
-              <article>
-                <span className="how-number">01</span>
-                <Copy size={30} />
-                <h3>Copie o prompt</h3>
-                <p>Tenha a instrução que estrutura as funções do seu escritório de IA.</p>
-              </article>
-              <article>
-                <span className="how-number">02</span>
-                <Command size={30} />
-                <h3>Cole no Claude</h3>
-                <p>Use sua conta e siga as orientações para iniciar a organização dos agentes.</p>
-              </article>
-              <article>
-                <span className="how-number">03</span>
-                <ArrowUpRight size={30} />
-                <h3>Comece a orientar</h3>
-                <p>
-                  Explique o nicho, peça a pesquisa e avance na oferta, na copy e nos criativos.
-                </p>
-              </article>
-            </div>
-            <div className="ai-proof reveal">
-              <div className="ai-proof__symbol">
-                <Sparkles size={35} />
-              </div>
-              <div>
-                <span className="section-index">VOCÊ JÁ ESTÁ VENDO UMA PARTE DO POTENCIAL</span>
-                <h3>Sim, esta página foi criada com inteligência artificial.</h3>
-                <p>
-                  Design, código e estrutura desenvolvidos com apoio de IA. É uma demonstração do
-                  que a tecnologia pode ajudar a construir quando existe uma direção clara e revisão
-                  humana.
-                </p>
-              </div>
-              <span className="ai-proof__tag">
-                DO CONCEITO AO CÓDIGO <Check size={16} />
-              </span>
-            </div>
-          </div>
-        </section>
-        <section id="oferta" className="offer-section wrap">
-          <div className="offer-intro reveal">
-            <span className="section-index">04 / SEU PONTO DE PARTIDA</span>
+        <section id="demonstracao" className="vsl-section">
+          <div className="wrap story reveal">
+            <span className="eyebrow">AGORA, VEJA NA PRÁTICA</span>
             <h2>
-              Sua próxima oferta merece
+              Chega de imaginar.
               <br />
-              <span>sair do papel.</span>
+              <span>
+                Veja o escritório
+                <br />
+                funcionando.
+              </span>
             </h2>
             <p>
-              Organize o que hoje está espalhado em abas, ideias e tarefas. Comece pelo prompt do
-              seu escritório de IA.
+              Em pouco mais de um minuto, entenda como as etapas se conectam. Da pesquisa ao que
+              você precisa produzir para tirar a oferta do papel.
+            </p>
+            <VideoDemo {...officeOffer.videos.presentation} variant="hero" />
+            <p className="section-caption">Toque para assistir com som, em uma tela dedicada.</p>
+          </div>
+        </section>
+        <section className="wrap story mining-section">
+          <div className="reveal">
+            <span className="eyebrow">SUA OPERAÇÃO COMEÇA PELA OFERTA</span>
+            <h2>
+              Não sabe o que vender?
+              <br />
+              <span>
+                Comece pela pesquisa.
+                <br />
+                Não pelo chute.
+              </span>
+            </h2>
+            <p>
+              Veja o agente organizar referências e oportunidades. Você compara os sinais, analisa
+              os ângulos e escolhe uma hipótese para testar.
+            </p>
+            <VideoDemo {...officeOffer.videos.mining} variant="mining" />
+            <p className="section-caption">
+              Anúncios ativos indicam atividade no mercado. Não comprovam faturamento.
             </p>
           </div>
-          <div className="offer-grid reveal">
-            <div className="offer-art">
-              <img
-                src="/images/prompt-escritorio.webp"
-                alt="Representação ilustrativa do prompt Escritório IA conectado a pesquisa, textos e criativos"
-                width="1000"
-                height="667"
-                loading="lazy"
-                decoding="async"
-              />
-              <div className="offer-art__caption">
-                <PackageCheck size={23} />
-                <div>
-                  <strong>Escritório IA</strong>
-                  <span>Um prompt para estruturar sua operação.</span>
-                </div>
-              </div>
-            </div>
-            <article className="offer-card">
-              <div className="offer-card__label">
-                <Sparkles size={17} /> PROMPT COMPLETO
-              </div>
-              <h3>Escritório de Agentes de IA</h3>
-              <p className="offer-description">
-                Sua estrutura para pesquisar, organizar e começar a criar.
+          <OfferLink local="apos-demonstracoes">Ver o prompt completo</OfferLink>
+        </section>
+        <section className="how-section">
+          <div className="wrap story">
+            <div className="reveal">
+              <span className="eyebrow">UM COMEÇO MAIS SIMPLES</span>
+              <h2>
+                Copie. Cole.
+                <br />
+                <span>Comece a orientar.</span>
+              </h2>
+              <p>
+                Você não precisa montar todas as instruções do zero. Começa com a estrutura e dá o
+                contexto do seu negócio.
               </p>
+            </div>
+            <div className="how-steps reveal">
+              <article>
+                <span className="step-number">01</span>
+                <Copy size={25} />
+                <div>
+                  <h3>Copie o prompt</h3>
+                  <p>Sua instrução para organizar as cinco funções.</p>
+                </div>
+              </article>
+              <article>
+                <span className="step-number">02</span>
+                <Command size={25} />
+                <div>
+                  <h3>Cole no Claude</h3>
+                  <p>Use sua conta e siga a sequência do prompt.</p>
+                </div>
+              </article>
+              <article>
+                <span className="step-number">03</span>
+                <ArrowUpRight size={25} />
+                <div>
+                  <h3>Dê a direção</h3>
+                  <p>Explique seu objetivo. Peça, revise e avance.</p>
+                </div>
+              </article>
+            </div>
+            <div className="ai-note reveal">
+              <Sparkles size={26} />
+              <p>
+                <strong>Esta página também foi construída com apoio de IA.</strong> Design, código e
+                estrutura, com direção e revisão humana. Um exemplo do potencial da tecnologia, não
+                uma promessa de resultado automático do prompt.
+              </p>
+            </div>
+          </div>
+        </section>
+        <section id="oferta" className="offer-section wrap story">
+          <div className="reveal">
+            <span className="eyebrow">LOTE LIMITADO A 50 ACESSOS</span>
+            <h2>
+              Sua próxima oferta
+              <br />
+              <span>
+                não precisa ficar
+                <br />
+                só na sua cabeça.
+              </span>
+            </h2>
+            <p>
+              Tenha um ponto de partida para conectar pesquisa, criação e organização. O prompt
+              completo, em um único acesso.
+            </p>
+          </div>
+          <div className="offer-package reveal">
+            <img
+              src="/images/prompt-escritorio.webp"
+              alt="Representação do pacote digital Escritório IA"
+              width="1000"
+              height="667"
+              loading="lazy"
+              decoding="async"
+            />
+            <article className="offer-card">
+              <div className="offer-label">
+                <Layers3 size={20} /> ESCRITÓRIO IA <span>50 ACESSOS NO LOTE</span>
+              </div>
+              <h3>
+                O prompt do seu
+                <br />
+                escritório de agentes.
+              </h3>
               <ul className="offer-list">
                 {[
-                  "Prompt para usar no Claude",
-                  "Funções de mineração e pesquisa de ofertas",
-                  "Apoio para copy e páginas de venda",
+                  "Prompt completo para colar no Claude",
+                  "Mineração e pesquisa de ofertas",
+                  "Copy e estrutura de páginas de vendas",
                   "Ganchos, roteiros e direção de criativos",
-                  "Organização da estrutura dos entregáveis",
+                  "Organização dos entregáveis",
                 ].map((item) => (
                   <li key={item}>
-                    <Check size={19} />
+                    <Check size={20} />
                     {item}
                   </li>
                 ))}
               </ul>
               <div className="offer-price">
-                <span>Seu acesso ao prompt por</span>
+                <span>O seu ponto de partida por</span>
                 <strong>{formatPrice(officeOffer.price)}</strong>
-                <small>Pagamento único pelo prompt. Sem mensalidade do produto.</small>
+                <span>Pagamento único pelo prompt.</span>
               </div>
               {checkout ? (
-                <a className="cta cta--purchase" href={checkout}>
-                  Quero meu escritório de IA <ArrowUpRight size={23} />
+                <a href={checkout} onClick={purchase} className="cta cta--purchase">
+                  Quero meu Escritório IA
+                  <ArrowUpRight size={22} />
                 </a>
               ) : (
                 <>
-                  <button className="cta cta--purchase cta--soon" disabled>
-                    Acesso em breve <ArrowRight size={21} />
+                  <button className="cta cta--purchase" disabled>
+                    Acesso em breve
+                    <ArrowUpRight size={22} />
                   </button>
                   <p className="offer-opening">
-                    Você poderá garantir seu acesso aqui quando as vendas abrirem.
+                    As vendas ainda não abriram. O acesso será disponibilizado aqui.
                   </p>
                 </>
               )}
-              <div className="offer-disclosure">
-                <Laptop size={19} />
-                <p>
-                  Você usa sua própria conta do Claude. Assinaturas, integrações e ferramentas
-                  externas não estão incluídas.
-                </p>
-              </div>
+              <p className="offer-limit">
+                <strong>Serão apenas 50 acessos neste lote.</strong> Não é uma oferta aberta sem
+                limite.
+              </p>
+              <p className="offer-disclosure">
+                O produto é o prompt. Sua conta do Claude, assinaturas e ferramentas externas são
+                separadas. A execução e a revisão continuam com você.
+              </p>
             </article>
           </div>
         </section>
-        <section className="faq-section wrap reveal">
-          <div>
-            <span className="section-index">ANTES DE COMEÇAR</span>
-            <h2>
-              Sem dúvida
-              <br />
-              no próximo passo.
-            </h2>
-            <p>Entenda o que você está adquirindo e o que depende da sua execução.</p>
-          </div>
+        <section className="faq-section wrap story reveal">
+          <span className="eyebrow">ANTES DE COMEÇAR</span>
+          <h2>
+            O próximo passo,
+            <br />
+            <span>sem dúvidas.</span>
+          </h2>
           <div className="faq-list">
             {questions.map(([q, a]) => (
               <details key={q}>
                 <summary>
                   {q}
-                  <Plus size={21} />
+                  <Plus size={22} />
                 </summary>
                 <p>{a}</p>
               </details>
@@ -456,21 +431,14 @@ function Index() {
       </main>
       <footer className="site-footer wrap">
         <div className="brand">
-          <span className="brand-symbol">
-            <Layers3 size={21} />
-          </span>
-          <span>
-            escritório<span className="brand-ia">IA</span>
-          </span>
+          <Layers3 size={22} />
+          escritório<span className="brand-ia">IA</span>
         </div>
-        <p>Uma direção clara para a sua próxima operação.</p>
-        <div>
-          <span>© 2026 Escritório IA.</span>
-          <small>
-            Produto independente. Sem afiliação com a Anthropic ou o Claude. Resultados dependem da
-            execução e não são garantidos.
-          </small>
-        </div>
+        <p>
+          Produto independente. Sem afiliação com a Anthropic ou o Claude. Não há garantia de vendas
+          ou faturamento.
+        </p>
+        <span>© 2026 Escritório IA.</span>
       </footer>
     </div>
   );
