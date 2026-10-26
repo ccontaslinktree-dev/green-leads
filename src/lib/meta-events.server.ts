@@ -6,6 +6,8 @@ const ALLOWED = new Set([
   "ViewContent",
   "InitiateCheckout",
   "ClickParaOferta",
+  "Funnel_Step",
+  "Funnel_Advance",
   "VSL_Play",
   "VSL_25",
   "VSL_50",

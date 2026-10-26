@@ -25,6 +25,7 @@ export function getCheckoutUrl() {
   const url = new URL(officeOffer.checkoutUrl);
   if (typeof window !== "undefined")
     new URLSearchParams(window.location.search).forEach((value, key) => {
+      if (key.startsWith("__lovable_") || key === "forceHideBadge") return;
       if (!url.searchParams.has(key)) url.searchParams.append(key, value);
     });
   return url.toString();

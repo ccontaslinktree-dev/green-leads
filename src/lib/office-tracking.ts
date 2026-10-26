@@ -19,6 +19,8 @@ const standard = new Set(["PageView", "ViewContent", "InitiateCheckout"]);
 const allowed = new Set([
   ...standard,
   "ClickParaOferta",
+  "Funnel_Step",
+  "Funnel_Advance",
   "VSL_Play",
   "VSL_25",
   "VSL_50",

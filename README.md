@@ -52,4 +52,8 @@ O teste usa fetch simulado, sem gerar conversões reais. As verificações de na
 
 ## Fluxo compacto
 
-A página segue: VSL de apresentação → desejo e benefícios → VSL de mineração → entregáveis e oferta. Há somente um link principal de rolagem fora da oferta. O player é preservado. O checkout ainda depende da URL real da Wiapy em src/data/office-offer.ts; nenhum endereço de outro produto é reutilizado.
+A sequência de apresentação é VSL → benefícios → VSL de mineração → oferta. Cada etapa agora ocupa uma URL própria, conforme detalhado abaixo. O player é preservado. O checkout ainda depende da URL real da Wiapy em src/data/office-offer.ts; nenhum endereço de outro produto é reutilizado.
+
+## Funil em quatro páginas
+
+A apresentação agora mostra uma etapa por vez, com URLs próprias: `/` (headline e VSL), `/etapa/beneficios` (explicação e entregáveis), `/etapa/mineracao` (demonstração da mineração), `/etapa/oferta` (pacote, preço e FAQ). Os botões avançam com transição de saída e entrada, preservam parâmetros de campanha e respeitam redução de movimento. Recarregar mantém a etapa pela URL; voltar do navegador funciona normalmente. Ao terminar cada VSL, o botão continua para a etapa seguinte. O Pixel registra Funnel_Step e Funnel_Advance; ViewContent permanece na oferta, e InitiateCheckout apenas no pagamento real.

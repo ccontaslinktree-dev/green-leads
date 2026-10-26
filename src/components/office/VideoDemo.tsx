@@ -8,8 +8,18 @@ type Props = {
   title: string;
   duration: string;
   variant?: "hero" | "mining";
+  onContinue?: () => void;
+  continueLabel?: string;
 };
-export function VideoDemo({ src, poster, title, duration, variant = "hero" }: Props) {
+export function VideoDemo({
+  src,
+  poster,
+  title,
+  duration,
+  variant = "hero",
+  onContinue,
+  continueLabel,
+}: Props) {
   const dialog = useRef<HTMLDialogElement>(null);
   const video = useRef<HTMLVideoElement>(null);
   const previousFocus = useRef<HTMLElement | null>(null);
@@ -17,6 +27,8 @@ export function VideoDemo({ src, poster, title, duration, variant = "hero" }: Pr
   const watchdog = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const marks = useRef(new Set<string>());
   const [open, setOpen] = useState(false);
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => setHydrated(true), []);
   const [ended, setEnded] = useState(false);
   const [blocked, setBlocked] = useState(false);
   const [failed, setFailed] = useState(false);
@@ -79,6 +91,10 @@ export function VideoDemo({ src, poster, title, duration, variant = "hero" }: Pr
   }
   function goToOffer() {
     close();
+    if (onContinue) {
+      onContinue();
+      return;
+    }
     trackEvent("ClickParaOferta", { local: `final-vsl-${variant}` });
     document.getElementById("oferta")?.scrollIntoView({
       behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -106,7 +122,13 @@ export function VideoDemo({ src, poster, title, duration, variant = "hero" }: Pr
   );
   return (
     <div className={`video-demo video-demo--${variant}`}>
-      <button className="video-cover" onClick={launch} aria-label={`Assistir: ${title}`}>
+      <button
+        className="video-cover"
+        disabled={!hydrated}
+        aria-busy={!hydrated}
+        onClick={launch}
+        aria-label={`Assistir: ${title}`}
+      >
         <img src={poster} width="576" height="1024" alt="" loading="lazy" decoding="async" />
         <span className="video-cover__shade" />
         <span className="video-cover__duration">DEMONSTRAÇÃO REAL · {duration}</span>
@@ -210,7 +232,7 @@ export function VideoDemo({ src, poster, title, duration, variant = "hero" }: Pr
             </h2>
             <p>Confira o que está incluído no prompt completo.</p>
             <button className="cta" onClick={goToOffer}>
-              Ver o acesso
+              {continueLabel ?? "Ver o acesso"}
               <ArrowDown size={22} />
             </button>
             <button className="vsl-return" onClick={close}>
