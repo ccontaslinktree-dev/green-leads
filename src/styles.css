@@ -1511,3 +1511,102 @@ h2 > span {
     font-size: clamp(30px, 8.4vw, 42px);
   }
 }
+
+/* Quiz presentation: one viewport, one active screen and a persistent next action. */
+.quiz-shell {
+  height: 100dvh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.quiz-shell .site-header {
+  flex: none;
+  padding-block: 14px;
+  padding-top: max(14px, env(safe-area-inset-top));
+}
+.quiz-header-label {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--muted-ink);
+  letter-spacing: 0.06em;
+}
+.quiz-shell .funnel-nav {
+  flex: none;
+  padding-top: 0;
+  padding-bottom: 8px;
+}
+.quiz-shell .funnel-nav__line {
+  min-height: 35px;
+}
+.quiz-shell .funnel-screen {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-gutter: stable;
+  padding-bottom: 24px;
+}
+.quiz-shell .compact-hero {
+  padding-block: 18px 8px;
+}
+.quiz-shell .compact-hero h1 {
+  font-size: clamp(30px, 4.8vw, 47px);
+}
+.quiz-shell .compact-lead {
+  margin-top: 15px;
+  font-size: 17px;
+}
+.quiz-shell .eyebrow {
+  margin-bottom: 12px;
+}
+.quiz-shell .compact-hero .video-demo,
+.quiz-shell .compact-mining .video-demo {
+  width: min(100%, 260px);
+  margin-top: 20px;
+}
+.quiz-shell .section-caption {
+  font-size: 13px;
+}
+.quiz-shell .desire-section {
+  margin-top: 0;
+  padding-block: 24px;
+  background: transparent;
+}
+.quiz-shell .desire-art {
+  max-width: 520px;
+  margin-block: 12px;
+}
+.quiz-shell .compact-mining {
+  padding-block: 24px;
+}
+.quiz-shell .compact-offer {
+  padding-top: 24px;
+}
+.quiz-actions {
+  flex: none;
+  padding: 12px 18px max(12px, env(safe-area-inset-bottom));
+  border-top: 1px solid var(--line);
+  background: #f7f8f2;
+}
+.quiz-actions .cta {
+  width: min(100%, 620px);
+  margin-inline: auto;
+  font-size: 16px;
+  min-height: 58px;
+}
+@media (min-width: 850px) {
+  .quiz-shell .site-header,
+  .quiz-shell .funnel-nav {
+    max-width: 800px;
+  }
+}
+@media (max-height: 740px) {
+  .quiz-shell .compact-hero .video-demo {
+    max-width: 215px;
+  }
+  .quiz-shell .compact-hero h1 {
+    font-size: 30px;
+  }
+}

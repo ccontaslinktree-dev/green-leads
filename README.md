@@ -57,3 +57,7 @@ A sequência de apresentação é VSL → benefícios → VSL de mineração →
 ## Funil em quatro páginas
 
 A apresentação agora mostra uma etapa por vez, com URLs próprias: `/` (headline e VSL), `/etapa/beneficios` (explicação e entregáveis), `/etapa/mineracao` (demonstração da mineração), `/etapa/oferta` (pacote, preço e FAQ). Os botões avançam com transição de saída e entrada, preservam parâmetros de campanha e respeitam redução de movimento. Recarregar mantém a etapa pela URL; voltar do navegador funciona normalmente. Ao terminar cada VSL, o botão continua para a etapa seguinte. O Pixel registra Funnel_Step e Funnel_Advance; ViewContent permanece na oferta, e InitiateCheckout apenas no pagamento real.
+
+## Apresentação com experiência de quiz
+
+A entrada principal usa uma moldura de 100dvh, barra de progresso e ação fixa de continuar. Apenas a etapa atual é montada. O botão troca o conteúdo sem recarregar a página: `?fase=1` (VSL), `?fase=2` (benefícios), `?fase=3` (mineração), `?fase=4` (oferta). A URL preserva a etapa ao atualizar, permite voltar pelo navegador e mantém os parâmetros de campanha. O conteúdo de uma etapa pode rolar dentro da moldura; as outras etapas não aparecem abaixo dela. As rotas `/etapa/*` permanecem compatíveis com links anteriores.

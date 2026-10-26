@@ -1,3 +1,4 @@
+import { useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Check, Layers3, Plus, Search, PenTool, PackageCheck } from "lucide-react";
 import { VideoDemo } from "@/components/office/VideoDemo";
@@ -24,24 +25,30 @@ export function OfficeFunnel({ step = 0 }: { step?: number }) {
   const [leaving, setLeaving] = useState(false);
   const [ready, setReady] = useState(false);
   const moving = useRef(false);
-  const paths = ["/", "/etapa/beneficios", "/etapa/mineracao", "/etapa/oferta"];
+  const navigate = useNavigate();
   const labels = ["Conheça", "Seu escritório", "Mineração", "Seu acesso"];
   function advance(next: number) {
     if (moving.current) return;
     moving.current = true;
     trackEvent("Funnel_Advance", { local: `${step + 1}_para_${next + 1}` });
     setLeaving(true);
-    const query = window.location.search;
+
     const delay = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 160;
-    setTimeout(() => window.location.assign(paths[next] + query), delay);
+    setTimeout(() => {
+      const query = Object.fromEntries(new URLSearchParams(window.location.search));
+      void navigate({ to: "/", search: { ...query, fase: next + 1 } });
+    }, delay);
   }
   const main = useRef<HTMLElement>(null);
   const [checkout, setCheckout] = useState<string | null>(null);
   useEffect(() => {
+    moving.current = false;
+    setLeaving(false);
     setReady(true);
     setCheckout(getCheckoutUrl());
     initializeTracking();
     trackEvent("Funnel_Step", { local: String(step + 1) });
+    main.current?.scrollTo(0, 0);
     main.current?.focus({ preventScroll: true });
     const offer = document.getElementById("oferta");
     const observer = new IntersectionObserver(
@@ -104,7 +111,7 @@ export function OfficeFunnel({ step = 0 }: { step?: number }) {
     window.location.assign(checkout);
   }
   return (
-    <div className="office-page office-page--compact office-funnel">
+    <div className="office-page office-page--compact office-funnel quiz-shell">
       <header className="site-header wrap">
         <div className="brand" aria-label="Escritório IA">
           <span className="brand-symbol">
@@ -112,9 +119,7 @@ export function OfficeFunnel({ step = 0 }: { step?: number }) {
           </span>
           escritório<span className="brand-ia">IA</span>
         </div>
-        <span className="header-edition">
-          EDIÇÃO LIMITADA <strong>50 acessos</strong>
-        </span>
+        <span className="quiz-header-label">SEU PRÓXIMO PASSO</span>
       </header>
       <nav className="funnel-nav wrap story" aria-label="Etapas da apresentação">
         <div className="funnel-nav__line">
@@ -141,6 +146,7 @@ export function OfficeFunnel({ step = 0 }: { step?: number }) {
         </div>
       </nav>
       <main
+        key={step}
         ref={main}
         tabIndex={-1}
         className={leaving ? "funnel-screen is-leaving" : "funnel-screen"}
@@ -170,13 +176,6 @@ export function OfficeFunnel({ step = 0 }: { step?: number }) {
               continueLabel="Conhecer meu escritório"
             />
             <p className="section-caption">Assista com som. Conheça o fluxo antes de começar.</p>
-            <button
-              className="cta funnel-next"
-              onClick={() => advance(1)}
-              disabled={!ready || leaving}
-            >
-              Quero ver o que posso construir <ArrowUpRight size={20} />
-            </button>
           </section>
         )}
         {step === 1 && (
@@ -234,13 +233,6 @@ export function OfficeFunnel({ step = 0 }: { step?: number }) {
                   </span>
                 </p>
               </div>
-              <button
-                className="cta funnel-next"
-                onClick={() => advance(2)}
-                disabled={!ready || leaving}
-              >
-                Ver a mineração na prática <ArrowUpRight size={20} />
-              </button>
             </div>
           </section>
         )}
@@ -267,13 +259,6 @@ export function OfficeFunnel({ step = 0 }: { step?: number }) {
             <p className="section-caption">
               Sinais de mercado ajudam a pesquisar. A validação continua com você.
             </p>
-            <button
-              className="cta funnel-next"
-              onClick={() => advance(3)}
-              disabled={!ready || leaving}
-            >
-              Quero conhecer o acesso completo <ArrowUpRight size={20} />
-            </button>
           </section>
         )}
         {step === 3 && (
@@ -374,17 +359,18 @@ export function OfficeFunnel({ step = 0 }: { step?: number }) {
           </section>
         )}
       </main>
-      <footer className="site-footer wrap">
-        <div className="brand">
-          <Layers3 size={22} />
-          escritório<span className="brand-ia">IA</span>
-        </div>
-        <p>
-          Produto independente. Sem afiliação com a Anthropic ou o Claude. Não há garantia de vendas
-          ou faturamento.
-        </p>
-        <span>© 2026 Escritório IA.</span>
-      </footer>
+      {step < 3 && (
+        <footer className="quiz-actions">
+          <button className="cta" disabled={!ready || leaving} onClick={() => advance(step + 1)}>
+            {step === 0
+              ? "CONTINUAR · VER MEU ESCRITÓRIO"
+              : step === 1
+                ? "CONTINUAR · VER A MINERAÇÃO"
+                : "CONTINUAR · VER MEU ACESSO"}
+            <ArrowUpRight size={21} />
+          </button>
+        </footer>
+      )}
     </div>
   );
 }
