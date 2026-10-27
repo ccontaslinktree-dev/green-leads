@@ -2,7 +2,7 @@
 export const officeOffer = {
   name: "Escritório IA",
   price: 9.99,
-  checkoutUrl: null as string | null,
+  checkoutUrl: "https://pay.wiapy.com/Eb3FxrU9PyAf" as string | null,
   videos: {
     presentation: {
       src: "/videos/apresentacao.mp4",
