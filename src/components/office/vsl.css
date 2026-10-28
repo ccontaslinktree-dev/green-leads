@@ -718,3 +718,374 @@
     height: 350px;
   }
 }
+
+/* White launch page: generous space, readable contrast, emerald actions. */
+.vsl-page {
+  background: #fff;
+  color: #172622;
+  padding: 0 24px;
+}
+.vsl-brand {
+  max-width: 1040px;
+  margin: auto;
+  justify-content: flex-start;
+  padding: 26px 0;
+  border-bottom: 1px solid #edf0ec;
+  color: #162c23;
+  letter-spacing: -0.5px;
+}
+.vsl-brand svg,
+.vsl-brand strong {
+  color: #13734d;
+}
+.vsl-header-tag {
+  margin-left: auto;
+  color: #64756c;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+}
+.vsl-main {
+  width: min(100%, 920px);
+}
+.vsl-intro {
+  padding: 46px 0 0;
+  margin: 0 auto 25px;
+}
+.vsl-eyebrow {
+  color: #17784e;
+  font-size: 10px;
+  letter-spacing: 1.4px;
+}
+.vsl-intro h1 {
+  max-width: 900px;
+  font-size: clamp(30px, 4.5vw, 51px);
+  line-height: 1.16;
+  letter-spacing: -1.8px;
+  color: #183027;
+}
+.vsl-intro h1 em {
+  color: #16804f;
+}
+.vsl-lead {
+  max-width: 680px;
+  font-size: 16px;
+  color: #526359;
+  line-height: 1.8;
+}
+.vsl-scarcity {
+  margin: 22px auto;
+  padding: 9px 16px;
+  color: #925b15;
+  background: #fff8e8;
+  border: 1px solid #efddb7;
+  font-size: 10px;
+  letter-spacing: 0.8px;
+}
+.vsl-player {
+  width: min(100%, 338px);
+  border: 1px solid #c7d8cd;
+  box-shadow: 0 20px 60px #1a4b2412;
+  background: #f0f6ef;
+  border-radius: 24px;
+}
+.vsl-play {
+  background: radial-gradient(ellipse at 50% 45%, #e0f0dc, #f5f8ef 70%);
+  color: #163b28;
+  padding: 32px 22px;
+}
+.vsl-play::before {
+  border-color: #cbdcc7;
+}
+.vsl-preview-label {
+  color: #207349;
+  font-size: 10px;
+}
+.vsl-preview-title {
+  color: #17352b;
+  font-size: 24px;
+  line-height: 1.5;
+}
+.vsl-preview-title strong {
+  color: #247b4f;
+}
+.vsl-play-icon {
+  background: #167748;
+  color: #fff;
+  box-shadow: 0 0 0 13px #1677480b;
+}
+.vsl-play:hover .vsl-play-icon {
+  background: #105a38;
+}
+.vsl-preview-meta {
+  color: #536c5a;
+}
+.vsl-retention {
+  color: #647368;
+  font-size: 13px;
+  margin-top: 22px;
+}
+.vsl-retention strong {
+  color: #214934;
+}
+.vsl-wait {
+  color: #6c7168;
+  background: #f7f8f3;
+  border-radius: 10px;
+  padding: 13px 16px;
+  max-width: 510px;
+}
+.vsl-wait svg,
+.vsl-wait strong {
+  color: #176c43;
+}
+.vsl-offer-region {
+  margin-top: 20px;
+}
+.vsl-offer {
+  max-width: 760px;
+  padding: 36px;
+  margin-top: 28px;
+  background: #fff;
+  border: 1px solid #b7d7c2;
+  box-shadow: 0 16px 60px #154d2210;
+  border-radius: 24px;
+  scroll-margin-top: 24px;
+}
+.vsl-offer h2 {
+  font-size: clamp(25px, 3.5vw, 34px);
+  line-height: 1.25;
+  letter-spacing: -1px;
+  color: #173829;
+  text-wrap: balance;
+}
+.vsl-offer p {
+  color: #54665b;
+}
+.vsl-offer-benefits {
+  display: grid;
+  gap: 10px;
+  list-style: none;
+  text-align: left;
+  margin: 22px auto;
+  padding: 20px;
+  max-width: 560px;
+  background: #f4f8f2;
+  border-radius: 14px;
+  color: #345240;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.vsl-offer-benefits li {
+  display: flex;
+  gap: 9px;
+}
+.vsl-offer-benefits li::before {
+  content: "✓";
+  color: #147349;
+  font-weight: 800;
+}
+.vsl-offer-urgency {
+  display: grid;
+  gap: 8px;
+  padding: 18px;
+  margin: 22px 0;
+  border: 1px solid #eed9ab;
+  border-radius: 12px;
+  background: #fffaed;
+}
+.vsl-offer-urgency strong {
+  color: #8c4c12;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.vsl-offer-urgency span {
+  color: #755d3d;
+  font-size: 12px;
+  line-height: 1.7;
+}
+.vsl-price strong {
+  color: #176d43;
+  font-size: 50px;
+}
+.vsl-price span {
+  color: #647367;
+}
+.vsl-buy {
+  color: #fff;
+  background: #157448;
+  border: 1px solid #13643f;
+  font-size: 13px;
+  min-height: 60px;
+  box-shadow: 0 8px 20px #16754719;
+}
+.vsl-buy:hover {
+  background: #105b37;
+}
+.vsl-offer .vsl-purchase-note {
+  color: #718075;
+}
+.vsl-extra-demo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 220px;
+  gap: 24px;
+  align-items: center;
+  text-align: left;
+  margin-top: 34px;
+  padding-top: 30px;
+  border-top: 1px solid #e4ece5;
+}
+.vsl-extra-demo h3 {
+  font-family: "Sora", sans-serif;
+  color: #214833;
+  font-size: 22px;
+  line-height: 1.35;
+  letter-spacing: -0.6px;
+}
+.vsl-extra-demo .video-cover {
+  border: 1px solid #cfdecf;
+  border-radius: 16px;
+}
+.vsl-extra-demo .video-cover__center strong {
+  font-size: 25px;
+}
+.vsl-extra-demo .video-cover__duration {
+  font-size: 7px;
+}
+.vsl-pains,
+.vsl-proof {
+  margin-top: 65px;
+}
+.vsl-pains h2,
+.vsl-proof h2 {
+  color: #203b2e;
+  font-size: clamp(25px, 3.5vw, 33px);
+}
+.vsl-pains h2 span,
+.vsl-proof h2 span {
+  color: #238152;
+}
+.vsl-pain-grid article {
+  background: #fafbf8;
+  border: 1px solid #dfe7dc;
+  padding: 24px;
+}
+.vsl-pain-grid article svg {
+  color: #a97730;
+}
+.vsl-pain-grid h3 {
+  color: #293b30;
+}
+.vsl-pain-grid p {
+  color: #667469;
+}
+.vsl-structure {
+  background: #edf5e9;
+  border-color: #ccdec6;
+  padding: 30px;
+}
+.vsl-structure h3 {
+  color: #244331;
+}
+.vsl-structure h3 span {
+  color: #23764c;
+}
+.vsl-structure p {
+  color: #526b57;
+}
+.vsl-structure button {
+  background: #167447;
+  color: #fff;
+}
+.vsl-proof-lead {
+  color: #67786c;
+}
+.vsl-proof-controls {
+  color: #617167;
+}
+.vsl-proof-controls button {
+  color: #256345;
+  background: #f0f5ec;
+  border-color: #ccdcc9;
+}
+.vsl-proof-card {
+  background: #f8faf6;
+  border-color: #d7e1d3;
+  box-shadow: 0 5px 16px #143f1e05;
+}
+.vsl-proof-card figcaption strong {
+  color: #2c4734;
+}
+.vsl-proof-card figcaption > span {
+  color: #6c7d6d;
+}
+.vsl-proof-note {
+  color: #798377;
+}
+.vsl-proof-scroll {
+  scrollbar-color: #a6c0a6 #f0f5ed;
+}
+.vsl-footer {
+  color: #7b877d;
+  margin-top: 25px;
+  border-top: 1px solid #edf1e9;
+}
+.vsl-page button:focus-visible,
+.vsl-page a:focus-visible {
+  outline-color: #16804f;
+}
+.vsl-error {
+  color: #a1412c;
+}
+@media (max-width: 640px) {
+  .vsl-page {
+    padding: 0 18px;
+  }
+  .vsl-brand {
+    padding: 20px 0;
+  }
+  .vsl-header-tag {
+    font-size: 7px;
+    letter-spacing: 0.6px;
+  }
+  .vsl-intro {
+    padding-top: 30px;
+  }
+  .vsl-intro h1 {
+    letter-spacing: -1px;
+  }
+  .vsl-lead {
+    font-size: 14px;
+    line-height: 1.75;
+  }
+  .vsl-player {
+    width: min(100%, 300px);
+  }
+  .vsl-offer {
+    padding: 27px 19px;
+    border-radius: 18px;
+  }
+  .vsl-offer-benefits {
+    padding: 16px;
+  }
+  .vsl-extra-demo {
+    grid-template-columns: 1fr;
+    gap: 17px;
+    text-align: center;
+  }
+  .vsl-extra-demo .video-demo {
+    width: min(100%, 235px);
+    margin: auto;
+  }
+  .vsl-buy {
+    font-size: 11px;
+    gap: 7px;
+  }
+  .vsl-structure {
+    padding: 24px 20px;
+  }
+  .vsl-pains,
+  .vsl-proof {
+    margin-top: 42px;
+  }
+}

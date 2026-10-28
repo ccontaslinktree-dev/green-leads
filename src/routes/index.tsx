@@ -5,6 +5,7 @@ import { officeOffer, formatPrice, getCheckoutUrl } from "@/data/office-offer";
 import { initializeTracking, trackEvent } from "@/lib/office-tracking";
 import vslUrl from "../../WhatsApp Video 2026-10-27 at 19.19.43.mp4?url";
 import "@/components/office/vsl.css";
+import { VideoDemo } from "@/components/office/VideoDemo";
 import { VslProof } from "@/components/office/VslProof";
 
 export const Route = createFileRoute("/")({ component: VslPage });
@@ -34,11 +35,14 @@ function VslPage() {
 
   const closePlayer = () => {
     video.current?.pause();
-    if (document.fullscreenElement === dialog.current)
-      void document.exitFullscreen().catch(() => {});
+    const exiting =
+      document.fullscreenElement === dialog.current
+        ? document.exitFullscreen().catch(() => {})
+        : Promise.resolve();
     if (dialog.current?.open) dialog.current.close();
     document.body.style.overflow = "";
     previousFocus.current?.focus();
+    return exiting;
   };
 
   useEffect(
@@ -72,14 +76,14 @@ function VslPage() {
     resumeVideo();
   };
 
-  const completeVideo = () => {
+  const completeVideo = async () => {
     const player = video.current;
     if (!player || !Number.isFinite(player.duration)) return;
     if (watched.current < player.duration - 0.8) {
       player.currentTime = watched.current;
       return;
     }
-    closePlayer();
+    await closePlayer();
     trackOnce("VSL_Complete");
     setFinished(true);
     if (!tracked.current.has("ViewContent")) {
@@ -98,7 +102,7 @@ function VslPage() {
         behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
           ? "instant"
           : "smooth",
-        block: "nearest",
+        block: "start",
       });
   }, [finished]);
 
@@ -109,20 +113,23 @@ function VslPage() {
         <span>
           escritório<strong>IA</strong>
         </span>
+        <span className="vsl-header-tag">UM PROMPT. CINCO FUNÇÕES.</span>
       </header>
       <main className="vsl-main">
         <div className="vsl-intro">
           <p className="vsl-eyebrow">PARA INFOPRODUTORES E GESTORES DE TRÁFEGO</p>
           <h1>
-            Mais uma noite procurando ofertas e <em>colocando seu orçamento em risco?</em>
+            Pare de carregar sua operação nas costas.{" "}
+            <em>Monte seu escritório de IA com um único prompt.</em>
           </h1>
           <p className="vsl-lead">
-            Antes de gastar no próximo teste, assista a estes poucos minutos. Descubra como usar a
-            IA para organizar sua pesquisa e parar de começar tudo do zero.
+            Imagine transformar suas ideias em uma oferta estruturada, com apoio para pesquisar,
+            escrever a copy, planejar a página e criar seus anúncios. Veja como começar no Claude ou
+            ChatGPT — e ter mais tempo para estratégia, testes e decisões.
           </p>
         </div>
         <section className="vsl-watch" aria-label="Vídeo de apresentação do Escritório IA">
-          <p className="vsl-scarcity">LOTE LIMITADO A 50 ACESSOS</p>
+          <p className="vsl-scarcity">CONDIÇÃO DE LANÇAMENTO · LOTE DE 50 ACESSOS</p>
           <div className={`vsl-player${finished ? " vsl-player--complete" : ""}`}>
             <dialog
               ref={dialog}
@@ -220,9 +227,9 @@ function VslPage() {
               >
                 <span className="vsl-preview-label">VEJA POR DENTRO</span>
                 <span className="vsl-preview-title">
-                  Suas próximas ofertas
+                  Menos noites no improviso.
                   <br />
-                  <strong>começam com direção.</strong>
+                  <strong>Mais direção para executar.</strong>
                 </span>
                 <span className="vsl-play-icon">
                   <Play size={30} fill="currentColor" aria-hidden="true" />
@@ -242,7 +249,6 @@ function VslPage() {
               <button onClick={startVideo}>Tentar novamente</button>.
             </p>
           )}
-          <VslProof onWatch={startVideo} />
           <p className="vsl-retention">
             <strong>Assista até o final para liberar a oferta.</strong> A apresentação mostra o
             funcionamento do prompt antes da compra.
@@ -255,12 +261,26 @@ function VslPage() {
                 className="vsl-offer"
                 aria-labelledby="vsl-offer-title"
               >
-                <span className="vsl-eyebrow">OFERTA LIBERADA · LOTE DE 50 ACESSOS</span>
-                <h2 id="vsl-offer-title">Monte seu Escritório IA.</h2>
+                <span className="vsl-eyebrow">VOCÊ VIU COMO FUNCIONA. AGORA É A SUA VEZ.</span>
+                <h2 id="vsl-offer-title">
+                  Sua próxima oferta pode começar com uma estrutura pronta para orientar a execução.
+                </h2>
                 <p>
                   Receba o guia com o prompt completo e as orientações para organizar cinco funções
                   no ChatGPT ou Claude: pesquisa, copy, páginas, criativos e entregáveis.
                 </p>
+                <ul className="vsl-offer-benefits">
+                  <li>Um prompt completo para organizar cinco funções de IA.</li>
+                  <li>Guia para começar na sua própria conta do Claude ou ChatGPT.</li>
+                  <li>Mais clareza para sair da ideia e planejar sua próxima oferta.</li>
+                </ul>
+                <div className="vsl-offer-urgency">
+                  <strong>R$ 9,99 por tempo limitado. O preço vai aumentar em breve.</strong>
+                  <span>
+                    São apenas 50 acessos neste lote. Aproveite a condição de lançamento enquanto
+                    estiver disponível.
+                  </span>
+                </div>
                 <div className="vsl-price">
                   <strong>{formatPrice(officeOffer.price)}</strong>
                   <span>Pagamento único</span>
@@ -282,11 +302,28 @@ function VslPage() {
                     });
                   }}
                 >
-                  QUERO MEU PROMPT DE IA <ArrowRight size={19} aria-hidden="true" />
+                  QUERO MONTAR MEU ESCRITÓRIO IA <ArrowRight size={19} aria-hidden="true" />
                 </a>
                 <p className="vsl-purchase-note">
                   Guia em PDF + prompt. Use com sua própria conta de IA.
                 </p>
+                <div className="vsl-extra-demo">
+                  <div>
+                    <span className="vsl-eyebrow">VEJA MAIS ANTES DE DECIDIR</span>
+                    <h3>Conheça a estrutura por dentro.</h3>
+                    <p>
+                      Assista também à apresentação complementar e veja a organização das funções na
+                      prática.
+                    </p>
+                  </div>
+                  <VideoDemo
+                    {...officeOffer.videos.presentation}
+                    onContinue={() =>
+                      offer.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+                    }
+                    continueLabel="Garantir meu guia + prompt"
+                  />
+                </div>
               </section>
             ) : (
               <p className="vsl-wait">
@@ -298,6 +335,7 @@ function VslPage() {
               </p>
             )}
           </div>
+          <VslProof onWatch={startVideo} />
         </section>
       </main>
       <footer className="vsl-footer">
