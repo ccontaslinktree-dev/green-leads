@@ -1089,3 +1089,137 @@
     margin-top: 42px;
   }
 }
+
+/* Direct sales flow: videos stay inline; the offer is always available below proof. */
+.inline-vsl {
+  aspect-ratio: auto;
+}
+.inline-vsl-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  background: #070c0a;
+}
+.inline-vsl-media video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  object-fit: contain;
+  cursor: pointer;
+}
+.inline-vsl-media video::-webkit-media-controls {
+  display: none !important;
+}
+.inline-vsl-resume {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 14px;
+  padding: 25px 15px;
+  width: 85%;
+  border: 1px solid #abdbc0;
+  background: #102b23eb;
+  color: #e5fff1;
+  border-radius: 14px;
+  cursor: pointer;
+  font-size: 12px;
+}
+.inline-vsl-footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 13px;
+  background: #f2f7ee;
+}
+.inline-vsl-footer button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #245337;
+  border: 0;
+  background: transparent;
+  min-height: 32px;
+  font-size: 11px;
+  cursor: pointer;
+}
+.inline-vsl-progress {
+  height: 4px;
+  flex: 1;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #d5e1d2;
+}
+.inline-vsl-progress > span {
+  display: block;
+  height: 100%;
+  background: #28794d;
+}
+.inline-vsl-error {
+  margin: 0;
+  padding: 10px;
+  background: #fff4ee;
+  color: #963d22;
+  font-size: 11px;
+  text-align: center;
+}
+.vsl-ai-proof {
+  padding: 35px;
+  margin: 44px auto 30px;
+  max-width: 760px;
+  background: #f1f7ed;
+  border: 1px solid #cbdcc4;
+  border-radius: 20px;
+  text-align: center;
+}
+.vsl-ai-proof .vsl-eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.vsl-ai-proof h2 {
+  color: #1b4d32;
+  font-family: "Sora", sans-serif;
+  font-size: clamp(25px, 3.5vw, 34px);
+  font-weight: 650;
+  line-height: 1.25;
+  letter-spacing: -1px;
+  margin: 0 0 15px;
+  text-wrap: balance;
+}
+.vsl-ai-proof .vsl-ai-question {
+  color: #1e663f;
+  font-size: 21px;
+  line-height: 1.4;
+  font-weight: 750;
+  margin: 0 0 18px;
+}
+.vsl-ai-proof p {
+  max-width: 620px;
+  margin: 12px auto;
+  color: #516b57;
+  font-size: 14px;
+  line-height: 1.85;
+}
+.vsl-extra-demo .inline-vsl {
+  width: 100%;
+}
+#apresentacao {
+  scroll-margin-top: 20px;
+}
+@media (max-width: 640px) {
+  .vsl-ai-proof {
+    padding: 27px 20px;
+    margin-top: 30px;
+  }
+  .vsl-extra-demo .inline-vsl {
+    width: min(100%, 235px);
+    margin: auto;
+  }
+}
