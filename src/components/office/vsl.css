@@ -441,3 +441,280 @@
 .vsl-player--complete {
   display: none;
 }
+
+.vsl-pains,
+.vsl-proof {
+  margin: 58px auto 0;
+  text-align: left;
+}
+.vsl-pains h2,
+.vsl-proof h2 {
+  font-family: "Sora", sans-serif;
+  font-size: clamp(24px, 3.5vw, 34px);
+  font-weight: 650;
+  letter-spacing: -1px;
+  line-height: 1.25;
+  margin: 0 0 18px;
+  text-wrap: balance;
+}
+.vsl-pains h2 span,
+.vsl-proof h2 span {
+  color: #81efb4;
+}
+.vsl-pain-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 25px;
+}
+.vsl-pain-grid article {
+  padding: 24px 20px;
+  border: 1px solid #334345;
+  border-radius: 16px;
+  background: #132026;
+}
+.vsl-pain-grid article svg {
+  color: #ffc38c;
+  margin-bottom: 19px;
+}
+.vsl-pain-grid h3 {
+  font-size: 16px;
+  font-weight: 750;
+  line-height: 1.5;
+  margin: 0 0 10px;
+}
+.vsl-pain-grid p {
+  color: #afbec5;
+  font-size: 13px;
+  line-height: 1.75;
+  margin: 0;
+}
+.vsl-structure {
+  margin-top: 18px;
+  padding: 27px;
+  border: 1px solid #37554b;
+  background: linear-gradient(120deg, #1c352c, #11221e);
+  border-radius: 16px;
+}
+.vsl-structure h3 {
+  max-width: 680px;
+  font-size: 23px;
+  font-weight: 700;
+  letter-spacing: -0.6px;
+  line-height: 1.4;
+  margin: 0 0 13px;
+}
+.vsl-structure h3 span {
+  color: #81efb4;
+}
+.vsl-structure p {
+  color: #bacec3;
+  font-size: 14px;
+  line-height: 1.8;
+  margin: 0 0 20px;
+}
+.vsl-structure button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 9px;
+  background: #81efb4;
+  color: #10231a;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.vsl-proof-lead {
+  max-width: 640px;
+  color: #b5c5cc;
+  font-size: 14px;
+  line-height: 1.75;
+  margin: 0 0 22px;
+}
+.vsl-proof-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+  color: #a1b5b9;
+  font-size: 12px;
+}
+.vsl-proof-controls > div {
+  display: flex;
+  gap: 8px;
+}
+.vsl-proof-controls button {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #345449;
+  background: #172a23;
+  color: #aaffcb;
+  cursor: pointer;
+}
+.vsl-proof-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  width: 100%;
+  border-radius: 15px;
+  scrollbar-width: thin;
+  scrollbar-color: #507364 #12221c;
+  overscroll-behavior-x: contain;
+}
+.vsl-proof-track {
+  display: flex;
+  width: max-content;
+}
+.vsl-proof-set {
+  display: flex;
+  flex-shrink: 0;
+  gap: 16px;
+  padding: 0 16px 12px 0;
+}
+.vsl-proof-card {
+  width: 264px;
+  flex-shrink: 0;
+  margin: 0;
+  padding: 10px;
+  background: #132022;
+  border: 1px solid #34494a;
+  border-radius: 16px;
+}
+.vsl-proof-image {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 360px;
+  background: #080d13;
+  border: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: zoom-in;
+  padding: 0;
+}
+.vsl-proof-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.vsl-proof-image > span {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 9px;
+  border-radius: 6px;
+  background: #07120feb;
+  color: #d7ffeb;
+  font-size: 10px;
+}
+.vsl-proof-card figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 15px 5px 9px;
+}
+.vsl-proof-card figcaption strong {
+  font-size: 13px;
+  line-height: 1.4;
+  font-weight: 700;
+  color: #edf9f2;
+}
+.vsl-proof-card figcaption > span {
+  font-size: 10px;
+  line-height: 1.4;
+  color: #a5b9b5;
+}
+.vsl-proof-note {
+  margin: 17px 0 30px;
+  max-width: 700px;
+  font-size: 11px;
+  line-height: 1.8;
+  color: #a1b0b4;
+}
+.vsl-proof-dialog {
+  width: min(94vw, 900px);
+  max-width: 94vw;
+  max-height: 94dvh;
+  padding: 55px 16px 14px;
+  margin: auto;
+  background: #0d171a;
+  color: #fff;
+  border: 1px solid #507361;
+  border-radius: 16px;
+  overflow: auto;
+}
+.vsl-proof-dialog::backdrop {
+  background: #000d;
+}
+.vsl-proof-dialog img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 75dvh;
+  margin: 0 auto;
+  object-fit: contain;
+}
+.vsl-proof-dialog p {
+  margin: 12px 0 0;
+  color: #c1d3cb;
+  font-size: 12px;
+  text-align: center;
+}
+.vsl-proof-close {
+  position: absolute;
+  top: 9px;
+  right: 11px;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  background: #1d342a;
+  color: #fff;
+  border: 1px solid #4b6e5a;
+  border-radius: 50%;
+  cursor: pointer;
+}
+@media (max-width: 640px) {
+  .vsl-pain-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .vsl-pain-grid article {
+    padding: 20px;
+  }
+  .vsl-pain-grid article svg {
+    margin-bottom: 10px;
+  }
+  .vsl-structure {
+    padding: 22px 19px;
+  }
+  .vsl-structure h3 {
+    font-size: 21px;
+  }
+  .vsl-structure button {
+    width: 100%;
+  }
+  .vsl-pains,
+  .vsl-proof {
+    margin-top: 38px;
+  }
+  .vsl-proof-card {
+    width: 250px;
+  }
+  .vsl-proof-image {
+    height: 350px;
+  }
+}

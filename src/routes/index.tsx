@@ -5,6 +5,7 @@ import { officeOffer, formatPrice, getCheckoutUrl } from "@/data/office-offer";
 import { initializeTracking, trackEvent } from "@/lib/office-tracking";
 import vslUrl from "../../WhatsApp Video 2026-10-27 at 19.19.43.mp4?url";
 import "@/components/office/vsl.css";
+import { VslProof } from "@/components/office/VslProof";
 
 export const Route = createFileRoute("/")({ component: VslPage });
 
@@ -241,6 +242,7 @@ function VslPage() {
               <button onClick={startVideo}>Tentar novamente</button>.
             </p>
           )}
+          <VslProof onWatch={startVideo} />
           <p className="vsl-retention">
             <strong>Assista até o final para liberar a oferta.</strong> A apresentação mostra o
             funcionamento do prompt antes da compra.
@@ -256,8 +258,8 @@ function VslPage() {
                 <span className="vsl-eyebrow">OFERTA LIBERADA · LOTE DE 50 ACESSOS</span>
                 <h2 id="vsl-offer-title">Monte seu Escritório IA.</h2>
                 <p>
-                  Receba o e-book com o prompt completo e as orientações para organizar cinco
-                  funções no ChatGPT ou Claude: pesquisa, copy, páginas, criativos e entregáveis.
+                  Receba o guia com o prompt completo e as orientações para organizar cinco funções
+                  no ChatGPT ou Claude: pesquisa, copy, páginas, criativos e entregáveis.
                 </p>
                 <div className="vsl-price">
                   <strong>{formatPrice(officeOffer.price)}</strong>
@@ -283,7 +285,7 @@ function VslPage() {
                   QUERO MEU PROMPT DE IA <ArrowRight size={19} aria-hidden="true" />
                 </a>
                 <p className="vsl-purchase-note">
-                  E-book em PDF + prompt. Use com sua própria conta de IA.
+                  Guia em PDF + prompt. Use com sua própria conta de IA.
                 </p>
               </section>
             ) : (
