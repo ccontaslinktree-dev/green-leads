@@ -72,7 +72,8 @@ export function VslProof({ onWatch }: { onWatch: () => void }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const lastFocus = useRef<HTMLElement | null>(null);
   const [paused, setPaused] = useState(false);
-  const [hovered, setHovered] = useState(false);
+  const resumeAfter = useRef(0);
+  const [viewing, setViewing] = useState(false);
   const [selected, setSelected] = useState(0);
 
   useEffect(() => {
@@ -88,11 +89,22 @@ export function VslProof({ onWatch }: { onWatch: () => void }) {
     });
     observer.observe(el);
     function tick(time: number) {
-      if (previous && visible && !document.hidden && !paused && !hovered && !media.matches && el) {
+      if (
+        previous &&
+        visible &&
+        !document.hidden &&
+        !paused &&
+        !viewing &&
+        time >= resumeAfter.current &&
+        !media.matches &&
+        el
+      ) {
         position += Math.min(time - previous, 50) * 0.04;
         const half = el.scrollWidth / 2;
         if (position >= half) position -= half;
         el.scrollLeft = position;
+      } else if (el) {
+        position = el.scrollLeft;
       }
       previous = time;
       frame = requestAnimationFrame(tick);
@@ -102,20 +114,21 @@ export function VslProof({ onWatch }: { onWatch: () => void }) {
       cancelAnimationFrame(frame);
       observer.disconnect();
     };
-  }, [paused, hovered]);
+  }, [paused, viewing]);
 
   const open = (index: number) => {
-    setPaused(true);
+    setViewing(true);
     setSelected(index);
     lastFocus.current = document.activeElement as HTMLElement;
     dialog.current?.showModal();
   };
   const close = () => {
     if (dialog.current?.open) dialog.current.close();
+    setViewing(false);
     lastFocus.current?.focus({ preventScroll: true });
   };
   const move = (direction: number) => {
-    setPaused(true);
+    resumeAfter.current = performance.now() + 1800;
     scroller.current?.scrollBy({
       left: direction * 285,
       behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -180,13 +193,15 @@ export function VslProof({ onWatch }: { onWatch: () => void }) {
               <ArrowLeft size={18} />
             </button>
             <button
+              style={{ width: 104, display: "flex", justifyContent: "center", gap: 6 }}
               onClick={() => setPaused(!paused)}
               aria-label={
                 paused ? "Retomar movimento dos resultados" : "Pausar movimento dos resultados"
               }
               aria-pressed={paused}
             >
-              {paused ? <Play size={16} /> : <Pause size={16} />}
+              {paused ? <ArrowRight size={16} /> : <Pause size={16} />}
+              <span>{paused ? "Retomar" : "Pausar"}</span>
             </button>
             <button onClick={() => move(1)} aria-label="Ver próximos resultados">
               <ArrowRight size={18} />
@@ -199,11 +214,12 @@ export function VslProof({ onWatch }: { onWatch: () => void }) {
           role="region"
           aria-label="Carrossel de resultados pessoais"
           tabIndex={0}
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
-          onPointerDown={() => setPaused(true)}
-          onWheel={() => setPaused(true)}
-          onFocus={() => setPaused(true)}
+          onPointerDown={() => {
+            resumeAfter.current = performance.now() + 3500;
+          }}
+          onWheel={() => {
+            resumeAfter.current = performance.now() + 2500;
+          }}
         >
           <div className="vsl-proof-track">
             {[0, 1].map((copy) => (
@@ -247,7 +263,10 @@ export function VslProof({ onWatch }: { onWatch: () => void }) {
           ref={dialog}
           aria-label="Print de resultado ampliado"
           onCancel={close}
-          onClose={() => lastFocus.current?.focus({ preventScroll: true })}
+          onClose={() => {
+            setViewing(false);
+            lastFocus.current?.focus({ preventScroll: true });
+          }}
         >
           <button className="vsl-proof-close" onClick={close} aria-label="Fechar print ampliado">
             <X size={24} />
