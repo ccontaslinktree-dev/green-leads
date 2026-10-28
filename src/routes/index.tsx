@@ -1,45 +1,110 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef } from "react";
-import { ArrowRight, Layers3, Sparkles } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { ArrowRight, Layers3, LockKeyhole, Play, Volume2, X, Pause } from "lucide-react";
 import { officeOffer, formatPrice, getCheckoutUrl } from "@/data/office-offer";
 import { initializeTracking, trackEvent } from "@/lib/office-tracking";
 import vslUrl from "../../WhatsApp Video 2026-10-27 at 19.19.43.mp4?url";
-import { InlineVsl } from "@/components/office/InlineVsl";
-import { VslProof } from "@/components/office/VslProof";
 import "@/components/office/vsl.css";
+import { VideoDemo } from "@/components/office/VideoDemo";
 
 export const Route = createFileRoute("/")({ component: VslPage });
+
 function VslPage() {
-  const presentation = useRef<HTMLElement>(null);
+  const video = useRef<HTMLVideoElement>(null);
   const offer = useRef<HTMLElement>(null);
-  const offerViewed = useRef(false);
+  const dialog = useRef<HTMLDialogElement>(null);
+  const watched = useRef(0);
+  const previousFocus = useRef<HTMLElement | null>(null);
+  const [playing, setPlaying] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const tracked = useRef(new Set<string>());
+  const [started, setStarted] = useState(false);
+  const [finished, setFinished] = useState(false);
+  const [error, setError] = useState(false);
+
   useEffect(() => {
     initializeTracking();
-    const el = offer.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (offerViewed.current || !entries.some((entry) => entry.isIntersecting)) return;
-        offerViewed.current = true;
-        trackEvent("ViewContent", {
-          content_name: officeOffer.name,
-          value: officeOffer.price,
-          currency: "BRL",
-        });
-        observer.disconnect();
-      },
-      { threshold: 0.15 },
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
   }, []);
-  const showPresentation = () =>
-    presentation.current?.scrollIntoView({
-      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
-        ? "instant"
-        : "smooth",
-      block: "start",
-    });
+
+  const trackOnce = (name: string) => {
+    if (tracked.current.has(name)) return;
+    tracked.current.add(name);
+    trackEvent(name, { content_name: officeOffer.name, video: "vsl_original" });
+  };
+
+  const closePlayer = () => {
+    video.current?.pause();
+    const exiting =
+      document.fullscreenElement === dialog.current
+        ? document.exitFullscreen().catch(() => {})
+        : Promise.resolve();
+    if (dialog.current?.open) dialog.current.close();
+    document.body.style.overflow = "";
+    previousFocus.current?.focus();
+    return exiting;
+  };
+
+  useEffect(
+    () => () => {
+      document.body.style.overflow = "";
+    },
+    [],
+  );
+
+  const resumeVideo = () => {
+    const player = video.current;
+    if (!player) return;
+    setError(false);
+    void player.play().catch(() => setError(true));
+  };
+
+  const startVideo = () => {
+    const player = video.current;
+    if (!player) return;
+    setError(false);
+    // Assign only on user interaction: the initial page never downloads the MP4.
+    if (!player.getAttribute("src")) player.src = vslUrl;
+    player.controls = false;
+    previousFocus.current = document.activeElement as HTMLElement;
+    document.body.style.overflow = "hidden";
+    if (!dialog.current?.open) dialog.current?.showModal();
+    // Full-viewport dialog remains available where the Fullscreen API is unsupported.
+    if (dialog.current?.requestFullscreen && !document.fullscreenElement)
+      void dialog.current.requestFullscreen().catch(() => {});
+    setStarted(true);
+    resumeVideo();
+  };
+
+  const completeVideo = async () => {
+    const player = video.current;
+    if (!player || !Number.isFinite(player.duration)) return;
+    if (watched.current < player.duration - 0.8) {
+      player.currentTime = watched.current;
+      return;
+    }
+    await closePlayer();
+    trackOnce("VSL_Complete");
+    setFinished(true);
+    if (!tracked.current.has("ViewContent")) {
+      tracked.current.add("ViewContent");
+      trackEvent("ViewContent", {
+        content_name: officeOffer.name,
+        value: officeOffer.price,
+        currency: "BRL",
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (finished)
+      offer.current?.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "instant"
+          : "smooth",
+        block: "start",
+      });
+  }, [finished]);
+
   return (
     <div className="vsl-page">
       <header className="vsl-brand" aria-label="Escritório IA">
@@ -57,108 +122,212 @@ function VslPage() {
             <em>Monte seu escritório de IA com um único prompt.</em>
           </h1>
           <p className="vsl-lead">
-            Imagine transformar suas ideias em uma oferta estruturada, com apoio para pesquisar,
-            escrever a copy, planejar a página e criar seus anúncios. Veja como começar no Claude ou
-            ChatGPT — e ter mais tempo para estratégia, testes e decisões.
+            Você pesquisa a oferta, escreve a copy, monta a página e ainda precisa criar os
+            anúncios? Veja como organizar cinco funções de IA com um único prompt — e parar de
+            começar do zero.
           </p>
         </div>
-        <section
-          ref={presentation}
-          id="apresentacao"
-          className="vsl-watch"
-          aria-label="Vídeo de apresentação do Escritório IA"
-        >
+        <section className="vsl-watch" aria-label="Vídeo de apresentação do Escritório IA">
           <p className="vsl-scarcity">CONDIÇÃO DE LANÇAMENTO · LOTE DE 50 ACESSOS</p>
-          <InlineVsl
-            src={vslUrl}
-            title="Conheça o Escritório IA"
-            duration="2min32s"
-            trackingName="vsl_original"
-          />
+          <div className={`vsl-player${finished ? " vsl-player--complete" : ""}`}>
+            <dialog
+              ref={dialog}
+              className="vsl-cinema"
+              aria-label="Assista até o final para liberar a oferta"
+              onCancel={closePlayer}
+              onClose={closePlayer}
+            >
+              <div className="vsl-cinema-header">
+                <span>ASSISTA ATÉ O FINAL PARA LIBERAR A OFERTA</span>
+                <button onClick={closePlayer} aria-label="Fechar vídeo">
+                  <X size={22} />
+                </button>
+              </div>
+              <video
+                ref={video}
+                preload="none"
+                playsInline
+                controls={false}
+                disablePictureInPicture
+                disableRemotePlayback
+                controlsList="nodownload noplaybackrate noremoteplayback"
+                onContextMenu={(event) => event.preventDefault()}
+                onClick={() => {
+                  if (playing) video.current?.pause();
+                  else resumeVideo();
+                }}
+                onPause={() => setPlaying(false)}
+                onPlaying={() => setPlaying(true)}
+                onSeeking={(event) => {
+                  if (event.currentTarget.currentTime > watched.current + 0.8)
+                    event.currentTarget.currentTime = watched.current;
+                }}
+                onRateChange={(event) => {
+                  if (event.currentTarget.playbackRate !== 1) event.currentTarget.playbackRate = 1;
+                }}
+                aria-label="VSL original: conheça o Escritório IA"
+                onPlay={() => {
+                  setError(false);
+                  trackOnce("VSL_Play");
+                }}
+                onTimeUpdate={(event) => {
+                  const player = event.currentTarget;
+                  if (!Number.isFinite(player.duration) || player.duration <= 0) return;
+                  if (player.currentTime > watched.current + 1.5) {
+                    player.currentTime = watched.current;
+                    return;
+                  }
+                  watched.current = Math.max(watched.current, player.currentTime);
+                  setProgress((watched.current / player.duration) * 100);
+                  for (const percent of [25, 50, 75]) {
+                    if (player.currentTime / player.duration >= percent / 100)
+                      trackOnce(`VSL_${percent}`);
+                  }
+                }}
+                onEnded={completeVideo}
+                onError={() => setError(true)}
+              />
+              {(!playing || error) && (
+                <button className="vsl-resume" onClick={resumeVideo}>
+                  <Play size={30} fill="currentColor" />
+                  <strong>{error ? "TENTAR NOVAMENTE" : "CONTINUAR ASSISTINDO"}</strong>
+                  <span>Assista até o final para liberar a oferta.</span>
+                </button>
+              )}
+              <div className="vsl-cinema-footer">
+                <button
+                  onClick={() => {
+                    if (playing) video.current?.pause();
+                    else resumeVideo();
+                  }}
+                  aria-label={playing ? "Pausar vídeo" : "Continuar vídeo"}
+                >
+                  {playing ? <Pause size={16} /> : <Play size={16} />}{" "}
+                  {playing ? "Pausar" : "Continuar"}
+                </button>
+                <div
+                  className="vsl-watch-progress"
+                  role="progressbar"
+                  aria-label="Vídeo assistido"
+                  aria-valuenow={Math.round(progress)}
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                >
+                  <span style={{ width: `${progress}%` }} />
+                </div>
+                <span>Oferta liberada ao concluir · 50 acessos</span>
+              </div>
+            </dialog>
+            {(!started || !finished) && (
+              <button
+                className="vsl-play"
+                onClick={startVideo}
+                aria-label="Assistir ao vídeo com som"
+              >
+                <span className="vsl-preview-label">VEJA POR DENTRO</span>
+                <span className="vsl-preview-title">
+                  Menos noites no improviso.
+                  <br />
+                  <strong>Mais direção para executar.</strong>
+                </span>
+                <span className="vsl-play-icon">
+                  <Play size={30} fill="currentColor" aria-hidden="true" />
+                </span>
+                <span className="vsl-play-text">
+                  {started ? "CONTINUAR ASSISTINDO" : "CLIQUE PARA ASSISTIR"}
+                </span>
+                <span className="vsl-preview-meta">
+                  <Volume2 size={16} aria-hidden="true" /> Com som · 2min32s
+                </span>
+              </button>
+            )}
+          </div>
+          {error && (
+            <p className="vsl-error" role="alert">
+              Não foi possível iniciar o vídeo.{" "}
+              <button onClick={startVideo}>Tentar novamente</button>.
+            </p>
+          )}
           <p className="vsl-retention">
-            <strong>Veja a estrutura por dentro.</strong> Dê o play e continue explorando a página
-            no seu ritmo.
+            <strong>Assista até o final para liberar a oferta.</strong> A apresentação mostra o
+            funcionamento do prompt antes da compra.
           </p>
-        </section>
-        <VslProof onWatch={showPresentation} />
-        <section className="vsl-ai-proof" aria-labelledby="ai-proof-title">
-          <span className="vsl-eyebrow">
-            <Sparkles size={16} aria-hidden="true" /> VOCÊ ESTÁ VENDO A IA EM AÇÃO
-          </span>
-          <h2 id="ai-proof-title">Esta estrutura foi criada com inteligência artificial.</h2>
-          <p className="vsl-ai-question">Ainda tem dúvida de que funciona?</p>
-          <p>
-            A página, a copy e os criativos que você viu foram construídos com apoio de IA e revisão
-            humana. Agora imagine usar esse processo para organizar sua próxima oferta, em vez de
-            passar noites tentando montar tudo sozinho.
-          </p>
-          <p>
-            <strong>O próximo passo é seu:</strong> tenha o guia e o prompt para começar a
-            estruturar seu próprio Escritório IA.
-          </p>
-        </section>
-        <section ref={offer} id="oferta" className="vsl-offer" aria-labelledby="vsl-offer-title">
-          <span className="vsl-eyebrow">DA IDEIA À ESTRUTURA. COMECE A SUA.</span>
-          <h2 id="vsl-offer-title">
-            Sua próxima oferta pode começar com uma estrutura pronta para orientar a execução.
-          </h2>
-          <p>
-            Receba o guia com o prompt completo e as orientações para organizar cinco funções no
-            ChatGPT ou Claude: pesquisa, copy, páginas, criativos e entregáveis.
-          </p>
-          <ul className="vsl-offer-benefits">
-            <li>Um prompt completo para organizar cinco funções de IA.</li>
-            <li>Guia para começar na sua própria conta do Claude ou ChatGPT.</li>
-            <li>Mais clareza para sair da ideia e planejar sua próxima oferta.</li>
-          </ul>
-          <div className="vsl-offer-urgency">
-            <strong>R$ 9,99 por tempo limitado. O preço vai aumentar em breve.</strong>
-            <span>
-              São apenas 50 acessos neste lote. Aproveite a condição de lançamento enquanto estiver
-              disponível.
-            </span>
-          </div>
-          <div className="vsl-price">
-            <strong>{formatPrice(officeOffer.price)}</strong>
-            <span>Pagamento único</span>
-          </div>
-          <a
-            className="vsl-buy"
-            href={officeOffer.checkoutUrl ?? undefined}
-            onClick={(event) => {
-              const url = getCheckoutUrl();
-              if (!url) {
-                event.preventDefault();
-                return;
-              }
-              event.currentTarget.href = url;
-              trackEvent("InitiateCheckout", {
-                content_name: officeOffer.name,
-                value: officeOffer.price,
-                currency: "BRL",
-              });
-            }}
-          >
-            QUERO MONTAR MEU ESCRITÓRIO IA <ArrowRight size={19} aria-hidden="true" />
-          </a>
-          <p className="vsl-purchase-note">
-            Guia em PDF + prompt. Use com sua própria conta de IA.
-          </p>
-          <div className="vsl-extra-demo">
-            <div>
-              <span className="vsl-eyebrow">VEJA MAIS ANTES DE DECIDIR</span>
-              <h3>Conheça a estrutura por dentro.</h3>
-              <p>
-                Assista também à apresentação complementar e veja a organização das funções na
-                prática.
+          <div className="vsl-offer-region" aria-live="polite">
+            {finished ? (
+              <section
+                ref={offer}
+                id="oferta"
+                className="vsl-offer"
+                aria-labelledby="vsl-offer-title"
+              >
+                <span className="vsl-eyebrow">VOCÊ VIU COMO FUNCIONA. AGORA É A SUA VEZ.</span>
+                <h2 id="vsl-offer-title">
+                  Chega de fazer tudo sozinho. Monte seu Escritório IA hoje.
+                </h2>
+                <p>
+                  Pare de gastar suas noites tentando montar tudo do zero. Tenha o guia com o prompt
+                  completo para organizar pesquisa, copy, páginas, criativos e entregáveis no Claude
+                  ou ChatGPT. Você dá a direção. A IA ajuda na execução.
+                </p>
+                <div className="vsl-offer-urgency">
+                  <strong>Preço de lançamento: R$ 9,99. Vai aumentar em breve.</strong>
+                  <span>
+                    Apenas 50 acessos neste lote. Garanta a condição atual enquanto estiver
+                    disponível.
+                  </span>
+                </div>
+                <div className="vsl-price">
+                  <strong>{formatPrice(officeOffer.price)}</strong>
+                  <span>Pagamento único</span>
+                </div>
+                <a
+                  className="vsl-buy"
+                  href={officeOffer.checkoutUrl ?? undefined}
+                  onClick={(event) => {
+                    const url = getCheckoutUrl();
+                    if (!url) {
+                      event.preventDefault();
+                      return;
+                    }
+                    event.currentTarget.href = url;
+                    trackEvent("InitiateCheckout", {
+                      content_name: officeOffer.name,
+                      value: officeOffer.price,
+                      currency: "BRL",
+                    });
+                  }}
+                >
+                  QUERO MONTAR MEU ESCRITÓRIO IA <ArrowRight size={19} aria-hidden="true" />
+                </a>
+                <p className="vsl-purchase-note">
+                  Guia em PDF + prompt. Use com sua própria conta de IA.
+                </p>
+                <div className="vsl-extra-demo">
+                  <div>
+                    <span className="vsl-eyebrow">VEJA MAIS ANTES DE DECIDIR</span>
+                    <h3>Veja o que você pode estruturar.</h3>
+                    <p>
+                      Um prompt. Cinco funções. Mais direção para tirar sua próxima oferta do papel.
+                    </p>
+                  </div>
+                  <VideoDemo
+                    {...officeOffer.videos.presentation}
+                    onContinue={() =>
+                      offer.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+                    }
+                    continueLabel="Garantir meu guia + prompt"
+                  />
+                </div>
+              </section>
+            ) : (
+              <p className="vsl-wait">
+                <LockKeyhole size={16} aria-hidden="true" />
+                <span>
+                  Ao final do vídeo, você poderá garantir o prompt por{" "}
+                  <strong>{formatPrice(officeOffer.price)}.</strong>
+                </span>
               </p>
-            </div>
-            <InlineVsl
-              src={officeOffer.videos.presentation.src}
-              title={officeOffer.videos.presentation.title}
-              duration={officeOffer.videos.presentation.duration}
-              trackingName="apresentacao_complementar"
-            />
+            )}
           </div>
         </section>
       </main>
