@@ -1,0 +1,81 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Base,Nimbus Sans,62,&H00FFFFFF,&H00FFFFFF,&H15141313,&H15141313,-1,0,0,0,100,100,0,0,3,17,0,5,0,0,0,1
+Style: Hook,Nimbus Sans,70,&H00FFFFFF,&H00FFFFFF,&H10141313,&H10141313,-1,0,0,0,100,100,0,0,3,18,0,5,0,0,0,1
+Style: Tag,Nimbus Sans,29,&H00FFFFFF,&H00FFFFFF,&H10141313,&H10141313,-1,0,0,0,100,100,1,0,3,12,0,5,0,0,0,1
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,0:00:29.00,Tag,,0,0,0,,{\pos(480,370)}FÚTBOL  /  ENTRENA CON INTENCIÓN
+Dialogue: 0,0:00:01.88,0:00:05.12,Hook,,0,0,0,,{\pos(480,570)}{\c&H0043FFD9}¿OTRA SEMANA\NREPITIENDO LOS\NMISMOS EJERCICIOS?
+Dialogue: 0,0:00:00.00,0:00:00.80,Base,,0,0,0,,{\pos(480,1095)}{\c&H0043FFD9}Entrenador{\c&H00FFFFFF&} o jugador,
+Dialogue: 0,0:00:00.80,0:00:00.96,Base,,0,0,0,,{\pos(480,1095)}Entrenador {\c&H0043FFD9}o{\c&H00FFFFFF&} jugador,
+Dialogue: 0,0:00:00.96,0:00:01.92,Base,,0,0,0,,{\pos(480,1095)}Entrenador o {\c&H0043FFD9}jugador,{\c&H00FFFFFF&}
+Dialogue: 0,0:00:04.00,0:00:05.20,Base,,0,0,0,,{\pos(480,1095)}{\c&H0043FFD9}ejercicios?{\c&H00FFFFFF&} La rutina se\Nsiente cómoda,
+Dialogue: 0,0:00:05.20,0:00:05.36,Base,,0,0,0,,{\pos(480,1095)}ejercicios? {\c&H0043FFD9}La{\c&H00FFFFFF&} rutina se\Nsiente cómoda,
+Dialogue: 0,0:00:05.36,0:00:05.76,Base,,0,0,0,,{\pos(480,1095)}ejercicios? La {\c&H0043FFD9}rutina{\c&H00FFFFFF&} se\Nsiente cómoda,
+Dialogue: 0,0:00:05.76,0:00:05.95,Base,,0,0,0,,{\pos(480,1095)}ejercicios? La rutina {\c&H0043FFD9}se{\c&H00FFFFFF&}\Nsiente cómoda,
+Dialogue: 0,0:00:05.95,0:00:06.24,Base,,0,0,0,,{\pos(480,1095)}ejercicios? La rutina se\N{\c&H0043FFD9}siente{\c&H00FFFFFF&} cómoda,
+Dialogue: 0,0:00:06.24,0:00:06.96,Base,,0,0,0,,{\pos(480,1095)}ejercicios? La rutina se\Nsiente {\c&H0043FFD9}cómoda,{\c&H00FFFFFF&}
+Dialogue: 0,0:00:06.92,0:00:07.20,Base,,0,0,0,,{\pos(480,1095)}{\c&H0043FFD9}hasta{\c&H00FFFFFF&} que ya no sabes\Nqué
+Dialogue: 0,0:00:07.20,0:00:07.36,Base,,0,0,0,,{\pos(480,1095)}hasta {\c&H0043FFD9}que{\c&H00FFFFFF&} ya no sabes\Nqué
+Dialogue: 0,0:00:07.36,0:00:07.60,Base,,0,0,0,,{\pos(480,1095)}hasta que {\c&H0043FFD9}ya{\c&H00FFFFFF&} no sabes\Nqué
+Dialogue: 0,0:00:07.60,0:00:07.76,Base,,0,0,0,,{\pos(480,1095)}hasta que ya {\c&H0043FFD9}no{\c&H00FFFFFF&} sabes\Nqué
+Dialogue: 0,0:00:07.76,0:00:08.08,Base,,0,0,0,,{\pos(480,1095)}hasta que ya no {\c&H0043FFD9}sabes{\c&H00FFFFFF&}\Nqué
+Dialogue: 0,0:00:08.08,0:00:08.24,Base,,0,0,0,,{\pos(480,1095)}hasta que ya no sabes\N{\c&H0043FFD9}qué{\c&H00FFFFFF&}
+Dialogue: 0,0:00:08.20,0:00:09.04,Base,,0,0,0,,{\pos(480,1095)}{\c&H0043FFD9}cambiar.{\c&H00FFFFFF&} Cada sesión\Nmerece un objetivo.
+Dialogue: 0,0:00:09.04,0:00:09.28,Base,,0,0,0,,{\pos(480,1095)}cambiar. {\c&H0043FFD9}Cada{\c&H00FFFFFF&} sesión\Nmerece un objetivo.
+Dialogue: 0,0:00:09.28,0:00:09.92,Base,,0,0,0,,{\pos(480,1095)}cambiar. Cada {\c&H0043FFD9}sesión{\c&H00FFFFFF&}\Nmerece un objetivo.
+Dialogue: 0,0:00:09.92,0:00:10.28,Base,,0,0,0,,{\pos(480,1095)}cambiar. Cada sesión\N{\c&H0043FFD9}merece{\c&H00FFFFFF&} un objetivo.
+Dialogue: 0,0:00:10.28,0:00:10.40,Base,,0,0,0,,{\pos(480,1095)}cambiar. Cada sesión\Nmerece {\c&H0043FFD9}un{\c&H00FFFFFF&} objetivo.
+Dialogue: 0,0:00:10.40,0:00:11.20,Base,,0,0,0,,{\pos(480,1095)}cambiar. Cada sesión\Nmerece un {\c&H0043FFD9}objetivo.{\c&H00FFFFFF&}
+Dialogue: 0,0:00:11.28,0:00:12.16,Base,,0,0,0,,{\pos(480,1095)}{\c&H0043FFD9}Pases,{\c&H00FFFFFF&} control,\Ndefinición:
+Dialogue: 0,0:00:12.16,0:00:12.72,Base,,0,0,0,,{\pos(480,1095)}Pases, {\c&H0043FFD9}control,{\c&H00FFFFFF&}\Ndefinición:
+Dialogue: 0,0:00:12.72,0:00:13.76,Base,,0,0,0,,{\pos(480,1095)}Pases, control,\N{\c&H0043FFD9}definición:{\c&H00FFFFFF&}
+Dialogue: 0,0:00:13.76,0:00:14.24,Base,,0,0,0,,{\pos(480,1095)}{\c&H0043FFD9}elige{\c&H00FFFFFF&} qué trabajar antes\Nde pisar
+Dialogue: 0,0:00:14.24,0:00:14.44,Base,,0,0,0,,{\pos(480,1095)}elige {\c&H0043FFD9}qué{\c&H00FFFFFF&} trabajar antes\Nde pisar
+Dialogue: 0,0:00:14.44,0:00:15.12,Base,,0,0,0,,{\pos(480,1095)}elige qué {\c&H0043FFD9}trabajar{\c&H00FFFFFF&} antes\Nde pisar
+Dialogue: 0,0:00:15.12,0:00:15.48,Base,,0,0,0,,{\pos(480,1095)}elige qué trabajar {\c&H0043FFD9}antes{\c&H00FFFFFF&}\Nde pisar
+Dialogue: 0,0:00:15.48,0:00:15.60,Base,,0,0,0,,{\pos(480,1095)}elige qué trabajar antes\N{\c&H0043FFD9}de{\c&H00FFFFFF&} pisar
+Dialogue: 0,0:00:15.60,0:00:15.92,Base,,0,0,0,,{\pos(480,1095)}elige qué trabajar antes\Nde {\c&H0043FFD9}pisar{\c&H00FFFFFF&}
+Dialogue: 0,0:00:15.88,0:00:16.00,Base,,0,0,0,,{\pos(480,1095)}{\c&H0043FFD9}el{\c&H00FFFFFF&} campo. Imagina dejar\Nde buscar
+Dialogue: 0,0:00:16.00,0:00:16.64,Base,,0,0,0,,{\pos(480,1095)}el {\c&H0043FFD9}campo.{\c&H00FFFFFF&} Imagina dejar\Nde buscar
+Dialogue: 0,0:00:16.64,0:00:17.12,Base,,0,0,0,,{\pos(480,1095)}el campo. {\c&H0043FFD9}Imagina{\c&H00FFFFFF&} dejar\Nde buscar
+Dialogue: 0,0:00:17.12,0:00:17.40,Base,,0,0,0,,{\pos(480,1095)}el campo. Imagina {\c&H0043FFD9}dejar{\c&H00FFFFFF&}\Nde buscar
+Dialogue: 0,0:00:17.40,0:00:17.52,Base,,0,0,0,,{\pos(480,1095)}el campo. Imagina dejar\N{\c&H0043FFD9}de{\c&H00FFFFFF&} buscar
+Dialogue: 0,0:00:17.52,0:00:17.84,Base,,0,0,0,,{\pos(480,1095)}el campo. Imagina dejar\Nde {\c&H0043FFD9}buscar{\c&H00FFFFFF&}
+Dialogue: 0,0:00:17.84,0:00:18.24,Base,,0,0,0,,{\pos(480,1095)}{\c&H0043FFD9}ideas{\c&H00FFFFFF&} a última hora y\Nllegar
+Dialogue: 0,0:00:18.24,0:00:18.32,Base,,0,0,0,,{\pos(480,1095)}ideas {\c&H0043FFD9}a{\c&H00FFFFFF&} última hora y\Nllegar
+Dialogue: 0,0:00:18.32,0:00:18.72,Base,,0,0,0,,{\pos(480,1095)}ideas a {\c&H0043FFD9}última{\c&H00FFFFFF&} hora y\Nllegar
+Dialogue: 0,0:00:18.72,0:00:19.04,Base,,0,0,0,,{\pos(480,1095)}ideas a última {\c&H0043FFD9}hora{\c&H00FFFFFF&} y\Nllegar
+Dialogue: 0,0:00:19.04,0:00:19.20,Base,,0,0,0,,{\pos(480,1095)}ideas a última hora {\c&H0043FFD9}y{\c&H00FFFFFF&}\Nllegar
+Dialogue: 0,0:00:19.20,0:00:19.52,Base,,0,0,0,,{\pos(480,1095)}ideas a última hora y\N{\c&H0043FFD9}llegar{\c&H00FFFFFF&}
+Dialogue: 0,0:00:19.52,0:00:19.68,Base,,0,0,0,,{\pos(480,1095)}{\c&H0043FFD9}con{\c&H00FFFFFF&} una intención\Nclara.
+Dialogue: 0,0:00:19.68,0:00:19.84,Base,,0,0,0,,{\pos(480,1095)}con {\c&H0043FFD9}una{\c&H00FFFFFF&} intención\Nclara.
+Dialogue: 0,0:00:19.84,0:00:20.56,Base,,0,0,0,,{\pos(480,1095)}con una {\c&H0043FFD9}intención{\c&H00FFFFFF&}\Nclara.
+Dialogue: 0,0:00:20.56,0:00:21.04,Base,,0,0,0,,{\pos(480,1095)}con una intención\N{\c&H0043FFD9}clara.{\c&H00FFFFFF&}
+Dialogue: 0,0:00:21.28,0:00:21.72,Base,,0,0,0,,{\pos(480,1095)}{\c&H0043FFD9}Conoce{\c&H00FFFFFF&} nuestra\Nplataforma de fútbol.
+Dialogue: 0,0:00:21.72,0:00:22.08,Base,,0,0,0,,{\pos(480,1095)}Conoce {\c&H0043FFD9}nuestra{\c&H00FFFFFF&}\Nplataforma de fútbol.
+Dialogue: 0,0:00:22.08,0:00:22.64,Base,,0,0,0,,{\pos(480,1095)}Conoce nuestra\N{\c&H0043FFD9}plataforma{\c&H00FFFFFF&} de fútbol.
+Dialogue: 0,0:00:22.64,0:00:22.80,Base,,0,0,0,,{\pos(480,1095)}Conoce nuestra\Nplataforma {\c&H0043FFD9}de{\c&H00FFFFFF&} fútbol.
+Dialogue: 0,0:00:22.80,0:00:23.44,Base,,0,0,0,,{\pos(480,1095)}Conoce nuestra\Nplataforma de {\c&H0043FFD9}fútbol.{\c&H00FFFFFF&}
+Dialogue: 0,0:00:23.52,0:00:23.76,Base,,0,0,0,,{\pos(480,1095)}{\c&H0043FFD9}Sal{\c&H00FFFFFF&} del piloto\Nautomático y empieza
+Dialogue: 0,0:00:23.76,0:00:23.92,Base,,0,0,0,,{\pos(480,1095)}Sal {\c&H0043FFD9}del{\c&H00FFFFFF&} piloto\Nautomático y empieza
+Dialogue: 0,0:00:23.92,0:00:24.24,Base,,0,0,0,,{\pos(480,1095)}Sal del {\c&H0043FFD9}piloto{\c&H00FFFFFF&}\Nautomático y empieza
+Dialogue: 0,0:00:24.24,0:00:24.96,Base,,0,0,0,,{\pos(480,1095)}Sal del piloto\N{\c&H0043FFD9}automático{\c&H00FFFFFF&} y empieza
+Dialogue: 0,0:00:24.96,0:00:25.04,Base,,0,0,0,,{\pos(480,1095)}Sal del piloto\Nautomático {\c&H0043FFD9}y{\c&H00FFFFFF&} empieza
+Dialogue: 0,0:00:25.04,0:00:25.52,Base,,0,0,0,,{\pos(480,1095)}Sal del piloto\Nautomático y {\c&H0043FFD9}empieza{\c&H00FFFFFF&}
+Dialogue: 0,0:00:25.52,0:00:25.60,Base,,0,0,0,,{\pos(480,1095)}{\c&H0043FFD9}a{\c&H00FFFFFF&} preparar tu próxima\Nsesión.
+Dialogue: 0,0:00:25.60,0:00:26.08,Base,,0,0,0,,{\pos(480,1095)}a {\c&H0043FFD9}preparar{\c&H00FFFFFF&} tu próxima\Nsesión.
+Dialogue: 0,0:00:26.08,0:00:26.32,Base,,0,0,0,,{\pos(480,1095)}a preparar {\c&H0043FFD9}tu{\c&H00FFFFFF&} próxima\Nsesión.
+Dialogue: 0,0:00:26.32,0:00:26.84,Base,,0,0,0,,{\pos(480,1095)}a preparar tu {\c&H0043FFD9}próxima{\c&H00FFFFFF&}\Nsesión.
+Dialogue: 0,0:00:26.84,0:00:27.52,Base,,0,0,0,,{\pos(480,1095)}a preparar tu próxima\N{\c&H0043FFD9}sesión.{\c&H00FFFFFF&}
+Dialogue: 0,0:00:27.56,0:00:27.72,Base,,0,0,0,,{\pos(480,1095)}{\c&H0043FFD9}Haz{\c&H00FFFFFF&} clic para\Nconocerla.
+Dialogue: 0,0:00:27.72,0:00:28.00,Base,,0,0,0,,{\pos(480,1095)}Haz {\c&H0043FFD9}clic{\c&H00FFFFFF&} para\Nconocerla.
+Dialogue: 0,0:00:28.00,0:00:28.24,Base,,0,0,0,,{\pos(480,1095)}Haz clic {\c&H0043FFD9}para{\c&H00FFFFFF&}\Nconocerla.
+Dialogue: 0,0:00:28.24,0:00:29.00,Base,,0,0,0,,{\pos(480,1095)}Haz clic para\N{\c&H0043FFD9}conocerla.{\c&H00FFFFFF&}

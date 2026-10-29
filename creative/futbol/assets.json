@@ -1,0 +1,72 @@
+[
+  {
+    "id": "clip-01",
+    "original": "WhatsApp Video 2026-10-28 at 21.01.58 (1).mp4",
+    "path": "assets/clip-01.mp4",
+    "duration": 19.5,
+    "width": 576,
+    "height": 1024,
+    "fps": 30,
+    "provenance": "User supplied training video. Existing source graphics retained. Illustrative footage, not a testimonial or platform demonstration."
+  },
+  {
+    "id": "clip-02",
+    "original": "WhatsApp Video 2026-10-28 at 21.01.58 (2).mp4",
+    "path": "assets/clip-02.mp4",
+    "duration": 8.333333,
+    "width": 576,
+    "height": 1024,
+    "fps": 30,
+    "provenance": "User supplied training video. Existing source graphics retained. Illustrative footage, not a testimonial or platform demonstration."
+  },
+  {
+    "id": "clip-03",
+    "original": "WhatsApp Video 2026-10-28 at 21.01.58 (3).mp4",
+    "path": "assets/clip-03.mp4",
+    "duration": 15.0,
+    "width": 576,
+    "height": 1024,
+    "fps": 30,
+    "provenance": "User supplied training video. Existing source graphics retained. Illustrative footage, not a testimonial or platform demonstration."
+  },
+  {
+    "id": "clip-04",
+    "original": "WhatsApp Video 2026-10-28 at 21.01.58 (4).mp4",
+    "path": "assets/clip-04.mp4",
+    "duration": 15.0,
+    "width": 576,
+    "height": 1024,
+    "fps": 30,
+    "provenance": "User supplied training video. Existing source graphics retained. Illustrative footage, not a testimonial or platform demonstration."
+  },
+  {
+    "id": "clip-05",
+    "original": "WhatsApp Video 2026-10-28 at 21.01.58 (5).mp4",
+    "path": "assets/clip-05.mp4",
+    "duration": 13.666667,
+    "width": 576,
+    "height": 1024,
+    "fps": 30,
+    "provenance": "User supplied training video. Existing source graphics retained. Illustrative footage, not a testimonial or platform demonstration."
+  },
+  {
+    "id": "clip-06",
+    "original": "WhatsApp Video 2026-10-28 at 21.01.58 (6).mp4",
+    "path": "assets/clip-06.mp4",
+    "duration": 24.666667,
+    "width": 576,
+    "height": 1024,
+    "fps": 30,
+    "provenance": "User supplied training video. Existing source graphics retained. Illustrative footage, not a testimonial or platform demonstration."
+  },
+  {
+    "id": "clip-07",
+    "original": "WhatsApp Video 2026-10-28 at 21.01.58.mp4",
+    "path": "assets/clip-07.mp4",
+    "duration": 20.3,
+    "width": 576,
+    "height": 1024,
+    "fps": 30,
+    "provenance": "User supplied training video. Existing source graphics retained. Illustrative footage, not a testimonial or platform demonstration."
+  }
+]

@@ -1,0 +1,39 @@
+1
+00:00:00,000 --> 00:00:01,920
+Entrenador o jugador,
+
+2
+00:00:01,960 --> 00:00:03,720
+La rutina se siente cómoda,
+
+3
+00:00:03,680 --> 00:00:05,000
+hasta que ya no sabes qué
+
+4
+00:00:04,960 --> 00:00:07,960
+cambiar. Cada sesión merece un objetivo.
+
+5
+00:00:08,080 --> 00:00:09,800
+Imagina dejar de buscar ideas a
+
+6
+00:00:09,760 --> 00:00:11,280
+última hora y llegar con una
+
+7
+00:00:11,280 --> 00:00:14,240
+intención clara. Conoce nuestra plataforma de
+
+8
+00:00:14,240 --> 00:00:16,520
+fútbol. Sal del piloto automático y
+
+9
+00:00:16,480 --> 00:00:18,960
+empieza a preparar tu próxima sesión.
+
+10
+00:00:19,000 --> 00:00:20,436
+Haz clic para conocerla.

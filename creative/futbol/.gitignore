@@ -1,0 +1,6 @@
+assets/*.mp4
+assets/*.mp3
+output/*.mp4
+output/*.wav
+__pycache__/
+

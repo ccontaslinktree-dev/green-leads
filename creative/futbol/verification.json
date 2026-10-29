@@ -1,0 +1,23 @@
+[
+  {
+    "file": "01-rompe-la-rutina.mp4",
+    "video_seconds": 29.0,
+    "audio_seconds": 29.0,
+    "ending_rms_dbfs": -21.15,
+    "full_decode": "passed"
+  },
+  {
+    "file": "02-sin-ideas.mp4",
+    "video_seconds": 20.466667,
+    "audio_seconds": 20.466,
+    "ending_rms_dbfs": -21.22,
+    "full_decode": "passed"
+  },
+  {
+    "file": "03-ultima-hora.mp4",
+    "video_seconds": 21.9,
+    "audio_seconds": 21.9,
+    "ending_rms_dbfs": -20.35,
+    "full_decode": "passed"
+  }
+]

@@ -1,0 +1,560 @@
+{
+  "version": {
+    "id": "02-sin-ideas",
+    "title": "Sin ideas para cambiar",
+    "angle": "Dolor: rutina cómoda y falta de ideas; cuerpo breve",
+    "ranges": [
+      [
+        0,
+        1.88
+      ],
+      [
+        5.12,
+        11.24
+      ],
+      [
+        16.56,
+        28.995918
+      ]
+    ],
+    "clips": [
+      [
+        7,
+        1,
+        4
+      ],
+      [
+        3,
+        2,
+        4.2
+      ],
+      [
+        2,
+        3,
+        4.8
+      ],
+      [
+        6,
+        9,
+        4.3
+      ],
+      [
+        1,
+        10,
+        4
+      ]
+    ],
+    "color": "FF735E",
+    "hook": "¿SIN IDEAS\nPARA CAMBIAR?",
+    "hook_start": 0,
+    "hook_end": 1.88,
+    "style": "scoreboard"
+  },
+  "dimensions": [
+    1080,
+    1920
+  ],
+  "fps": 30,
+  "runtime": 20.466666666666665,
+  "speech_words": [
+    {
+      "text": "Entrenador",
+      "start": 0,
+      "end": 0.64,
+      "source_start": 0
+    },
+    {
+      "text": "o",
+      "start": 0.8,
+      "end": 0.88,
+      "source_start": 0.8
+    },
+    {
+      "text": "jugador,",
+      "start": 0.96,
+      "end": 1.84,
+      "source_start": 0.96
+    },
+    {
+      "text": "La",
+      "start": 1.96,
+      "end": 2.04,
+      "source_start": 5.2
+    },
+    {
+      "text": "rutina",
+      "start": 2.12,
+      "end": 2.4399999999999995,
+      "source_start": 5.36
+    },
+    {
+      "text": "se",
+      "start": 2.5199999999999996,
+      "end": 2.5999999999999996,
+      "source_start": 5.76
+    },
+    {
+      "text": "siente",
+      "start": 2.707,
+      "end": 2.919999999999999,
+      "source_start": 5.947
+    },
+    {
+      "text": "cómoda,",
+      "start": 3.000000000000001,
+      "end": 3.6399999999999997,
+      "source_start": 6.24
+    },
+    {
+      "text": "hasta",
+      "start": 3.6800000000000006,
+      "end": 3.88,
+      "source_start": 6.92
+    },
+    {
+      "text": "que",
+      "start": 3.96,
+      "end": 4.04,
+      "source_start": 7.2
+    },
+    {
+      "text": "ya",
+      "start": 4.12,
+      "end": 4.2799999999999985,
+      "source_start": 7.36
+    },
+    {
+      "text": "no",
+      "start": 4.36,
+      "end": 4.439999999999999,
+      "source_start": 7.6
+    },
+    {
+      "text": "sabes",
+      "start": 4.5200000000000005,
+      "end": 4.759999999999999,
+      "source_start": 7.76
+    },
+    {
+      "text": "qué",
+      "start": 4.840000000000001,
+      "end": 4.919999999999999,
+      "source_start": 8.08
+    },
+    {
+      "text": "cambiar.",
+      "start": 4.959999999999998,
+      "end": 5.599999999999999,
+      "source_start": 8.2
+    },
+    {
+      "text": "Cada",
+      "start": 5.799999999999998,
+      "end": 5.959999999999998,
+      "source_start": 9.04
+    },
+    {
+      "text": "sesión",
+      "start": 6.04,
+      "end": 6.5200000000000005,
+      "source_start": 9.28
+    },
+    {
+      "text": "merece",
+      "start": 6.680000000000001,
+      "end": 7.000000000000001,
+      "source_start": 9.92
+    },
+    {
+      "text": "un",
+      "start": 7.04,
+      "end": 7.079999999999999,
+      "source_start": 10.28
+    },
+    {
+      "text": "objetivo.",
+      "start": 7.160000000000001,
+      "end": 7.88,
+      "source_start": 10.4
+    },
+    {
+      "text": "Imagina",
+      "start": 8.080000000000002,
+      "end": 8.48,
+      "source_start": 16.64
+    },
+    {
+      "text": "dejar",
+      "start": 8.560000000000002,
+      "end": 8.8,
+      "source_start": 17.12
+    },
+    {
+      "text": "de",
+      "start": 8.84,
+      "end": 8.880000000000003,
+      "source_start": 17.4
+    },
+    {
+      "text": "buscar",
+      "start": 8.96,
+      "end": 9.200000000000003,
+      "source_start": 17.52
+    },
+    {
+      "text": "ideas",
+      "start": 9.280000000000001,
+      "end": 9.600000000000001,
+      "source_start": 17.84
+    },
+    {
+      "text": "a",
+      "start": 9.68,
+      "end": 9.720000000000002,
+      "source_start": 18.24
+    },
+    {
+      "text": "última",
+      "start": 9.760000000000002,
+      "end": 10.080000000000002,
+      "source_start": 18.32
+    },
+    {
+      "text": "hora",
+      "start": 10.16,
+      "end": 10.400000000000002,
+      "source_start": 18.72
+    },
+    {
+      "text": "y",
+      "start": 10.48,
+      "end": 10.560000000000002,
+      "source_start": 19.04
+    },
+    {
+      "text": "llegar",
+      "start": 10.64,
+      "end": 10.880000000000003,
+      "source_start": 19.2
+    },
+    {
+      "text": "con",
+      "start": 10.96,
+      "end": 11.040000000000003,
+      "source_start": 19.52
+    },
+    {
+      "text": "una",
+      "start": 11.120000000000001,
+      "end": 11.200000000000003,
+      "source_start": 19.68
+    },
+    {
+      "text": "intención",
+      "start": 11.280000000000001,
+      "end": 11.84,
+      "source_start": 19.84
+    },
+    {
+      "text": "clara.",
+      "start": 12.0,
+      "end": 12.400000000000002,
+      "source_start": 20.56
+    },
+    {
+      "text": "Conoce",
+      "start": 12.720000000000002,
+      "end": 13.120000000000001,
+      "source_start": 21.28
+    },
+    {
+      "text": "nuestra",
+      "start": 13.16,
+      "end": 13.440000000000001,
+      "source_start": 21.72
+    },
+    {
+      "text": "plataforma",
+      "start": 13.52,
+      "end": 14.0,
+      "source_start": 22.08
+    },
+    {
+      "text": "de",
+      "start": 14.080000000000002,
+      "end": 14.16,
+      "source_start": 22.64
+    },
+    {
+      "text": "fútbol.",
+      "start": 14.240000000000002,
+      "end": 14.8,
+      "source_start": 22.8
+    },
+    {
+      "text": "Sal",
+      "start": 14.96,
+      "end": 15.120000000000001,
+      "source_start": 23.52
+    },
+    {
+      "text": "del",
+      "start": 15.200000000000003,
+      "end": 15.280000000000001,
+      "source_start": 23.76
+    },
+    {
+      "text": "piloto",
+      "start": 15.360000000000003,
+      "end": 15.599999999999998,
+      "source_start": 23.92
+    },
+    {
+      "text": "automático",
+      "start": 15.679999999999996,
+      "end": 16.24,
+      "source_start": 24.24
+    },
+    {
+      "text": "y",
+      "start": 16.400000000000002,
+      "end": 16.44,
+      "source_start": 24.96
+    },
+    {
+      "text": "empieza",
+      "start": 16.48,
+      "end": 16.88,
+      "source_start": 25.04
+    },
+    {
+      "text": "a",
+      "start": 16.959999999999997,
+      "end": 17.000000000000004,
+      "source_start": 25.52
+    },
+    {
+      "text": "preparar",
+      "start": 17.040000000000003,
+      "end": 17.44,
+      "source_start": 25.6
+    },
+    {
+      "text": "tu",
+      "start": 17.52,
+      "end": 17.599999999999998,
+      "source_start": 26.08
+    },
+    {
+      "text": "próxima",
+      "start": 17.76,
+      "end": 18.16,
+      "source_start": 26.32
+    },
+    {
+      "text": "sesión.",
+      "start": 18.280000000000005,
+      "end": 18.88,
+      "source_start": 26.84
+    },
+    {
+      "text": "Haz",
+      "start": 19.000000000000004,
+      "end": 19.12,
+      "source_start": 27.56
+    },
+    {
+      "text": "clic",
+      "start": 19.16,
+      "end": 19.360000000000003,
+      "source_start": 27.72
+    },
+    {
+      "text": "para",
+      "start": 19.44,
+      "end": 19.599999999999998,
+      "source_start": 28
+    },
+    {
+      "text": "conocerla.",
+      "start": 19.679999999999996,
+      "end": 20.435918000000004,
+      "source_start": 28.24
+    }
+  ],
+  "picture_edl": [
+    {
+      "asset_id": "clip-07",
+      "source_in": 1,
+      "source_out": 5.0,
+      "sequence_start": 0,
+      "sequence_end": 4.0,
+      "audio_owner": "narration",
+      "fit": "uniform scale, full frame",
+      "speed": 1
+    },
+    {
+      "asset_id": "clip-03",
+      "source_in": 2,
+      "source_out": 6.2,
+      "sequence_start": 4.0,
+      "sequence_end": 8.2,
+      "audio_owner": "narration",
+      "fit": "uniform scale, full frame",
+      "speed": 1
+    },
+    {
+      "asset_id": "clip-02",
+      "source_in": 3,
+      "source_out": 7.8,
+      "sequence_start": 8.2,
+      "sequence_end": 13.0,
+      "audio_owner": "narration",
+      "fit": "uniform scale, full frame",
+      "speed": 1
+    },
+    {
+      "asset_id": "clip-06",
+      "source_in": 9,
+      "source_out": 13.3,
+      "sequence_start": 13.0,
+      "sequence_end": 17.3,
+      "audio_owner": "narration",
+      "fit": "uniform scale, full frame",
+      "speed": 1
+    },
+    {
+      "asset_id": "clip-01",
+      "source_in": 10,
+      "source_out": 13.166666666666666,
+      "sequence_start": 17.3,
+      "sequence_end": 20.46666666666667,
+      "audio_owner": "narration",
+      "fit": "uniform scale, full frame",
+      "speed": 1
+    }
+  ],
+  "caption_schedule": [
+    {
+      "start": 0,
+      "end": 1.9200000000000002,
+      "text": "Entrenador o jugador,",
+      "bounds": [
+        100,
+        1010,
+        850,
+        1215
+      ],
+      "mode": "subtitle"
+    },
+    {
+      "start": 1.96,
+      "end": 3.7199999999999998,
+      "text": "La rutina se siente cómoda,",
+      "bounds": [
+        100,
+        1010,
+        850,
+        1215
+      ],
+      "mode": "subtitle"
+    },
+    {
+      "start": 3.6800000000000006,
+      "end": 4.999999999999999,
+      "text": "hasta que ya no sabes qué",
+      "bounds": [
+        100,
+        1010,
+        850,
+        1215
+      ],
+      "mode": "subtitle"
+    },
+    {
+      "start": 4.959999999999998,
+      "end": 7.96,
+      "text": "cambiar. Cada sesión merece un objetivo.",
+      "bounds": [
+        100,
+        1010,
+        850,
+        1215
+      ],
+      "mode": "subtitle"
+    },
+    {
+      "start": 8.080000000000002,
+      "end": 9.800000000000002,
+      "text": "Imagina dejar de buscar ideas a",
+      "bounds": [
+        100,
+        1010,
+        850,
+        1215
+      ],
+      "mode": "subtitle"
+    },
+    {
+      "start": 9.760000000000002,
+      "end": 11.280000000000003,
+      "text": "última hora y llegar con una",
+      "bounds": [
+        100,
+        1010,
+        850,
+        1215
+      ],
+      "mode": "subtitle"
+    },
+    {
+      "start": 11.280000000000001,
+      "end": 14.24,
+      "text": "intención clara. Conoce nuestra plataforma de",
+      "bounds": [
+        100,
+        1010,
+        850,
+        1215
+      ],
+      "mode": "subtitle"
+    },
+    {
+      "start": 14.240000000000002,
+      "end": 16.52,
+      "text": "fútbol. Sal del piloto automático y",
+      "bounds": [
+        100,
+        1010,
+        850,
+        1215
+      ],
+      "mode": "subtitle"
+    },
+    {
+      "start": 16.48,
+      "end": 18.959999999999997,
+      "text": "empieza a preparar tu próxima sesión.",
+      "bounds": [
+        100,
+        1010,
+        850,
+        1215
+      ],
+      "mode": "subtitle"
+    },
+    {
+      "start": 19.000000000000004,
+      "end": 20.435918,
+      "text": "Haz clic para conocerla.",
+      "bounds": [
+        100,
+        1010,
+        850,
+        1215
+      ],
+      "mode": "subtitle"
+    }
+  ],
+  "safe_zone": "Provisional conservative profile; not platform certification."
+}

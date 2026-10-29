@@ -1,0 +1,705 @@
+{
+  "version": {
+    "id": "01-rompe-la-rutina",
+    "title": "Rompe la rutina",
+    "angle": "Dolor: repetir siempre los mismos ejercicios",
+    "ranges": [
+      [
+        0,
+        28.995918
+      ]
+    ],
+    "clips": [
+      [
+        1,
+        0.5,
+        5.12
+      ],
+      [
+        2,
+        1,
+        3.88
+      ],
+      [
+        6,
+        2,
+        5.5
+      ],
+      [
+        4,
+        3,
+        6.7
+      ],
+      [
+        5,
+        7,
+        4
+      ],
+      [
+        3,
+        5,
+        3.8
+      ]
+    ],
+    "color": "D9FF43",
+    "hook": "¿OTRA SEMANA\nREPITIENDO LOS\nMISMOS EJERCICIOS?",
+    "hook_start": 1.88,
+    "hook_end": 5.12,
+    "style": "editorial"
+  },
+  "dimensions": [
+    1080,
+    1920
+  ],
+  "fps": 30,
+  "runtime": 29.0,
+  "speech_words": [
+    {
+      "text": "Entrenador",
+      "start": 0,
+      "end": 0.64,
+      "source_start": 0
+    },
+    {
+      "text": "o",
+      "start": 0.8,
+      "end": 0.88,
+      "source_start": 0.8
+    },
+    {
+      "text": "jugador,",
+      "start": 0.96,
+      "end": 1.84,
+      "source_start": 0.96
+    },
+    {
+      "text": "¿otra",
+      "start": 1.88,
+      "end": 2.16,
+      "source_start": 1.88
+    },
+    {
+      "text": "semana",
+      "start": 2.24,
+      "end": 2.64,
+      "source_start": 2.24
+    },
+    {
+      "text": "repitiendo",
+      "start": 2.76,
+      "end": 3.2,
+      "source_start": 2.76
+    },
+    {
+      "text": "los",
+      "start": 3.28,
+      "end": 3.44,
+      "source_start": 3.28
+    },
+    {
+      "text": "mismos",
+      "start": 3.6,
+      "end": 3.92,
+      "source_start": 3.6
+    },
+    {
+      "text": "ejercicios?",
+      "start": 4,
+      "end": 4.96,
+      "source_start": 4
+    },
+    {
+      "text": "La",
+      "start": 5.2,
+      "end": 5.28,
+      "source_start": 5.2
+    },
+    {
+      "text": "rutina",
+      "start": 5.36,
+      "end": 5.68,
+      "source_start": 5.36
+    },
+    {
+      "text": "se",
+      "start": 5.76,
+      "end": 5.84,
+      "source_start": 5.76
+    },
+    {
+      "text": "siente",
+      "start": 5.947,
+      "end": 6.16,
+      "source_start": 5.947
+    },
+    {
+      "text": "cómoda,",
+      "start": 6.24,
+      "end": 6.88,
+      "source_start": 6.24
+    },
+    {
+      "text": "hasta",
+      "start": 6.92,
+      "end": 7.12,
+      "source_start": 6.92
+    },
+    {
+      "text": "que",
+      "start": 7.2,
+      "end": 7.28,
+      "source_start": 7.2
+    },
+    {
+      "text": "ya",
+      "start": 7.36,
+      "end": 7.52,
+      "source_start": 7.36
+    },
+    {
+      "text": "no",
+      "start": 7.6,
+      "end": 7.68,
+      "source_start": 7.6
+    },
+    {
+      "text": "sabes",
+      "start": 7.76,
+      "end": 8,
+      "source_start": 7.76
+    },
+    {
+      "text": "qué",
+      "start": 8.08,
+      "end": 8.16,
+      "source_start": 8.08
+    },
+    {
+      "text": "cambiar.",
+      "start": 8.2,
+      "end": 8.84,
+      "source_start": 8.2
+    },
+    {
+      "text": "Cada",
+      "start": 9.04,
+      "end": 9.2,
+      "source_start": 9.04
+    },
+    {
+      "text": "sesión",
+      "start": 9.28,
+      "end": 9.76,
+      "source_start": 9.28
+    },
+    {
+      "text": "merece",
+      "start": 9.92,
+      "end": 10.24,
+      "source_start": 9.92
+    },
+    {
+      "text": "un",
+      "start": 10.28,
+      "end": 10.32,
+      "source_start": 10.28
+    },
+    {
+      "text": "objetivo.",
+      "start": 10.4,
+      "end": 11.12,
+      "source_start": 10.4
+    },
+    {
+      "text": "Pases,",
+      "start": 11.28,
+      "end": 11.92,
+      "source_start": 11.28
+    },
+    {
+      "text": "control,",
+      "start": 12.16,
+      "end": 12.64,
+      "source_start": 12.16
+    },
+    {
+      "text": "definición:",
+      "start": 12.72,
+      "end": 13.68,
+      "source_start": 12.72
+    },
+    {
+      "text": "elige",
+      "start": 13.76,
+      "end": 14.16,
+      "source_start": 13.76
+    },
+    {
+      "text": "qué",
+      "start": 14.24,
+      "end": 14.4,
+      "source_start": 14.24
+    },
+    {
+      "text": "trabajar",
+      "start": 14.44,
+      "end": 14.96,
+      "source_start": 14.44
+    },
+    {
+      "text": "antes",
+      "start": 15.12,
+      "end": 15.44,
+      "source_start": 15.12
+    },
+    {
+      "text": "de",
+      "start": 15.48,
+      "end": 15.52,
+      "source_start": 15.48
+    },
+    {
+      "text": "pisar",
+      "start": 15.6,
+      "end": 15.84,
+      "source_start": 15.6
+    },
+    {
+      "text": "el",
+      "start": 15.88,
+      "end": 15.92,
+      "source_start": 15.88
+    },
+    {
+      "text": "campo.",
+      "start": 16,
+      "end": 16.4,
+      "source_start": 16
+    },
+    {
+      "text": "Imagina",
+      "start": 16.64,
+      "end": 17.04,
+      "source_start": 16.64
+    },
+    {
+      "text": "dejar",
+      "start": 17.12,
+      "end": 17.36,
+      "source_start": 17.12
+    },
+    {
+      "text": "de",
+      "start": 17.4,
+      "end": 17.44,
+      "source_start": 17.4
+    },
+    {
+      "text": "buscar",
+      "start": 17.52,
+      "end": 17.76,
+      "source_start": 17.52
+    },
+    {
+      "text": "ideas",
+      "start": 17.84,
+      "end": 18.16,
+      "source_start": 17.84
+    },
+    {
+      "text": "a",
+      "start": 18.24,
+      "end": 18.28,
+      "source_start": 18.24
+    },
+    {
+      "text": "última",
+      "start": 18.32,
+      "end": 18.64,
+      "source_start": 18.32
+    },
+    {
+      "text": "hora",
+      "start": 18.72,
+      "end": 18.96,
+      "source_start": 18.72
+    },
+    {
+      "text": "y",
+      "start": 19.04,
+      "end": 19.12,
+      "source_start": 19.04
+    },
+    {
+      "text": "llegar",
+      "start": 19.2,
+      "end": 19.44,
+      "source_start": 19.2
+    },
+    {
+      "text": "con",
+      "start": 19.52,
+      "end": 19.6,
+      "source_start": 19.52
+    },
+    {
+      "text": "una",
+      "start": 19.68,
+      "end": 19.76,
+      "source_start": 19.68
+    },
+    {
+      "text": "intención",
+      "start": 19.84,
+      "end": 20.4,
+      "source_start": 19.84
+    },
+    {
+      "text": "clara.",
+      "start": 20.56,
+      "end": 20.96,
+      "source_start": 20.56
+    },
+    {
+      "text": "Conoce",
+      "start": 21.28,
+      "end": 21.68,
+      "source_start": 21.28
+    },
+    {
+      "text": "nuestra",
+      "start": 21.72,
+      "end": 22,
+      "source_start": 21.72
+    },
+    {
+      "text": "plataforma",
+      "start": 22.08,
+      "end": 22.56,
+      "source_start": 22.08
+    },
+    {
+      "text": "de",
+      "start": 22.64,
+      "end": 22.72,
+      "source_start": 22.64
+    },
+    {
+      "text": "fútbol.",
+      "start": 22.8,
+      "end": 23.36,
+      "source_start": 22.8
+    },
+    {
+      "text": "Sal",
+      "start": 23.52,
+      "end": 23.68,
+      "source_start": 23.52
+    },
+    {
+      "text": "del",
+      "start": 23.76,
+      "end": 23.84,
+      "source_start": 23.76
+    },
+    {
+      "text": "piloto",
+      "start": 23.92,
+      "end": 24.16,
+      "source_start": 23.92
+    },
+    {
+      "text": "automático",
+      "start": 24.24,
+      "end": 24.8,
+      "source_start": 24.24
+    },
+    {
+      "text": "y",
+      "start": 24.96,
+      "end": 25,
+      "source_start": 24.96
+    },
+    {
+      "text": "empieza",
+      "start": 25.04,
+      "end": 25.44,
+      "source_start": 25.04
+    },
+    {
+      "text": "a",
+      "start": 25.52,
+      "end": 25.56,
+      "source_start": 25.52
+    },
+    {
+      "text": "preparar",
+      "start": 25.6,
+      "end": 26,
+      "source_start": 25.6
+    },
+    {
+      "text": "tu",
+      "start": 26.08,
+      "end": 26.16,
+      "source_start": 26.08
+    },
+    {
+      "text": "próxima",
+      "start": 26.32,
+      "end": 26.72,
+      "source_start": 26.32
+    },
+    {
+      "text": "sesión.",
+      "start": 26.84,
+      "end": 27.44,
+      "source_start": 26.84
+    },
+    {
+      "text": "Haz",
+      "start": 27.56,
+      "end": 27.68,
+      "source_start": 27.56
+    },
+    {
+      "text": "clic",
+      "start": 27.72,
+      "end": 27.92,
+      "source_start": 27.72
+    },
+    {
+      "text": "para",
+      "start": 28,
+      "end": 28.16,
+      "source_start": 28
+    },
+    {
+      "text": "conocerla.",
+      "start": 28.24,
+      "end": 28.995918,
+      "source_start": 28.24
+    }
+  ],
+  "picture_edl": [
+    {
+      "asset_id": "clip-01",
+      "source_in": 0.5,
+      "source_out": 5.633333333333334,
+      "sequence_start": 0,
+      "sequence_end": 5.133333333333334,
+      "audio_owner": "narration",
+      "fit": "uniform scale, full frame",
+      "speed": 1
+    },
+    {
+      "asset_id": "clip-02",
+      "source_in": 1,
+      "source_out": 4.866666666666667,
+      "sequence_start": 5.133333333333334,
+      "sequence_end": 9.0,
+      "audio_owner": "narration",
+      "fit": "uniform scale, full frame",
+      "speed": 1
+    },
+    {
+      "asset_id": "clip-06",
+      "source_in": 2,
+      "source_out": 7.5,
+      "sequence_start": 9.0,
+      "sequence_end": 14.5,
+      "audio_owner": "narration",
+      "fit": "uniform scale, full frame",
+      "speed": 1
+    },
+    {
+      "asset_id": "clip-04",
+      "source_in": 3,
+      "source_out": 9.7,
+      "sequence_start": 14.5,
+      "sequence_end": 21.2,
+      "audio_owner": "narration",
+      "fit": "uniform scale, full frame",
+      "speed": 1
+    },
+    {
+      "asset_id": "clip-05",
+      "source_in": 7,
+      "source_out": 11.0,
+      "sequence_start": 21.2,
+      "sequence_end": 25.2,
+      "audio_owner": "narration",
+      "fit": "uniform scale, full frame",
+      "speed": 1
+    },
+    {
+      "asset_id": "clip-03",
+      "source_in": 5,
+      "source_out": 8.8,
+      "sequence_start": 25.2,
+      "sequence_end": 29.0,
+      "audio_owner": "narration",
+      "fit": "uniform scale, full frame",
+      "speed": 1
+    }
+  ],
+  "caption_schedule": [
+    {
+      "start": 0,
+      "end": 1.9200000000000002,
+      "text": "Entrenador o jugador,",
+      "bounds": [
+        100,
+        1010,
+        850,
+        1215
+      ],
+      "mode": "subtitle"
+    },
+    {
+      "start": 4,
+      "end": 6.96,
+      "text": "ejercicios? La rutina se siente cómoda,",
+      "bounds": [
+        100,
+        1010,
+        850,
+        1215
+      ],
+      "mode": "subtitle"
+    },
+    {
+      "start": 6.92,
+      "end": 8.24,
+      "text": "hasta que ya no sabes qué",
+      "bounds": [
+        100,
+        1010,
+        850,
+        1215
+      ],
+      "mode": "subtitle"
+    },
+    {
+      "start": 8.2,
+      "end": 11.2,
+      "text": "cambiar. Cada sesión merece un objetivo.",
+      "bounds": [
+        100,
+        1010,
+        850,
+        1215
+      ],
+      "mode": "subtitle"
+    },
+    {
+      "start": 11.28,
+      "end": 13.76,
+      "text": "Pases, control, definición:",
+      "bounds": [
+        100,
+        1010,
+        850,
+        1215
+      ],
+      "mode": "subtitle"
+    },
+    {
+      "start": 13.76,
+      "end": 15.92,
+      "text": "elige qué trabajar antes de pisar",
+      "bounds": [
+        100,
+        1010,
+        850,
+        1215
+      ],
+      "mode": "subtitle"
+    },
+    {
+      "start": 15.88,
+      "end": 17.84,
+      "text": "el campo. Imagina dejar de buscar",
+      "bounds": [
+        100,
+        1010,
+        850,
+        1215
+      ],
+      "mode": "subtitle"
+    },
+    {
+      "start": 17.84,
+      "end": 19.52,
+      "text": "ideas a última hora y llegar",
+      "bounds": [
+        100,
+        1010,
+        850,
+        1215
+      ],
+      "mode": "subtitle"
+    },
+    {
+      "start": 19.52,
+      "end": 21.04,
+      "text": "con una intención clara.",
+      "bounds": [
+        100,
+        1010,
+        850,
+        1215
+      ],
+      "mode": "subtitle"
+    },
+    {
+      "start": 21.28,
+      "end": 23.439999999999998,
+      "text": "Conoce nuestra plataforma de fútbol.",
+      "bounds": [
+        100,
+        1010,
+        850,
+        1215
+      ],
+      "mode": "subtitle"
+    },
+    {
+      "start": 23.52,
+      "end": 25.52,
+      "text": "Sal del piloto automático y empieza",
+      "bounds": [
+        100,
+        1010,
+        850,
+        1215
+      ],
+      "mode": "subtitle"
+    },
+    {
+      "start": 25.52,
+      "end": 27.52,
+      "text": "a preparar tu próxima sesión.",
+      "bounds": [
+        100,
+        1010,
+        850,
+        1215
+      ],
+      "mode": "subtitle"
+    },
+    {
+      "start": 27.56,
+      "end": 28.995918,
+      "text": "Haz clic para conocerla.",
+      "bounds": [
+        100,
+        1010,
+        850,
+        1215
+      ],
+      "mode": "subtitle"
+    }
+  ],
+  "safe_zone": "Provisional conservative profile; not platform certification."
+}
