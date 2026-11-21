@@ -1,339 +1,95 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
-import { ArrowRight, Layers3, LockKeyhole, Play, Volume2, X, Pause } from "lucide-react";
-import { officeOffer, formatPrice, getCheckoutUrl } from "@/data/office-offer";
-import { initializeTracking, trackEvent } from "@/lib/office-tracking";
-import vslUrl from "../../WhatsApp Video 2026-10-27 at 19.19.43.mp4?url";
-import "@/components/office/vsl.css";
-import { VideoDemo } from "@/components/office/VideoDemo";
+import { createFileRoute } from '@tanstack/react-router';
+import { useEffect, useState } from 'react';
+import { BookOpen, Check, CheckCircle2, Clock3, Download, FileText, Gift, GraduationCap, ListChecks, Smartphone, Target, X } from 'lucide-react';
+import { initializeTracking, trackEvent } from '@/lib/office-tracking';
+import { paesOffer } from '@/data/paes-offer';
 
-export const Route = createFileRoute("/")({ component: VslPage });
+export const Route = createFileRoute('/')({ component: PaesPage });
+const sample = '/paes/muestra-paes.pdf';
+const pages = [
+ ['Una ruta para empezar', 'Mira el alcance de la muestra.'],
+ ['M1 explicada paso a paso', 'Del dato a la operación.'],
+ ['Lectura con evidencia', 'Un texto original y dos preguntas.'],
+ ['Entiende cada respuesta', 'Revisa el porqué de la solución.'],
+ ['Tu semana, organizada', 'Un calendario para adaptar.'],
+ ['Aprende de tus errores', 'Una plantilla para volver a practicar.'],
+];
+function KitLink({ light = false, children = 'QUIERO VER EL KIT' }: { light?: boolean; children?: React.ReactNode }) {
+ return <a className={`paes-button ${light ? 'paes-button-light' : ''}`} href="#kit" onClick={() => trackEvent('ClickParaOferta', { content_name: paesOffer.name })}>{children}</a>;
+}
+function ExamClock() {
+ const [days, setDays] = useState<number | null>(null);
+ useEffect(() => { const tick = () => setDays(Math.ceil((Date.parse('2026-11-30T00:00:00-03:00') - Date.now()) / 86400000)); tick(); const id = setInterval(tick, 60000); return () => clearInterval(id); }, []);
+ return <div className="paes-clock"><Clock3 size={20} aria-hidden="true"/><span>{days === null ? 'PAES REGULAR: 30 NOVIEMBRE AL 2 DICIEMBRE 2026' : days > 0 ? `QUEDAN ${days} DÍAS PARA LA PRIMERA JORNADA · 30 NOV – 2 DIC` : days >= -2 ? 'PAES REGULAR EN CURSO · 30 NOV – 2 DIC' : 'PAES REGULAR 2026 FINALIZADA · REVISA LAS PRÓXIMAS FECHAS OFICIALES'}</span></div>;
+}
+function PaesPage() {
+ const [activePage, setActivePage] = useState<number | null>(null);
+ useEffect(() => { initializeTracking(); trackEvent('ViewContent', { content_name: paesOffer.name }); }, []);
+ useEffect(() => {
+  if (activePage === null) return;
+  const previous = document.activeElement as HTMLElement | null;
+  const close = (e: KeyboardEvent) => { if (e.key === 'Escape') setActivePage(null); };
+  document.addEventListener('keydown', close); const old = document.body.style.overflow; document.body.style.overflow = 'hidden';
+  const dialog = document.getElementById('sample-dialog') as HTMLDialogElement | null; if (dialog && !dialog.open) dialog.showModal();
+  return () => { document.removeEventListener('keydown', close); document.body.style.overflow = old; previous?.focus(); };
+ }, [activePage]);
+ const checkout = () => {
+  if (!paesOffer.checkoutUrl || paesOffer.status !== 'ready') return;
+  const url = new URL(paesOffer.checkoutUrl); new URLSearchParams(window.location.search).forEach((v,k) => { if (!k.startsWith('__lovable_') && !url.searchParams.has(k)) url.searchParams.set(k,v); });
+  trackEvent('InitiateCheckout', { content_name: paesOffer.name, currency: 'CLP', value: paesOffer.priceCLP ?? 0 }); window.location.assign(url.toString());
+ };
+ return <main className="paes-page">
+  <ExamClock />
+  <section className="paes-hero">
+   <div className="paes-wrap paes-center">
+    <div className="paes-wordmark"><BookOpen size={21} aria-hidden="true"/> PAES EN FOCO</div>
+    <span className="paes-tag">PRELANZAMIENTO · M1 + COMPETENCIA LECTORA</span>
+    <h1>REPASA SIN PERDERTE<br className="desktop-break"/> ENTRE APUNTES SUELTOS.</h1>
+    <p className="paes-hero-sub">IDENTIFICA LO QUE TE CUESTA.<br/>PRACTICA. REVISA. VUELVE A INTENTAR.</p>
+    <img className="paes-hero-mockup" src="/paes/kit-mockup.webp" width="1280" height="853" alt="Mockup ilustrativo del kit en preparación: guías de M1 y Competencia Lectora, actividades extra, plan y cuaderno de errores" fetchPriority="high"/>
+    <p className="paes-caption paes-caption-light">Mockup ilustrativo. Kit digital en preparación; la muestra de 6 páginas ya está disponible.</p>
+    <p className="paes-hero-copy">Un kit de repaso visual para ordenar tus últimos días de estudio. <strong>Matemática M1 y Competencia Lectora</strong>, con práctica explicada y una ruta que puedas consultar desde tu celular.</p>
+    <div className="paes-trust"><span><Smartphone size={18}/> Digital</span><span><FileText size={18}/> Muestra real</span><span><Download size={18}/> PDF descargable</span></div>
+    <KitLink light>QUIERO CONOCER LOS MATERIALES</KitLink>
+    <p className="paes-caption paes-caption-light">M1 + Lectora. No incluye M2, Ciencias ni Historia.</p>
+   </div>
+  </section>
 
-function VslPage() {
-  const video = useRef<HTMLVideoElement>(null);
-  const offer = useRef<HTMLElement>(null);
-  const dialog = useRef<HTMLDialogElement>(null);
-  const watched = useRef(0);
-  const previousFocus = useRef<HTMLElement | null>(null);
-  const [playing, setPlaying] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const tracked = useRef(new Set<string>());
-  const [started, setStarted] = useState(false);
-  const [finished, setFinished] = useState(false);
-  const [error, setError] = useState(false);
+  <section className="paes-section paes-samples" id="muestra">
+   <div className="paes-wrap paes-center"><span className="paes-eyebrow">ABRE LA MUESTRA ANTES DE DECIDIR</span><h2>ASÍ SE VE EL REPASO<br/><em>POR DENTRO.</em></h2><p className="paes-intro">Páginas reales de la muestra gratuita. Toca una ficha para verla más grande o descarga el PDF completo de la muestra.</p></div>
+   <div className="paes-marquee" role="region" aria-label="Carrusel automático de páginas de muestra"><div className="paes-track">{[0,1].map(copy => <div className="paes-track-group" key={copy} aria-hidden={copy === 1 ? true : undefined}>{pages.map(([title,desc],i) => <button type="button" key={title} className="paes-sample" tabIndex={copy===1?-1:0} onClick={() => setActivePage(i)} aria-label={`Ampliar: ${title}`}><img src={`/paes/muestra-${i+1}.webp`} width="750" height="1175" alt={copy===0?title:''} loading="lazy" decoding="async"/><strong>{title}</strong><span>{desc}</span></button>)}</div>)}</div></div>
+   <div className="paes-wrap paes-center"><a className="paes-textlink" href={sample} target="_blank" rel="noopener">Abrir la muestra gratuita de 6 páginas <Download size={18}/></a></div>
+  </section>
 
-  useEffect(() => {
-    initializeTracking();
-  }, []);
+  <section className="paes-section paes-soft" id="materiales"><div className="paes-wrap"><div className="paes-center"><span className="paes-eyebrow">DOS ÁREAS. UNA FORMA DE REPASAR.</span><h2>MENOS BÚSQUEDA.<br/><em>MÁS PRÁCTICA CON SENTIDO.</em></h2></div>
+   <div className="paes-material-grid">{[
+    { image:2,title:'Matemática M1',label:'GUÍA PREVISTA DEL KIT',body:'Organización por ejes para identificar qué necesitas reforzar y practicar con procedimientos explicados.',list:['Números y álgebra','Geometría, datos y probabilidad','Ejercicios con explicación del proceso'] },
+    { image:3,title:'Competencia Lectora',label:'GUÍA PREVISTA DEL KIT',body:'Una ruta para leer con intención, buscar evidencia y revisar por qué una alternativa responde al texto.',list:['Localizar información','Interpretar el sentido del texto','Evaluar con evidencia'] },
+   ].map(m=><article className="paes-material" key={m.title}><div className="paes-paper"><img src={`/paes/muestra-${m.image}.webp`} width="750" height="1175" alt={`Página de muestra de ${m.title}`} loading="lazy" decoding="async"/></div><div className="paes-material-copy"><span className="paes-eyebrow">{m.label}</span><h3>{m.title}</h3><p>{m.body}</p><ul>{m.list.map(t=><li key={t}><CheckCircle2 size={19}/><span>{t}</span></li>)}</ul></div></article>)}
+   </div><div className="paes-center"><KitLink /></div>
+  </div></section>
 
-  const trackOnce = (name: string) => {
-    if (tracked.current.has(name)) return;
-    tracked.current.add(name);
-    trackEvent(name, { content_name: officeOffer.name, video: "vsl_original" });
-  };
+  <section className="paes-section paes-pain"><div className="paes-wrap paes-center"><span className="paes-eyebrow">EL TIEMPO QUE QUEDA TAMBIÉN CUENTA</span><h2>ABRIR MÁS PESTAÑAS<br/><em>NO ORDENA TU REPASO.</em></h2><p className="paes-intro">Un video por aquí. Un PDF por allá. Y al final del día, la misma duda: “¿qué debería practicar ahora?”. Cambia la búsqueda sin rumbo por una tarea concreta.</p><div className="paes-process">{[['01','Detecta','Identifica el tema o la habilidad que necesitas trabajar.'],['02','Practica','Resuelve primero y revisa después la explicación.'],['03','Refuerza','Anota el error y vuelve a intentarlo sin mirar.']].map(([n,t,d])=><article key={n}><span>{n}</span><h3>{t}</h3><p>{d}</p></article>)}</div><KitLink light>QUIERO UN REPASO MÁS ORGANIZADO</KitLink></div></section>
 
-  const closePlayer = () => {
-    video.current?.pause();
-    const exiting =
-      document.fullscreenElement === dialog.current
-        ? document.exitFullscreen().catch(() => {})
-        : Promise.resolve();
-    if (dialog.current?.open) dialog.current.close();
-    document.body.style.overflow = "";
-    previousFocus.current?.focus();
-    return exiting;
-  };
+  <section className="paes-section"><div className="paes-wrap"><div className="paes-center"><span className="paes-eyebrow">¿TE IDENTIFICAS?</span><h2>PARA QUIEN QUIERE<br/><em>APROVECHAR SU REPASO.</em></h2></div><div className="paes-audience">{[[GraduationCap,'Rindes por primera vez','Quieres ordenar M1 y Lectora sin saltar entre materiales que no sabes cómo usar.'],[Target,'Vuelves a rendir la PAES','Quieres identificar errores y reforzar lo que todavía te cuesta.'],[BookOpen,'Ya estudias en un preuniversitario','Buscas un apoyo de consulta y práctica; no reemplaza tus clases ni el temario.'],[ListChecks,'Acompañas a un estudiante','Como apoderado, quieres ver una rutina clara y tareas concretas de repaso.']].map(([Icon,title,body])=>{const I=Icon as typeof BookOpen;return <article key={String(title)}><I size={27} aria-hidden="true"/><h3>{String(title)}</h3><p>{String(body)}</p></article>})}</div></div></section>
 
-  useEffect(
-    () => () => {
-      document.body.style.overflow = "";
-    },
-    [],
-  );
+  <section className="paes-section paes-soft" id="bonos"><div className="paes-wrap"><div className="paes-center"><span className="paes-eyebrow">COMPLEMENTOS QUE TIENEN UNA FUNCIÓN</span><h2>EL REPASO NO TERMINA<br/><em>AL MARCAR UNA RESPUESTA.</em></h2><p className="paes-intro">Esta es la propuesta de bonos del kit. Los contenidos completos están en preparación.</p></div><div className="paes-bonuses">
+   <article className="paes-bonus paes-bonus-featured"><div className="paes-bonus-cover"><span>BONO PREVISTO</span><b>100</b><strong>ACTIVIDADES<br/>EXTRA</strong><BookOpen size={60} aria-hidden="true"/></div><div><span className="paes-eyebrow">EN PREPARACIÓN</span><h3>100 actividades extra</h3><p>Propuesta: 50 de M1 y 50 de Lectura, con soluciones explicadas. Práctica adicional para reforzar por tema, no para acumular páginas.</p></div></article>
+   <article className="paes-bonus"><img src="/paes/muestra-5.webp" width="750" height="1175" alt="Ejemplo de calendario de repaso de 7 días" loading="lazy" decoding="async"/><div><span className="paes-eyebrow">EJEMPLO EN LA MUESTRA</span><h3>Plan de repaso</h3><p>Una guía para repartir tus tareas y adaptar la semana a tus dificultades.</p></div></article>
+   <article className="paes-bonus"><img src="/paes/muestra-6.webp" width="750" height="1175" alt="Plantilla de registro de errores incluida en la muestra" loading="lazy" decoding="async"/><div><span className="paes-eyebrow">PLANTILLA EN LA MUESTRA</span><h3>Cuaderno de errores</h3><p>Registra qué falló, cómo se resuelve y cuándo volver a intentarlo.</p></div></article>
+  </div></div></section>
 
-  const resumeVideo = () => {
-    const player = video.current;
-    if (!player) return;
-    setError(false);
-    void player.play().catch(() => setError(true));
-  };
+  <section className="paes-section paes-offer" id="kit"><div className="paes-wrap paes-center"><span className="paes-eyebrow">CONOCE EL ALCANCE ANTES DE ELEGIR</span><h2>KIT DE REPASO<br/><em>M1 + LECTORA.</em></h2><div className="paes-offer-card"><span className="paes-launch">PRELANZAMIENTO</span><h3>PAES en Foco</h3><p>La propuesta reúne dos guías y tres complementos para ordenar tu práctica.</p><ul>{['Guía de repaso Matemática M1','Guía de Competencia Lectora','Bono previsto: 100 actividades extra','Plan de repaso y cuaderno de errores','Formato digital para consultar e imprimir'].map(t=><li key={t}><Check size={20}/><span>{t}</span></li>)}</ul><div className="paes-availability"><Clock3 size={23}/><div><strong>Kit completo en preparación</strong><p>El precio y la fecha de entrega se publicarán cuando el material esté listo.</p></div></div>{paesOffer.status === 'ready' && paesOffer.checkoutUrl ? <><strong className="paes-price">{new Intl.NumberFormat('es-CL',{style:'currency',currency:'CLP',maximumFractionDigits:0}).format(paesOffer.priceCLP ?? 0)}</strong><button className="paes-button" onClick={checkout}>QUIERO MI KIT</button></> : <button className="paes-button paes-disabled" disabled>COMPRA AÚN NO DISPONIBLE</button>}<a className="paes-textlink" href={sample} target="_blank" rel="noopener">Mientras tanto, abre la muestra gratis <Download size={17}/></a><p className="paes-caption">La muestra no es el kit completo ni un ensayo oficial. No se cobra ni se solicita información personal para abrirla.</p></div></div></section>
 
-  const startVideo = () => {
-    const player = video.current;
-    if (!player) return;
-    setError(false);
-    // Assign only on user interaction: the initial page never downloads the MP4.
-    if (!player.getAttribute("src")) player.src = vslUrl;
-    player.controls = false;
-    previousFocus.current = document.activeElement as HTMLElement;
-    document.body.style.overflow = "hidden";
-    if (!dialog.current?.open) dialog.current?.showModal();
-    // Full-viewport dialog remains available where the Fullscreen API is unsupported.
-    if (dialog.current?.requestFullscreen && !document.fullscreenElement)
-      void dialog.current.requestFullscreen().catch(() => {});
-    setStarted(true);
-    resumeVideo();
-  };
-
-  const completeVideo = async () => {
-    const player = video.current;
-    if (!player || !Number.isFinite(player.duration)) return;
-    if (watched.current < player.duration - 0.8) {
-      player.currentTime = watched.current;
-      return;
-    }
-    await closePlayer();
-    trackOnce("VSL_Complete");
-    setFinished(true);
-    if (!tracked.current.has("ViewContent")) {
-      tracked.current.add("ViewContent");
-      trackEvent("ViewContent", {
-        content_name: officeOffer.name,
-        value: officeOffer.price,
-        currency: "BRL",
-      });
-    }
-  };
-
-  useEffect(() => {
-    if (finished)
-      offer.current?.scrollIntoView({
-        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
-          ? "instant"
-          : "smooth",
-        block: "start",
-      });
-  }, [finished]);
-
-  return (
-    <div className="vsl-page">
-      <header className="vsl-brand" aria-label="Escritório IA">
-        <Layers3 size={22} aria-hidden="true" />
-        <span>
-          escritório<strong>IA</strong>
-        </span>
-        <span className="vsl-header-tag">UM PROMPT. CINCO FUNÇÕES.</span>
-      </header>
-      <main className="vsl-main">
-        <div className="vsl-intro">
-          <p className="vsl-eyebrow">PARA INFOPRODUTORES E GESTORES DE TRÁFEGO</p>
-          <h1>
-            Pare de carregar sua operação nas costas.{" "}
-            <em>Monte seu escritório de IA com um único prompt.</em>
-          </h1>
-          <p className="vsl-lead">
-            Você pesquisa a oferta, escreve a copy, monta a página e ainda precisa criar os
-            anúncios? Veja como organizar cinco funções de IA com um único prompt — e parar de
-            começar do zero.
-          </p>
-        </div>
-        <section className="vsl-watch" aria-label="Vídeo de apresentação do Escritório IA">
-          <p className="vsl-scarcity">CONDIÇÃO DE LANÇAMENTO · LOTE DE 50 ACESSOS</p>
-          <div className={`vsl-player${finished ? " vsl-player--complete" : ""}`}>
-            <dialog
-              ref={dialog}
-              className="vsl-cinema"
-              aria-label="Assista até o final para liberar a oferta"
-              onCancel={closePlayer}
-              onClose={closePlayer}
-            >
-              <div className="vsl-cinema-header">
-                <span>ASSISTA ATÉ O FINAL PARA LIBERAR A OFERTA</span>
-                <button onClick={closePlayer} aria-label="Fechar vídeo">
-                  <X size={22} />
-                </button>
-              </div>
-              <video
-                ref={video}
-                preload="none"
-                playsInline
-                controls={false}
-                disablePictureInPicture
-                disableRemotePlayback
-                controlsList="nodownload noplaybackrate noremoteplayback"
-                onContextMenu={(event) => event.preventDefault()}
-                onClick={() => {
-                  if (playing) video.current?.pause();
-                  else resumeVideo();
-                }}
-                onPause={() => setPlaying(false)}
-                onPlaying={() => setPlaying(true)}
-                onSeeking={(event) => {
-                  if (event.currentTarget.currentTime > watched.current + 0.8)
-                    event.currentTarget.currentTime = watched.current;
-                }}
-                onRateChange={(event) => {
-                  if (event.currentTarget.playbackRate !== 1) event.currentTarget.playbackRate = 1;
-                }}
-                aria-label="VSL original: conheça o Escritório IA"
-                onPlay={() => {
-                  setError(false);
-                  trackOnce("VSL_Play");
-                }}
-                onTimeUpdate={(event) => {
-                  const player = event.currentTarget;
-                  if (!Number.isFinite(player.duration) || player.duration <= 0) return;
-                  if (player.currentTime > watched.current + 1.5) {
-                    player.currentTime = watched.current;
-                    return;
-                  }
-                  watched.current = Math.max(watched.current, player.currentTime);
-                  setProgress((watched.current / player.duration) * 100);
-                  for (const percent of [25, 50, 75]) {
-                    if (player.currentTime / player.duration >= percent / 100)
-                      trackOnce(`VSL_${percent}`);
-                  }
-                }}
-                onEnded={completeVideo}
-                onError={() => setError(true)}
-              />
-              {(!playing || error) && (
-                <button className="vsl-resume" onClick={resumeVideo}>
-                  <Play size={30} fill="currentColor" />
-                  <strong>{error ? "TENTAR NOVAMENTE" : "CONTINUAR ASSISTINDO"}</strong>
-                  <span>Assista até o final para liberar a oferta.</span>
-                </button>
-              )}
-              <div className="vsl-cinema-footer">
-                <button
-                  onClick={() => {
-                    if (playing) video.current?.pause();
-                    else resumeVideo();
-                  }}
-                  aria-label={playing ? "Pausar vídeo" : "Continuar vídeo"}
-                >
-                  {playing ? <Pause size={16} /> : <Play size={16} />}{" "}
-                  {playing ? "Pausar" : "Continuar"}
-                </button>
-                <div
-                  className="vsl-watch-progress"
-                  role="progressbar"
-                  aria-label="Vídeo assistido"
-                  aria-valuenow={Math.round(progress)}
-                  aria-valuemin={0}
-                  aria-valuemax={100}
-                >
-                  <span style={{ width: `${progress}%` }} />
-                </div>
-                <span>Oferta liberada ao concluir · 50 acessos</span>
-              </div>
-            </dialog>
-            {(!started || !finished) && (
-              <button
-                className="vsl-play"
-                onClick={startVideo}
-                aria-label="Assistir ao vídeo com som"
-              >
-                <span className="vsl-preview-label">VEJA POR DENTRO</span>
-                <span className="vsl-preview-title">
-                  Menos noites no improviso.
-                  <br />
-                  <strong>Mais direção para executar.</strong>
-                </span>
-                <span className="vsl-play-icon">
-                  <Play size={30} fill="currentColor" aria-hidden="true" />
-                </span>
-                <span className="vsl-play-text">
-                  {started ? "CONTINUAR ASSISTINDO" : "CLIQUE PARA ASSISTIR"}
-                </span>
-                <span className="vsl-preview-meta">
-                  <Volume2 size={16} aria-hidden="true" /> Com som · 2min32s
-                </span>
-              </button>
-            )}
-          </div>
-          {error && (
-            <p className="vsl-error" role="alert">
-              Não foi possível iniciar o vídeo.{" "}
-              <button onClick={startVideo}>Tentar novamente</button>.
-            </p>
-          )}
-          <p className="vsl-retention">
-            <strong>Assista até o final para liberar a oferta.</strong> A apresentação mostra o
-            funcionamento do prompt antes da compra.
-          </p>
-          <div className="vsl-offer-region" aria-live="polite">
-            {finished ? (
-              <section
-                ref={offer}
-                id="oferta"
-                className="vsl-offer"
-                aria-labelledby="vsl-offer-title"
-              >
-                <span className="vsl-eyebrow">VOCÊ VIU COMO FUNCIONA. AGORA É A SUA VEZ.</span>
-                <h2 id="vsl-offer-title">
-                  Chega de fazer tudo sozinho. Monte seu Escritório IA hoje.
-                </h2>
-                <p>
-                  Pare de gastar suas noites tentando montar tudo do zero. Tenha o guia com o prompt
-                  completo para organizar pesquisa, copy, páginas, criativos e entregáveis no Claude
-                  ou ChatGPT. Você dá a direção. A IA ajuda na execução.
-                </p>
-                <div className="vsl-offer-urgency">
-                  <strong>Preço de lançamento: R$ 9,99. Vai aumentar em breve.</strong>
-                  <span>
-                    Apenas 50 acessos neste lote. Garanta a condição atual enquanto estiver
-                    disponível.
-                  </span>
-                </div>
-                <div className="vsl-price">
-                  <strong>{formatPrice(officeOffer.price)}</strong>
-                  <span>Pagamento único</span>
-                </div>
-                <a
-                  className="vsl-buy"
-                  href={officeOffer.checkoutUrl ?? undefined}
-                  onClick={(event) => {
-                    const url = getCheckoutUrl();
-                    if (!url) {
-                      event.preventDefault();
-                      return;
-                    }
-                    event.currentTarget.href = url;
-                    trackEvent("InitiateCheckout", {
-                      content_name: officeOffer.name,
-                      value: officeOffer.price,
-                      currency: "BRL",
-                    });
-                  }}
-                >
-                  QUERO MONTAR MEU ESCRITÓRIO IA <ArrowRight size={19} aria-hidden="true" />
-                </a>
-                <p className="vsl-purchase-note">
-                  Guia em PDF + prompt. Use com sua própria conta de IA.
-                </p>
-                <div className="vsl-extra-demo">
-                  <div>
-                    <span className="vsl-eyebrow">VEJA MAIS ANTES DE DECIDIR</span>
-                    <h3>Veja o que você pode estruturar.</h3>
-                    <p>
-                      Um prompt. Cinco funções. Mais direção para tirar sua próxima oferta do papel.
-                    </p>
-                  </div>
-                  <VideoDemo
-                    {...officeOffer.videos.presentation}
-                    onContinue={() =>
-                      offer.current?.scrollIntoView({ behavior: "smooth", block: "start" })
-                    }
-                    continueLabel="Garantir meu guia + prompt"
-                  />
-                </div>
-              </section>
-            ) : (
-              <p className="vsl-wait">
-                <LockKeyhole size={16} aria-hidden="true" />
-                <span>
-                  Ao final do vídeo, você poderá garantir o prompt por{" "}
-                  <strong>{formatPrice(officeOffer.price)}.</strong>
-                </span>
-              </p>
-            )}
-          </div>
-        </section>
-      </main>
-      <footer className="vsl-footer">
-        Escritório IA · Organização para a sua operação digital.
-      </footer>
-    </div>
-  );
+  <section className="paes-section"><div className="paes-wrap paes-faq"><div className="paes-center"><span className="paes-eyebrow">CLARIDAD ANTES DE DECIDIR</span><h2>PREGUNTAS FRECUENTES</h2></div>{[
+   ['¿Qué incluye la muestra gratuita?','Seis páginas con presentación, porcentajes introductorios, un texto original con preguntas, soluciones explicadas, un calendario de ejemplo y una plantilla de errores.'],
+   ['¿El kit ya se puede comprar?','Todavía no. Está en preparación. La muestra gratuita sí está disponible; el precio y las condiciones se anunciarán antes de abrir las compras.'],
+   ['¿Incluye todas las pruebas PAES?','No. El alcance previsto es Matemática M1 y Competencia Lectora. No contempla M2, Ciencias ni Historia y Ciencias Sociales.'],
+   ['¿Es material oficial de DEMRE?','No. Es una propuesta independiente. La muestra contiene ejercicios autorales introductorios. Revisa siempre los temarios, requisitos y calendarios en las páginas oficiales.'],
+   ['¿Garantiza un puntaje o el ingreso a una carrera?','No. Es un apoyo para estudiar y practicar. El resultado depende de tu preparación y de los requisitos del proceso de admisión.'],
+   ['¿Puedo verlo en el celular o imprimirlo?','Sí. La muestra es un PDF descargable. Puedes abrirla en el celular, tablet o computador e imprimir las páginas que necesites.'],
+  ].map(([q,a])=><details key={q}><summary>{q}</summary><p>{a}</p></details>)}<KitLink>VER EL KIT Y SU DISPONIBILIDAD</KitLink></div></section>
+  <footer className="paes-footer"><div className="paes-wrap"><strong>PAES EN FOCO</strong><p>Material independiente de apoyo al estudio. Sin afiliación ni respaldo de DEMRE, Universidad de Chile o el Ministerio de Educación. Mockup ilustrativo; kit completo en preparación.</p><p>PAES Regular 2026, proceso de Admisión 2027: 30 de noviembre, 1 y 2 de diciembre de 2026. Consulta los canales oficiales antes de organizar tu rendición.</p><nav aria-label="Fuentes oficiales"><a href="https://www.mineduc.cl/comienza-la-inscripcion-a-la-paes-regular-2026-admision-2027/" target="_blank" rel="noopener">Calendario oficial</a><a href="https://acceso-sup.mineduc.cl/acceso-buscador/material-de-preparacion-paes" target="_blank" rel="noopener">Temarios y recursos</a></nav><small>© {new Date().getFullYear()} PAES en Foco. La compra del kit aún no está habilitada.</small></div></footer>
+  {activePage !== null && <dialog id="sample-dialog" className="paes-dialog" onCancel={()=>setActivePage(null)} onClick={e=>{if(e.target===e.currentTarget)setActivePage(null)}}><div className="paes-dialog-head"><strong>{pages[activePage][0]}</strong><button type="button" onClick={()=>setActivePage(null)} aria-label="Cerrar página ampliada" autoFocus><X/></button></div><img src={`/paes/muestra-${activePage+1}.webp`} width="750" height="1175" alt={pages[activePage][0]}/><a href={sample} target="_blank" rel="noopener">Abrir PDF con zoom</a></dialog>}
+ </main>;
 }
