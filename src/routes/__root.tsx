@@ -79,7 +79,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "PAES en Foco | Repaso M1 + Competencia Lectora" },
-      { name: "description", content: "Conoce la propuesta de repaso visual para Matemática M1 y Competencia Lectora. Kit en preparación y muestra gratuita de 6 páginas para descargar." },
+      { name: "description", content: "Conoce la propuesta de repaso visual para Matemática M1 y Competencia Lectora. Kit en preparación y muestra gratuita de 16 páginas para descargar." },
       { name: "author", content: "PAES en Foco" },
       { property: "og:title", content: "PAES en Foco | Un repaso con dirección" },
       { property: "og:description", content: "Guías visuales, práctica explicada y organización. Conoce el kit en preparación y abre la muestra gratuita de M1 y Lectora." },
