@@ -1,5 +1,5 @@
 // Public Pixel ID only. API access tokens belong exclusively in server secrets.
-export const META_PIXEL_ID = "1418598996441763";
+export const META_PIXEL_ID = "1670040038036599";
 type Parameters = Record<string, string | number>;
 type PixelFunction = ((...args: unknown[]) => void) & {
   callMethod?: (...args: unknown[]) => void;

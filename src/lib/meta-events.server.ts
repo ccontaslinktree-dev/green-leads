@@ -1,6 +1,6 @@
 import { officeOffer } from "../data/office-offer.ts";
 // Imported only by the SSR server entry. No credential is part of the client build.
-const PIXEL_ID = "1418598996441763";
+const PIXEL_ID = "1670040038036599";
 const ALLOWED = new Set([
   "PageView",
   "ViewContent",
@@ -33,7 +33,7 @@ function setting(bindings: Bindings, name: string): string {
   return typeof value === "string" ? value : "";
 }
 async function accessToken(bindings: Bindings) {
-  const direct = setting(bindings, "META_CAPI_ACCESS_TOKEN");
+  const direct = setting(bindings, "META_CAPI_TOKEN") || setting(bindings, "META_CAPI_ACCESS_TOKEN");
   if (direct) return direct;
   if (cachedToken && cachedToken.expires > Date.now()) return cachedToken.value;
   const base = setting(bindings, "SUPABASE_URL");
