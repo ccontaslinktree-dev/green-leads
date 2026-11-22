@@ -78,14 +78,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "PAES en Foco | Repaso M1 + Competencia Lectora" },
-      { name: "description", content: "Repasa Matemática M1 y Competencia Lectora con guías visuales, ejercicios explicados y herramientas para organizar tu estudio." },
-      { name: "author", content: "PAES en Foco" },
-      { property: "og:title", content: "PAES en Foco | Un repaso con dirección" },
-      { property: "og:description", content: "Guías visuales, práctica explicada y organización para tu repaso de Matemática M1 y Competencia Lectora." },
-      { property: "og:image", content: "/paes/kit-mockup.webp" },
+      { title: "Manual del Pescador Práctico | Plataforma de Pesca" },
+      { name: "description", content: "500 enseñanzas de pesca organizadas por categorías: nudos, equipo, peces, carnadas, técnicas, limpieza y cortes. Para principiantes e intermedios de LATAM." },
+      { name: "author", content: "Manual del Pescador Práctico" },
+      { property: "og:title", content: "Manual del Pescador Práctico | Deja de improvisar" },
+      { property: "og:description", content: "Encuentra qué revisar antes de tu próxima salida. Contenido de pesca organizado por categorías y bonos prácticos." },
+      { property: "og:image", content: "/pescador/plataforma.webp" },
       { property: "og:type", content: "website" },
-      { property: "og:locale", content: "es_CL" },
+      { property: "og:locale", content: "es_419" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
@@ -111,7 +111,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="es-CL">
+    <html lang="es-419">
       <head>
         <HeadContent />
         <script

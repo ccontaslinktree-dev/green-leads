@@ -6,7 +6,7 @@ const event = (id: string, name = "PageView") => ({
   event_name: name,
   event_id: id,
   event_source_url: "https://office.example/?email=never-forward-this",
-  custom_data: { value: 0.01, email: "private@example.com" },
+  custom_data: { value: 0.01, plan_id: "completo", email: "private@example.com" },
   fbp: "fb.1.1793040000000.123456",
 });
 function request(body: unknown, origin = "https://office.example") {
@@ -53,7 +53,9 @@ test("relay validates events, keeps secrets server-side, strips data and dedupli
     const payload = JSON.parse(String(sent[0].init?.body));
     assert.equal(payload.data[0].event_id, "deduplicated-123");
     assert.equal(payload.data[0].event_source_url, "https://office.example/");
-    assert.equal(payload.data[0].custom_data.value, 9.99);
+    assert.equal(payload.data[0].custom_data.value, 4.50);
+    assert.equal(payload.data[0].custom_data.currency, "USD");
+    assert.equal(payload.data[0].custom_data.plan_id, "completo");
     assert.equal(payload.data[0].custom_data.email, undefined);
     assert.equal(payload.data[0].user_data.email, undefined);
     assert.deepEqual(
@@ -63,6 +65,13 @@ test("relay validates events, keeps secrets server-side, strips data and dedupli
       { accepted: true, duplicate: true },
     );
     assert.equal(sent.length, 1);
+    const basicEvent = event("basic-plan-123456", "InitiateCheckout");
+    basicEvent.custom_data.plan_id = "basico";
+    assert.equal((await handleMetaEvents(request(basicEvent), bindings)).status, 200);
+    const basicPayload = JSON.parse(String(sent[1].init?.body));
+    assert.equal(basicPayload.data[0].custom_data.value, 4.00);
+    assert.equal(basicPayload.data[0].custom_data.currency, "USD");
+    assert.equal(basicPayload.data[0].custom_data.plan_id, "basico");
     assert.equal(
       (
         await handleMetaEvents(

@@ -1,4 +1,4 @@
-import { officeOffer } from "../data/office-offer.ts";
+import { fishingPlans } from "../data/pescador-offer.ts";
 // Imported only by the SSR server entry. No credential is part of the client build.
 const PIXEL_ID = "1670040038036599";
 const ALLOWED = new Set([
@@ -120,8 +120,13 @@ export async function handleMetaEvents(request: Request, bindings: Bindings = {}
     if (typeof value === "string" && value.length < 100) custom[name] = value;
   }
   if (["ViewContent", "InitiateCheckout"].includes(payload.event_name)) {
-    custom.value = officeOffer.price;
-    custom.currency = "BRL";
+    const planId = payload.custom_data?.plan_id;
+    if (payload.event_name === "InitiateCheckout" && planId !== "completo" && planId !== "basico")
+      return json({ error: "invalid_plan" }, 400);
+    const plan = planId === "basico" ? fishingPlans.basico : fishingPlans.completo;
+    custom.value = plan.priceUSD;
+    custom.currency = "USD";
+    if (planId === "completo" || planId === "basico") custom.plan_id = planId;
   }
   const userData: Record<string, string> = {
     client_user_agent: request.headers.get("user-agent") ?? "",
