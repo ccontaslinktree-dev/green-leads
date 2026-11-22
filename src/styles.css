@@ -17,3 +17,6 @@
 
 /* Real PDF excerpts retain their full calculations and diagrams. */
 .paes-sample img,.paes-bonus>img{aspect-ratio:804/1056;object-fit:contain;background:#fff}.paes-paper{max-height:none;padding:20px}.paes-paper img{border-radius:7px}
+
+/* Concise offer test: bonuses focus on their practical use. */
+.paes-bonuses-compact .paes-bonus{padding:24px}.paes-bonuses-compact .paes-bonus>div:not(.paes-bonus-icon){padding:0}.paes-bonus-icon{display:flex;align-items:center;justify-content:center;width:58px;height:58px;border-radius:14px;background:#e8f3eb;color:#236b43;margin-bottom:18px}
