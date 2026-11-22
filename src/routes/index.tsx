@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { BookOpen, Check, Clock3, FileText, Gift, GraduationCap, ListChecks, Smartphone, Target, X } from 'lucide-react';
 import { initializeTracking, trackEvent } from '@/lib/office-tracking';
 import { paesOffer, paesPlans, type PaesPlan } from '@/data/paes-offer';
+import { MaterialCarousel, PreparationPrompt, ValueBreakdown } from '@/components/paes-experience';
 
 export const Route = createFileRoute('/')({ component: PaesPage });
 
@@ -47,7 +48,9 @@ function PaesPage() {
    </div>
   </section>
 
-  <section className="paes-section paes-pain"><div className="paes-wrap paes-center"><span className="paes-eyebrow">CADA DÍA SIN DIRECCIÓN TE CUESTA CARO</span><h2>IDENTIFICA TUS ERRORES AHORA<br/><em>O SE REPETIRÁN EN LA PRUEBA.</em></h2><p className="paes-intro">¿Horas estudiando y todavía no sabes qué reforzar? Encuentra el tema que te cuesta, practica y entiende el procedimiento antes de volver a intentarlo.</p><div className="paes-process">{[['01','Detecta','Encuentra exactamente el tema que te está bajando el puntaje.'],['02','Practica','Resuelve primero, revisa la explicación y entiende por qué fallaste.'],['03','Refuerza','Anota el error y repítelo hasta que deje de ser un problema.']].map(([n,t,d])=><article key={n}><span>{n}</span><h3>{t}</h3><p>{d}</p></article>)}</div><KitLink light>QUIERO ORGANIZAR MIS ÚLTIMOS DÍAS</KitLink></div></section>
+  <section className="paes-section paes-pain" id="preparacion" tabIndex={-1}><div className="paes-wrap paes-center"><span className="paes-eyebrow">CADA DÍA SIN DIRECCIÓN TE CUESTA CARO</span><h2>IDENTIFICA TUS ERRORES AHORA<br/><em>O SE REPETIRÁN EN LA PRUEBA.</em></h2><p className="paes-intro">¿Horas estudiando y todavía no sabes qué reforzar? Encuentra el tema que te cuesta, practica y entiende el procedimiento antes de volver a intentarlo.</p><div className="paes-process">{[['01','Detecta','Encuentra exactamente el tema que te está bajando el puntaje.'],['02','Practica','Resuelve primero, revisa la explicación y entiende por qué fallaste.'],['03','Refuerza','Anota el error y repítelo hasta que deje de ser un problema.']].map(([n,t,d])=><article key={n}><span>{n}</span><h3>{t}</h3><p>{d}</p></article>)}</div><KitLink light>QUIERO ORGANIZAR MIS ÚLTIMOS DÍAS</KitLink></div></section>
+
+  <MaterialCarousel />
 
   <section className="paes-section"><div className="paes-wrap"><div className="paes-center"><span className="paes-eyebrow">¿TE IDENTIFICAS?</span><h2>SI NO QUIERES LLEGAR<br/><em>A LA PRUEBA ADIVINANDO.</em></h2></div><div className="paes-audience">{[[GraduationCap,'Rindes por primera vez','No sabes por dónde empezar y el tiempo se te está acabando. Necesitas una ruta, ya.'],[Target,'Vuelves a rendir la PAES','No puedes darte el lujo de repetir los mismos errores. Esta vez tiene que ser distinto.'],[BookOpen,'Ya estudias en un preuniversitario','Quieres práctica extra con dirección para los últimos días. Es un apoyo: no reemplaza tus clases ni el temario.'],[ListChecks,'Acompañas a un estudiante','Como apoderado, quieres verlo estudiar con un plan claro y no perdido entre pestañas.']].map(([Icon,title,body])=>{const I=Icon as typeof BookOpen;return <article key={String(title)}><I size={27} aria-hidden="true"/><h3>{String(title)}</h3><p>{String(body)}</p></article>})}</div></div></section>
 
@@ -56,6 +59,8 @@ function PaesPage() {
    <article className="paes-bonus"><div className="paes-bonus-icon" aria-hidden="true"><ListChecks size={32}/></div><div><span className="paes-eyebrow">BONO 2</span><h3>Plan de repaso</h3><p>Sabe qué hacer cada día hasta la prueba. Sin improvisar, sin perder ni una tarde.</p></div></article>
    <article className="paes-bonus"><div className="paes-bonus-icon" aria-hidden="true"><FileText size={32}/></div><div><span className="paes-eyebrow">BONO 3</span><h3>Cuaderno de errores</h3><p>Registra cada error y elimínalo antes de que te cueste puntos el día de la prueba.</p></div></article>
   </div></div></section>
+
+  <ValueBreakdown formatPrice={usd} />
 
   <section className="paes-section paes-offer" id="kit"><div className="paes-wrap paes-center"><span className="paes-eyebrow">ELIGE AHORA. EL TIEMPO NO ESPERA.</span><h2>ASEGURA TU REPASO<br/><em>ANTES DE QUE SUBA EL PRECIO.</em></h2><OfferTimer /><div className="paes-plans">
    <div className="paes-offer-card paes-plan-main"><span className="paes-launch">MÁS ELEGIDO · RECOMENDADO</span><h3>Paquete Completo</h3><p>Todo lo que necesitas para llegar a la prueba sabiendo qué hacer cada día. Guías + los 3 bonos.</p><ul>{['Guía de repaso Matemática M1','Guía de Competencia Lectora','BONO: 100 actividades extra con soluciones','BONO: Plan de repaso día a día','BONO: Cuaderno de errores','Acceso inmediato · Estudia desde tu celular'].map(t=><li key={t}><Check size={20}/><span>{t}</span></li>)}</ul><div className="paes-availability"><Clock3 size={23}/><div><strong>Guías + práctica + organización</strong><p>Las dos guías y los tres bonos para reforzar lo que te cuesta y organizar tu repaso.</p></div></div><strong className="paes-price">{usd(paesPlans.completo.priceUSD)}</strong><p className="paes-plan-save">Pago único en dólares estadounidenses</p><button className="paes-button" onClick={() => checkout(paesPlans.completo)}>SÍ, QUIERO EL PAQUETE COMPLETO</button><p className="paes-caption">Precio de lanzamiento por tiempo limitado. Material independiente de apoyo; no garantiza puntaje.</p></div>
@@ -72,5 +77,6 @@ function PaesPage() {
   ].map(([q,a])=><details key={q}><summary>{q}</summary><p>{a}</p></details>)}<KitLink>QUIERO ASEGURAR MI PAQUETE AHORA</KitLink></div></section>
   <footer className="paes-footer"><div className="paes-wrap"><strong>PAES EN FOCO</strong><p>Material independiente de apoyo al estudio. Sin afiliación ni respaldo de DEMRE, Universidad de Chile o el Ministerio de Educación. No reemplaza el temario oficial ni garantiza puntaje.</p><p>PAES Regular 2026, proceso de Admisión 2027: 30 de noviembre, 1 y 2 de diciembre de 2026. Consulta los canales oficiales antes de organizar tu rendición.</p><nav aria-label="Fuentes oficiales"><a href="https://www.mineduc.cl/comienza-la-inscripcion-a-la-paes-regular-2026-admision-2027/" target="_blank" rel="noopener">Calendario oficial</a><a href="https://acceso-sup.mineduc.cl/acceso-buscador/material-de-preparacion-paes" target="_blank" rel="noopener">Temarios y recursos</a></nav><small>© {new Date().getFullYear()} PAES en Foco. Todos los derechos reservados.</small></div></footer>
 
+  <PreparationPrompt />
  </main>;
 }
