@@ -14,7 +14,7 @@ function ExamClock() {
  useEffect(() => { const tick = () => setDays(Math.ceil((Date.parse('2026-11-30T00:00:00-03:00') - Date.now()) / 86400000)); tick(); const id = setInterval(tick, 60000); return () => clearInterval(id); }, []);
  return <div className="paes-clock"><Clock3 size={20} aria-hidden="true"/><span>{days === null ? 'PAES REGULAR: 30 NOVIEMBRE AL 2 DICIEMBRE 2026' : days > 0 ? `QUEDAN ${days} DÍAS PARA LA PRIMERA JORNADA · 30 NOV – 2 DIC` : days >= -2 ? 'PAES REGULAR EN CURSO · 30 NOV – 2 DIC' : 'PAES REGULAR 2026 FINALIZADA · REVISA LAS PRÓXIMAS FECHAS OFICIALES'}</span></div>;
 }
-const clp = (n: number) => new Intl.NumberFormat('es-CL',{style:'currency',currency:'CLP',maximumFractionDigits:0}).format(n);
+const usd = (n: number) => `US$ ${new Intl.NumberFormat('es-CL',{minimumFractionDigits:2,maximumFractionDigits:2}).format(n)}`;
 function OfferTimer() {
  const [left, setLeft] = useState<number | null>(null);
  useEffect(() => {
@@ -29,7 +29,7 @@ function PaesPage() {
  useEffect(() => { initializeTracking(); trackEvent('ViewContent', { content_name: paesOffer.name }); }, []);
  const checkout = (plan: PaesPlan) => {
   const url = new URL(plan.checkoutUrl); new URLSearchParams(window.location.search).forEach((v,k) => { if (!k.startsWith('__lovable_') && !url.searchParams.has(k)) url.searchParams.set(k,v); });
-  trackEvent('InitiateCheckout', { content_name: plan.name, currency: 'CLP', value: plan.priceCLP }); window.location.assign(url.toString());
+  trackEvent('InitiateCheckout', { content_name: plan.name, currency: 'USD', value: plan.priceUSD }); window.location.assign(url.toString());
  };
  return <main className="paes-page">
   <ExamClock />
@@ -43,7 +43,6 @@ function PaesPage() {
     <p className="paes-caption paes-caption-light">Imagen ilustrativa. Kit 100% digital con acceso inmediato después de la compra.</p>
     <p className="paes-hero-copy">Deja de saltar entre apuntes y videos. Refuerza <strong>Matemática M1 y Competencia Lectora</strong> con ejemplos resueltos, práctica explicada y una ruta clara para organizar tu repaso.</p>
     <div className="paes-trust"><span><Smartphone size={18}/> En tu celular</span><span><FileText size={18}/> Práctica explicada</span><span><Clock3 size={18}/> Acceso inmediato</span></div>
-    <KitLink light>QUIERO CONTROLAR MI REPASO AHORA</KitLink>
     <p className="paes-caption paes-caption-light">Enfocado en M1 + Lectora. No incluye M2, Ciencias ni Historia.</p>
    </div>
   </section>
@@ -59,12 +58,12 @@ function PaesPage() {
   </div></div></section>
 
   <section className="paes-section paes-offer" id="kit"><div className="paes-wrap paes-center"><span className="paes-eyebrow">ELIGE AHORA. EL TIEMPO NO ESPERA.</span><h2>ASEGURA TU REPASO<br/><em>ANTES DE QUE SUBA EL PRECIO.</em></h2><OfferTimer /><div className="paes-plans">
-   <div className="paes-offer-card paes-plan-main"><span className="paes-launch">MÁS ELEGIDO · RECOMENDADO</span><h3>Paquete Completo</h3><p>Todo lo que necesitas para llegar a la prueba sabiendo qué hacer cada día. Guías + los 3 bonos.</p><ul>{['Guía de repaso Matemática M1','Guía de Competencia Lectora','BONO: 100 actividades extra con soluciones','BONO: Plan de repaso día a día','BONO: Cuaderno de errores','Acceso inmediato · Estudia desde tu celular'].map(t=><li key={t}><Check size={20}/><span>{t}</span></li>)}</ul><div className="paes-availability"><Clock3 size={23}/><div><strong>Valor normal: <s>{clp(paesPlans.completo.anchorCLP)}</s></strong><p>Menos que un completo en la esquina. Un preuniversitario cuesta cientos de miles; aquí tienes una ruta clara por el precio de una bebida.</p></div></div><strong className="paes-price">{clp(paesPlans.completo.priceCLP)}</strong><p className="paes-plan-save">Ahorras {clp(paesPlans.completo.anchorCLP - paesPlans.completo.priceCLP)} hoy · pago único</p><button className="paes-button" onClick={() => checkout(paesPlans.completo)}>SÍ, QUIERO EL PAQUETE COMPLETO</button><p className="paes-caption">Precio de lanzamiento por tiempo limitado. Material independiente de apoyo; no garantiza puntaje.</p></div>
-   <div className="paes-offer-card paes-plan-basic"><h3>Paquete Básico</h3><p>Solo las guías. Sin bonos, sin plan de repaso, sin cuaderno de errores.</p><ul>{['Guía de repaso Matemática M1','Guía de Competencia Lectora','Consulta desde tu celular o imprime'].map(t=><li key={t}><Check size={20}/><span>{t}</span></li>)}{['Sin 100 actividades extra','Sin plan de repaso','Sin cuaderno de errores'].map(t=><li key={t} className="paes-plan-no"><X size={20}/><span>{t}</span></li>)}</ul><p className="paes-plan-anchor">Valor normal: <s>{clp(paesPlans.basico.anchorCLP)}</s></p><strong className="paes-price">{clp(paesPlans.basico.priceCLP)}</strong><button className="paes-button paes-button-ghost" onClick={() => checkout(paesPlans.basico)}>QUIERO SOLO EL BÁSICO</button></div>
+   <div className="paes-offer-card paes-plan-main"><span className="paes-launch">MÁS ELEGIDO · RECOMENDADO</span><h3>Paquete Completo</h3><p>Todo lo que necesitas para llegar a la prueba sabiendo qué hacer cada día. Guías + los 3 bonos.</p><ul>{['Guía de repaso Matemática M1','Guía de Competencia Lectora','BONO: 100 actividades extra con soluciones','BONO: Plan de repaso día a día','BONO: Cuaderno de errores','Acceso inmediato · Estudia desde tu celular'].map(t=><li key={t}><Check size={20}/><span>{t}</span></li>)}</ul><div className="paes-availability"><Clock3 size={23}/><div><strong>Guías + práctica + organización</strong><p>Las dos guías y los tres bonos para reforzar lo que te cuesta y organizar tu repaso.</p></div></div><strong className="paes-price">{usd(paesPlans.completo.priceUSD)}</strong><p className="paes-plan-save">Pago único en dólares estadounidenses</p><button className="paes-button" onClick={() => checkout(paesPlans.completo)}>SÍ, QUIERO EL PAQUETE COMPLETO</button><p className="paes-caption">Precio de lanzamiento por tiempo limitado. Material independiente de apoyo; no garantiza puntaje.</p></div>
+   <div className="paes-offer-card paes-plan-basic"><h3>Paquete Básico</h3><p>Solo las guías. Sin bonos, sin plan de repaso, sin cuaderno de errores.</p><ul>{['Guía de repaso Matemática M1','Guía de Competencia Lectora','Consulta desde tu celular o imprime'].map(t=><li key={t}><Check size={20}/><span>{t}</span></li>)}{['Sin 100 actividades extra','Sin plan de repaso','Sin cuaderno de errores'].map(t=><li key={t} className="paes-plan-no"><X size={20}/><span>{t}</span></li>)}</ul><p className="paes-plan-anchor">Pago único en dólares estadounidenses</p><strong className="paes-price">{usd(paesPlans.basico.priceUSD)}</strong><button className="paes-button paes-button-ghost" onClick={() => checkout(paesPlans.basico)}>QUIERO SOLO EL BÁSICO</button></div>
   </div></div></section>
 
   <section className="paes-section"><div className="paes-wrap paes-faq"><div className="paes-center"><span className="paes-eyebrow">CLARIDAD ANTES DE DECIDIR</span><h2>PREGUNTAS FRECUENTES</h2></div>{[
-   ['¿Cuál es la diferencia entre los paquetes?','El Básico trae solo las guías de M1 y Lectora. El Completo trae las guías más los 3 bonos: 100 actividades extra, plan de repaso y cuaderno de errores. Por solo $1.000 más, el Completo es la opción que recomendamos.'],
+   ['¿Cuál es la diferencia entre los paquetes?',`El Básico trae solo las guías de M1 y Lectora. El Completo trae las guías más los 3 bonos: 100 actividades extra, plan de repaso y cuaderno de errores. Por ${usd(paesPlans.completo.priceUSD - paesPlans.basico.priceUSD)} más, el Completo es la opción que recomendamos.`],
    ['¿Cómo recibo el material?','Después de confirmar el pago, recibes por correo las instrucciones de acceso al kit digital y puedes empezar tu repaso.'],
    ['¿Incluye todas las pruebas PAES?','No. El enfoque es Matemática M1 y Competencia Lectora. No contempla M2, Ciencias ni Historia y Ciencias Sociales.'],
    ['¿Es material oficial de DEMRE?','No. Es material independiente de apoyo, con ejercicios autorales. Revisa siempre los temarios, requisitos y calendarios en las páginas oficiales.'],
