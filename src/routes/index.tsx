@@ -2,15 +2,10 @@ import { createFileRoute } from '@tanstack/react-router';
 import { useEffect, useRef, useState, type MouseEvent } from 'react';
 import { initializeTracking, trackEvent } from '@/lib/office-tracking';
 import { fishingOffer, fishingPlans, platformSamples, type FishingPlanId } from '@/data/pescador-offer';
+import { MiniVsl } from '@/components/pescador/MiniVsl';
+import { SocialProof } from '@/components/pescador/SocialProof';
+import { fishingMiniVsl } from '@/data/pescador-proof';
 export const Route = createFileRoute('/')({ component: FishingPage });
-const previews = [
- ['equipo','Prepara el conjunto','Entiende la función de cada componente.'],
- ['nudos','La unión también cuenta','Esquema y explicaciones del contenido real.'],
- ['carnadas','Elige con un motivo','Opciones, presentación y contexto.'],
- ['agua','Lee lo que te rodea','Profundidad, corriente y estructura.'],
- ['cortes','Del pez al corte','Orientación para limpieza y preparación.'],
- ['ensenanzas','Enseñanzas para aplicar','Cada enseñanza trae explicación y ejemplo.'],
-] as const;
 function CheckoutButton({plan}:{plan:FishingPlanId}) {
  const entry = fishingPlans[plan];
  const ready = typeof entry.checkoutUrl === 'string' && entry.checkoutUrl.startsWith('https://pay.hotmart.com/');
@@ -23,26 +18,19 @@ function CheckoutButton({plan}:{plan:FishingPlanId}) {
  };
  return <button className={`button checkout ${plan==='basico'?'secondary':''}`} disabled={!ready} onClick={checkout}>QUIERO EL PAQUETE {plan==='completo'?'COMPLETO':'BÁSICO'}</button>;
 }
-function MaterialCarousel({onPreview}:{onPreview:(name:string,title:string,trigger:HTMLButtonElement)=>void}) {
- return <div className="track" id="material-track">{[0,1].map(copy=><div className="track-group" key={copy} aria-hidden={copy===1?true:undefined}>{previews.map(([name,title,desc])=><button key={name} type="button" className="preview" aria-label={`Ampliar: ${title}`} tabIndex={copy===1?-1:0} onClick={e=>onPreview(name,title,e.currentTarget)}><img src={`/pescador/excerpt-${name}.webp`} width={600} height={850} alt={copy?'':title} loading="lazy" decoding="async"/><strong>{title}</strong><span>{desc}</span></button>)}</div>)}</div>;
-}
 function PlatformPreview(){
  const [selected,setSelected]=useState(0);const item=platformSamples[selected];
  return <section className="section platform-section"><div className="wrap"><div className="center"><span className="eyebrow">CADA DUDA TIENE SU LUGAR</span><h2>ABRE LA CATEGORÍA.<br/><em>DEJA DE BUSCAR A CIEGAS.</em></h2><p className="intro">¿El nudo te falla? Ve a nudos. ¿No sabes qué presentar? Revisa carnadas. Explora una enseñanza real de cada categoría.</p></div><div className="platform-demo"><div className="platform-demo-head"><span>PESCADOR PRÁCTICO</span><span>VISTA DEL CONTENIDO</span></div><div className="category-tabs" role="tablist" aria-label="Categorías de ejemplo">{platformSamples.map((s,i)=><button id={`category-${i}`} key={s.category} role="tab" aria-selected={i===selected} aria-controls="category-content" tabIndex={i===selected?0:-1} onClick={()=>setSelected(i)} onKeyDown={e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();const next=e.key==='Home'?0:e.key==='End'?platformSamples.length-1:(selected+(e.key==='ArrowRight'?1:-1)+platformSamples.length)%platformSamples.length;setSelected(next);document.getElementById(`category-${next}`)?.focus();}}}>{s.category}</button>)}</div><article id="category-content" role="tabpanel" aria-labelledby={`category-${selected}`} tabIndex={0}><span className="lesson-label">ENSEÑANZA {String(item.number).padStart(3,'0')} · {item.category.toUpperCase()}</span><h3>{item.title}</h3><p>{item.body}</p><div className="application"><strong>LLÉVALO A LA PRÁCTICA</strong><p>{item.example}</p></div></article><p className="platform-demo-caption">Ejemplo de organización y contenido. La apariencia final del área de acceso puede variar.</p></div></div></section>;
 }
 function FishingPage(){
- const preview=useRef<HTMLDialogElement>(null);const prompt=useRef<HTMLDialogElement>(null);const lastTrigger=useRef<HTMLButtonElement|null>(null);
- const [activePage,setActivePage]=useState<{name:string;title:string}|null>(null);
+ const prompt=useRef<HTMLDialogElement>(null);
  useEffect(()=>{initializeTracking();trackEvent('ViewContent',{content_name:fishingOffer.name,currency:'USD',value:fishingPlans.completo.priceUSD});},[]);
- useEffect(()=>{if(activePage)preview.current?.showModal();},[activePage]);
  useEffect(()=>{
   let seen=false;try{seen=sessionStorage.getItem('pescador-preparacion')==='shown';}catch{}
   if(seen)return;let stopped=false;let timer:ReturnType<typeof setTimeout>;
-  const show=()=>{if(stopped)return;if(document.hidden||preview.current?.open){timer=setTimeout(show,1000);return;}prompt.current?.showModal();try{sessionStorage.setItem('pescador-preparacion','shown');}catch{}};
+  const show=()=>{if(stopped)return;if(document.hidden||Array.from(document.querySelectorAll('video[data-mini-vsl]')).some(v=>!(v as HTMLVideoElement).paused)){timer=setTimeout(show,1000);return;}prompt.current?.showModal();try{sessionStorage.setItem('pescador-preparacion','shown');}catch{}};
   timer=setTimeout(show,5000);return()=>{stopped=true;clearTimeout(timer);};
  },[]);
- const openPreview=(name:string,title:string,trigger:HTMLButtonElement)=>{lastTrigger.current=trigger;setActivePage({name,title});};
- const closePreview=()=>{preview.current?.close();setActivePage(null);lastTrigger.current?.focus();};
  const closePrompt=()=>prompt.current?.close();
  const continueReading=()=>{closePrompt();const el=document.getElementById('preparacion');el?.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});el?.focus({preventScroll:true});};
  const trackPlanScroll=(e:MouseEvent<HTMLDivElement>)=>{if((e.target as HTMLElement).closest('a[href="#planes"]'))trackEvent('ClickParaOferta',{content_name:fishingOffer.name});};
@@ -50,11 +38,11 @@ function FishingPage(){
 
 <div className="topbar">500 ENSEÑANZAS PARA TU PRÓXIMA SALIDA <span>COMPLETO US$ 4,50</span></div>
 <main>
-<section className="hero"><div className="wrap center"><div className="brand"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M25 5v20a10 10 0 1 1-20 0v-7l7 7M25 5h8" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/></svg>PESCADOR PRÁCTICO</div><span className="eyebrow">PARA PRINCIPIANTES E INTERMEDIOS · ESPAÑOL LATAM</span><h1>¿BUSCAS PECES MÁS GRANDES?<br/>EMPIEZA POR TU PREPARACIÓN.</h1><p className="hero-sub"><strong>Aprende qué carnada elegir, qué nudo usar y cómo hacerlo.</strong> 500 enseñanzas organizadas para preparar mejor tu equipo y tu próxima pesca.</p><img className="hero-image" src="/pescador/plataforma.webp" width="1536" height="1024" alt="Vista ilustrativa de la plataforma de pesca organizada por categorías en tablet y celular" fetchPriority="high"/><p className="caption light">Vista ilustrativa de la organización por categorías. Acceso digital; no incluye dispositivos ni equipo de pesca.</p><p className="hero-copy">Deja de elegir a ciegas. Conoce el pez que buscas y aprende a relacionar carnada, nudo, equipo y presentación. Todo organizado por categorías, en tu celular.</p><div className="trust"><span>Consulta en tu celular</span><span>Ejemplos para aplicar</span><span>Categorías para cada duda</span></div></div></section>
+<section className="hero"><div className="wrap center"><div className="brand"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M25 5v20a10 10 0 1 1-20 0v-7l7 7M25 5h8" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/></svg>PESCADOR PRÁCTICO</div><span className="eyebrow">PARA PRINCIPIANTES E INTERMEDIOS · ESPAÑOL LATAM</span><h1>¿BUSCAS PECES MÁS GRANDES?<br/>EMPIEZA POR TU PREPARACIÓN.</h1><MiniVsl/><p className="hero-sub"><strong>Aprende qué carnada elegir, qué nudo usar y cómo hacerlo.</strong> 500 enseñanzas organizadas para preparar mejor tu equipo y tu próxima pesca.</p>{!fishingMiniVsl.src&&<><img className="hero-image" src="/pescador/plataforma.webp" width="1536" height="1024" alt="Vista ilustrativa de la plataforma de pesca organizada por categorías en tablet y celular" fetchPriority="high"/><p className="caption light">Vista ilustrativa de la organización por categorías. Acceso digital; no incluye dispositivos ni equipo de pesca.</p></>}<p className="hero-copy">Deja de elegir a ciegas. Conoce el pez que buscas y aprende a relacionar carnada, nudo, equipo y presentación. Todo organizado por categorías, en tu celular.</p><div className="trust"><span>Consulta en tu celular</span><span>Ejemplos para aplicar</span><span>Categorías para cada duda</span></div></div></section>
 
 <section className="section pain" id="preparacion" tabIndex={-1}><div className="wrap center"><span className="eyebrow">ELIGE CON UN OBJETIVO</span><h2>IR POR UN PEZ MÁS GRANDE<br/><em>EMPIEZA ANTES DEL LANCE.</em></h2><p className="intro">La carnada, la unión y el equipo tienen que ser adecuados para el pez y el lugar. Aprende qué revisar antes de lanzar y qué corregir cuando pierdes una captura.</p><div className="steps"><article><b>OBSERVA</b><p>Conoce el pez que buscas y el lugar donde pescas.</p></article><article><b>PREPARA</b><p>Elige tu presentación y practica una unión apropiada.</p></article><article><b>AJUSTA</b><p>Revisa cómo lo haces y corrige una decisión por vez.</p></article></div><a className="button button-lime" href="#planes">QUIERO APRENDER A PREPARARME</a></div></section>
 
-<section className="section" id="material"><div className="wrap center"><span className="eyebrow">CARNADA, NUDO Y TÉCNICA: MIRA CÓMO APRENDER</span><h2>DEL NUDO A LA CARNADA.<br/><em>ENTIENDE CADA ELECCIÓN.</em></h2><p className="intro">Mira el contenido real: cómo preparar una unión, comparar señuelos y revisar tu equipo. Toca una imagen para verla en grande.</p></div><div className="marquee" role="region" aria-label="Carrusel automático de páginas reales"><MaterialCarousel onPreview={openPreview} /></div></section>
+<SocialProof />
 
 <PlatformPreview /><section className="section soft"><div className="wrap"><div className="center"><span className="eyebrow">¿TE IDENTIFICAS?</span><h2>EMPIEZA POR LO QUE<br/><em>TODAVÍA TE CUESTA.</em></h2></div><div className="audience"><article><span className="chip">ESTÁS EMPEZANDO</span><h3>Todo parece complicado.</h3><p>Caña, carrete, línea, anzuelo y carnada. Ordena las bases con una ruta que puedas consultar.</p></article><article><span className="chip">YA TIENES EXPERIENCIA</span><h3>Repites errores sin entenderlos.</h3><p>Revisa presentación, uniones, pérdidas y manejo. Entra en la categoría de tu dificultad y revisa qué corregir.</p></article><article><span className="chip">QUIERES IR MÁS ALLÁ</span><h3>La pesca no acaba en la captura.</h3><p>El Completo también trata limpieza, fileteado, rodajas, espinas y conservación.</p></article></div></div></section>
 
@@ -70,7 +58,6 @@ function FishingPage(){
 <footer><div className="wrap"><strong>MANUAL DEL PESCADOR PRÁCTICO</strong><p>Material educativo independiente de consulta. No sustituye identificación local, demostraciones prácticas ni las indicaciones de fabricantes y autoridades. Verifica permisos, restricciones y avisos sanitarios de tu localidad.</p><p>Las vistas de la plataforma son ilustrativas de su organización. Los ejemplos interiores corresponden al contenido educativo producido.</p></div></footer>
 
 </main>
-<dialog ref={preview} className="preview-dialog" aria-label="Contenido ampliado" onCancel={()=>{setActivePage(null);lastTrigger.current?.focus();}} onClick={e=>{if(e.target===e.currentTarget)closePreview();}}><div><strong>{activePage?.title}</strong><button type="button" onClick={closePreview} aria-label="Cerrar contenido ampliado">×</button></div>{activePage&&<img src={`/pescador/excerpt-${activePage.name}-full.webp`} alt={activePage.title}/>}</dialog>
 <dialog ref={prompt} className="reading-prompt" aria-labelledby="prompt-title" onClick={e=>{if(e.target===e.currentTarget)closePrompt();}}><button type="button" className="prompt-close" aria-label="Cerrar aviso" onClick={closePrompt}>×</button><span className="eyebrow">ANTES DE TU PRÓXIMA SALIDA</span><h2 id="prompt-title">¿QUIERES IR POR<br/><em>PECES MÁS GRANDES?</em></h2><p>Empieza por entender el pez, la carnada y la unión que estás preparando. Descubre cómo organizar ese aprendizaje antes de tu próxima salida.</p><button className="button" type="button" onClick={continueReading}>QUIERO PREPARAR MEJOR MI SALIDA</button></dialog>
 </div>;
 }
