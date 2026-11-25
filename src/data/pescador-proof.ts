@@ -1,7 +1,7 @@
 // Customer accounts supplied by the owner. Keep each photo attributed only after identification.
 export const fishingMiniVsl: { src: string | null; poster: string; aspectRatio: string } = {
-  src: '/pescador/mini-vsl.mp4',
-  poster: '/pescador/mini-vsl-poster.jpg',
+  src: '/pescador/mini-vsl-v2.mp4',
+  poster: '/pescador/mini-vsl-v2-poster.jpg',
   aspectRatio: '9 / 16',
 };
 export const fishingTestimonials: { name: string; quote: string; image: string | null }[] = [
