@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { fishingMiniVsl } from "../data/pescador-proof";
 
 function NotFoundComponent() {
   return (
@@ -97,6 +98,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "canonical", href: "https://manual-pescador-practico.lovable.app/" },
+      { rel: "preload", href: fishingMiniVsl.poster, as: "image", fetchPriority: "high" },
       { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
       {
         rel: "preload",

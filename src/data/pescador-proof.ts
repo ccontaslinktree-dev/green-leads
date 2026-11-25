@@ -33,4 +33,4 @@ export const fishingTestimonials: { name: string; quote: string; image: string |
 ];
 
 // Photos are shown as a separate gallery until the owner identifies each person.
-export const fishingResultPhotos = [{"src": "/pescador/feedbacks/registro-01.png", "width": 220, "height": 304}, {"src": "/pescador/feedbacks/registro-02.png", "width": 416, "height": 290}, {"src": "/pescador/feedbacks/registro-03.png", "width": 244, "height": 292}, {"src": "/pescador/feedbacks/registro-04.png", "width": 510, "height": 312}, {"src": "/pescador/feedbacks/registro-05.png", "width": 404, "height": 574}];
+export const fishingResultPhotos = [{"src": "/pescador/feedbacks/registro-01.webp", "width": 220, "height": 304}, {"src": "/pescador/feedbacks/registro-02.webp", "width": 416, "height": 290}, {"src": "/pescador/feedbacks/registro-03.webp", "width": 244, "height": 292}, {"src": "/pescador/feedbacks/registro-04.webp", "width": 510, "height": 312}, {"src": "/pescador/feedbacks/registro-05.webp", "width": 404, "height": 574}];

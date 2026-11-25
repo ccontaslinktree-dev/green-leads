@@ -24,7 +24,7 @@ function FishingPage(){
  const trackPlanScroll=(e:MouseEvent<HTMLDivElement>)=>{if((e.target as HTMLElement).closest('a[href="#planes"]'))trackEvent('ClickParaOferta',{content_name:fishingOffer.name});};
  return <div className="fishing-page" onClick={trackPlanScroll}>
 
-<div className="topbar"><b className="topbar-dot" aria-hidden="true"/>500 ENSEÑANZAS + VIDEOS EXCLUSIVOS <span>COMPLETO US$ 6,50</span></div>
+<div className="topbar"><b className="topbar-dot" aria-hidden="true"/>⚠ SOLO HOY: ESTA OFERTA ESTÁ EN EL AIRE <span>¡MAÑANA PUEDE SALIR!</span></div>
 <main>
 <section className="hero"><div className="wrap center"><div className="brand"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M25 5v20a10 10 0 1 1-20 0v-7l7 7M25 5h8" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/></svg>PESCADOR PRÁCTICO</div><span className="eyebrow">PARA PRINCIPIANTES E INTERMEDIOS · ESPAÑOL LATAM</span><h1>DEJA DE PESCAR COMO PRINCIPIANTE.<br/>EMPIEZA A PESCAR CON CRITERIO DE PROFESIONAL.</h1><MiniVsl/><p className="video-offer-badge">VIDEOS EXCLUSIVOS DEL COMPLETO: PESCADORES ENSEÑÁNDOTE A PESCAR</p><AtlasCarousel/><p className="hero-sub"><strong>En el Completo: 500 enseñanzas por categoría + videos de pescadores enseñando en la práctica.</strong> Deja de conformarte con peces chicos: aprende a elegir el nudo, la carnada y el montaje para ir mejor preparado en busca de peces más grandes.</p><div className="trust"><span>Consulta en tu celular</span><span>Material visual + videos en el Completo</span><span>Categorías para cada duda</span></div></div></section>
 
